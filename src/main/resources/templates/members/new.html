@@ -12,20 +12,16 @@
     <div layout:fragment="content">
       <div class="container">
         <h1>회원가입</h1>
-        <form action="">
+        <form th:action="@{/members/new}" th:object="${memberForm}" method="post">
           <div class="input-box">
-            <input type="text" class="name" name="name" placeholder="이름" />
+            <input type="text" class="name" th:field="*{name}" placeholder="이름" />
             <p class="login-check name"></p>
-          </div>
-          <div class="input-box">
-            <input type="text" class="id" name="id" placeholder="아이디" />
-            <p class="login-check id"></p>
           </div>
           <div class="input-box">
             <input
               type="email"
               class="email"
-              name="email"
+              th:field="*{email}"
               placeholder="이메일"
             />
             <p class="login-check id"></p>
@@ -34,22 +30,35 @@
             <input
               type="password"
               class="pwd"
-              name="pwd"
+              th:field="*{pwd}"
               placeholder="비밀번호"
             />
             <p class="login-check id"></p>
           </div>
           <div class="input-box">
-            <input type="tel" class="tel" name="tel" placeholder="휴대폰번호" />
+            <input type="tel" class="tel" th:field="*{tel}" placeholder="휴대폰번호" />
             <p class="login-check id"></p>
           </div>
-          <select name="region" class="region">
+          <select name="region" class="region" >
             <option disabled hidden="hidden" selected>지역 선택</option>
           </select>
+            <label for="gender">성별</label>
+          <input type="radio" name="gender" id="gender" value="male"> 남
+          <input type="radio" name="gender" value="female"> 여
+            <label for="age">나이</label>
+            <input type="text" id="age" placeholder="만나이 입력 ex)25세">
+            <label for="sport">운동 종목</label>
+            <input type="radio" name="sport" id="sport" value="러닝">러닝
+            <input type="radio" name="sport" value="웨이트">웨이트
+            <input type="radio" name="sport" value="모두 선택">모두 선택
+
+            <p>러닝 페이스 입력</p>
+            <label for="minute">분</label>
+            <input type="text" id="minute">
+            <label for="second">초</label>
+            <input type="text" id="second">
         </form>
-        <button onclick="test()">버어튼</button>
       </div>
-    </div>
     <script>
         const regions = [
         "광덕면",
@@ -113,10 +122,7 @@
         newRegion.innerText = region;
         dropdown.appendChild(newRegion);
       });
-
-      function test() {
-        alert("동작 테스트");
-      }
     </script>
+    </div>
   </body>
 </html>
