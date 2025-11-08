@@ -1,0 +1,32 @@
+package com.human.movemate.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.LocalDateTime;
+
+// 모델 : DB 테이블과 같은 구조의 객체(붕어빵)를 생성할 수 있는 클래스(붕어빵 틀)
+
+// @ 붙은 애들을 어노테이션이라고 부름
+// Getter : 객체의 값을 [추출]하기 위한 getter를 생성해줌
+// Setter : 객체에 값을 [설정]하기 위한 setter를 생성해줌
+
+// NoArgConstructor : [매개변수가 없는 생성자]를 만들어줌.
+//          -> new Member(); 로 멤버 객체를 생성할 수 있음
+
+// AllArgsConstructor : [매개변수가 전부 있는 생성자]를 만들어줌
+//          -> new Member(id, email, tel, pwd, name, regDate);로 멤버 객체를 생성할 수 있음
+
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
+public class Member {
+    // DB 테이블의 컬럼과 대응되는 이름, 자료형을 가진 인스턴스 필드 생성
+    // DB { (자료형) Number (이름) id } -> 모델 { (자료형) Long (이름) id }
+    private Long id;
+    private String email;
+    private String tel;
+    private String pwd;
+    private String name;
+    private LocalDateTime regDate;
+}
