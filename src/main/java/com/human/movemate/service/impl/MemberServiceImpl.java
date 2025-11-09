@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class MemberServiceImpl implements MemberService {
     // MemberDao 클래스의 기능을 사용하기 위한 의존성 주입
-    MemberDao memberDao;
+    private final MemberDao memberDao;
 
     // 상속을 준 인터페이스 (MemberService) 에
     // 생성자 (public), 반환타입 (boolean), 메서드 이름 (signup), 매개변수 (Member member)가
@@ -28,17 +28,22 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Member getById(Long id) {
-        return memberDao.findById(id);
+    public Member login(Member member) {
+        log.info("로그인을 위한 정보: {}", member);
+        Member memberRes = memberDao.findById(member.getUserId());
+        if(memberRes == null || !memberRes.getPassword().equals(member.getPassword())) {
+            return null;
+        }
+        return memberRes;
     }
 
     @Override
-    public boolean update(Long id, Member member) {
-        return memberDao.update(id, member);
+    public boolean update(Long no, Member member) {
+        return memberDao.update(no, member);
     }
 
     @Override
-    public boolean delete(Long id) {
-        return memberDao.delete(id);
+    public boolean delete(Long no) {
+        return memberDao.delete(no);
     }
 }

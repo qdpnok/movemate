@@ -1,10 +1,14 @@
 package com.human.movemate.controller;
 
+import com.human.movemate.model.Member;
 import com.human.movemate.service.impl.MemberServiceImpl;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 // @ 붙은 애들을 어노테이션이라고 부름
 
@@ -32,7 +36,15 @@ public class LoginController {
     // 관찰해보니까 return "경로" 로 작성하는 건 resources/templates 밑의 html을 가리키고,
     // return "redirect:/경로" 로 작성하는 건 http://localhost:8282/경로 를 가리키는 것 같슴다
 
-
-
+    @PostMapping("/login")
+    public String login(@ModelAttribute Member member, HttpSession session) {
+        Member memberRes = memberService.login(member);
+        log.info("로그인 : {}", memberRes);
+        if(memberRes == null) {
+            return "redirect:/";
+        }
+        session.setAttribute("loginMember", member);
+        return "main/main";
+    }
 
 }

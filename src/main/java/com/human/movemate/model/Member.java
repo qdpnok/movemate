@@ -1,9 +1,6 @@
 package com.human.movemate.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -19,14 +16,14 @@ import java.time.LocalDateTime;
 // AllArgsConstructor : [매개변수가 전부 있는 생성자]를 만들어줌
 //          -> new Member(id, email, tel, pwd, name, regDate);로 멤버 객체를 생성할 수 있음
 
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor @ToString
 public class Member {
     // DB 테이블의 컬럼과 대응되는 이름, 자료형을 가진 인스턴스 필드 생성
     // DB { (자료형) Number (이름) id } -> 모델 { (자료형) Long (이름) id }
-    private Long id;
-    private String email;
-    private String tel;
-    private String pwd;
+    private Long userNo;
     private String name;
-    private LocalDateTime regDate;
+    private String userId;
+    private String password;
+    private String email;
+    private String phoneNo;
 }

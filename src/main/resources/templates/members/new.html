@@ -12,10 +12,28 @@
     <div layout:fragment="content">
       <div class="container">
         <h1>회원가입</h1>
-        <form th:action="@{/members/new}" th:object="${memberForm}" method="post">
+        <form
+          th:action="@{/members/new}"
+          th:object="${memberForm}"
+          method="post"
+        >
           <div class="input-box">
-            <input type="text" class="name" th:field="*{name}" placeholder="이름" />
+            <input
+              type="text"
+              class="name"
+              th:field="*{name}"
+              placeholder="이름"
+            />
             <p class="login-check name"></p>
+          </div>
+          <div class="input-box">
+              <input
+                      type="text"
+                      class="id"
+                      th:field="*{userId}"
+                      placeholder="이름"
+              />
+              <p class="login-check id"></p>
           </div>
           <div class="input-box">
             <input
@@ -30,99 +48,105 @@
             <input
               type="password"
               class="pwd"
-              th:field="*{pwd}"
+              th:field="*{password}"
               placeholder="비밀번호"
             />
             <p class="login-check id"></p>
           </div>
           <div class="input-box">
-            <input type="tel" class="tel" th:field="*{tel}" placeholder="휴대폰번호" />
+            <input
+              type="tel"
+              class="tel"
+              th:field="*{phoneNo}"
+              placeholder="휴대폰번호"
+            />
             <p class="login-check id"></p>
           </div>
-          <select name="region" class="region" >
+          <select name="region" class="region">
             <option disabled hidden="hidden" selected>지역 선택</option>
           </select>
-            <label for="gender">성별</label>
-          <input type="radio" name="gender" id="gender" value="male"> 남
-          <input type="radio" name="gender" value="female"> 여
-            <label for="age">나이</label>
-            <input type="text" id="age" placeholder="만나이 입력 ex)25세">
-            <label for="sport">운동 종목</label>
-            <input type="radio" name="sport" id="sport" value="러닝">러닝
-            <input type="radio" name="sport" value="웨이트">웨이트
-            <input type="radio" name="sport" value="모두 선택">모두 선택
+          <label for="gender">성별</label>
+          <input type="radio" name="gender" id="gender" value="male" /> 남
+          <input type="radio" name="gender" value="female" /> 여
+          <label for="age">나이</label>
+          <input type="text" id="age" placeholder="만나이 입력 ex)25세" />
+          <label for="sport">운동 종목</label>
+          <input type="radio" name="sport" id="sport" value="러닝" />러닝
+          <input type="radio" name="sport" value="웨이트" />웨이트
+          <input type="radio" name="sport" value="모두 선택" />모두 선택
 
-            <p>러닝 페이스 입력</p>
-            <label for="minute">분</label>
-            <input type="text" id="minute">
-            <label for="second">초</label>
-            <input type="text" id="second">
+          <p>러닝 페이스 입력</p>
+          <label for="minute">분</label>
+          <input type="text" id="minute" />
+          <label for="second">초</label>
+          <input type="text" id="second" />
+          <button type="submit">회원가입</button>
         </form>
       </div>
-    <script>
+      <script>
         const regions = [
-        "광덕면",
-        "구룡동",
-        "구성동",
-        "다가동",
-        "대흥동",
-        "동면",
-        "목천읍",
-        "문화동",
-        "병천면",
-        "봉명동",
-        "북면",
-        "사직동",
-        "삼룡동",
-        "성남면",
-        "성황동",
-        "수신면",
-        "신방동",
-        "신부동",
-        "안서동",
-        "영성동",
-        "오룡동",
-        "용곡동",
-        "원성1동",
-        "원성2동",
-        "원성동",
-        "유량동",
-        "청당동",
-        "청수동",
-        "풍세면",
-        "두정동",
-        "백석동",
-        "부대동",
-        "부성1동",
-        "부성2동",
-        "불당동",
-        "성거읍",
-        "성성동",
-        "성정1동",
-        "성정2동",
-        "성정동",
-        "성환읍",
-        "신당동",
-        "쌍용1동",
-        "쌍용2동",
-        "쌍용3동",
-        "쌍용동",
-        "업성동",
-        "와촌동",
-        "입장면",
-        "직산읍",
-        "차암동",
-      ];
-      const dropdown = document.querySelector("select");
-      console.log(dropdown);
+          "광덕면",
+          "구룡동",
+          "구성동",
+          "다가동",
+          "대흥동",
+          "동면",
+          "목천읍",
+          "문화동",
+          "병천면",
+          "봉명동",
+          "북면",
+          "사직동",
+          "삼룡동",
+          "성남면",
+          "성황동",
+          "수신면",
+          "신방동",
+          "신부동",
+          "안서동",
+          "영성동",
+          "오룡동",
+          "용곡동",
+          "원성1동",
+          "원성2동",
+          "원성동",
+          "유량동",
+          "청당동",
+          "청수동",
+          "풍세면",
+          "두정동",
+          "백석동",
+          "부대동",
+          "부성1동",
+          "부성2동",
+          "불당동",
+          "성거읍",
+          "성성동",
+          "성정1동",
+          "성정2동",
+          "성정동",
+          "성환읍",
+          "신당동",
+          "쌍용1동",
+          "쌍용2동",
+          "쌍용3동",
+          "쌍용동",
+          "업성동",
+          "와촌동",
+          "입장면",
+          "직산읍",
+          "차암동",
+        ];
+        const dropdown = document.querySelector("select");
+        console.log(dropdown);
 
-      regions.forEach((region) => {
-        const newRegion = document.createElement("option");
-        newRegion.value = region;
-        newRegion.innerText = region;
-        dropdown.appendChild(newRegion);
-      });
-    </script>
+        regions.forEach((region) => {
+          const newRegion = document.createElement("option");
+          newRegion.value = region;
+          newRegion.innerText = region;
+          dropdown.appendChild(newRegion);
+        });
+      </script>
     </div>
   </body>
 </html>

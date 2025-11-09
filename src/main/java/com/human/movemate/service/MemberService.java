@@ -9,12 +9,12 @@ public interface MemberService {
     // 회원 가입
     boolean signup(Member member);
 
-    // id로 회원 조회
-    Member getById(Long id);
+    // 로그인
+    Member login(Member member);
 
     // 회원 정보 수정
-    boolean update(Long id, Member member);
+    boolean update(Long no, Member member);
 
     // 회원 정보 삭제
-    boolean delete(Long id);
+    boolean delete(Long no);
 }
