@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 @Slf4j
 public class MainController {
+
+    // 루트경로(http://localhost:8282)로 get 방식을 사용해서 이동하겠다
     @GetMapping("/")
     public String mainPage() {
         return "main/main";

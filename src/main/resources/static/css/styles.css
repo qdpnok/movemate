@@ -13,10 +13,8 @@
 }
 
 body {
-  font-family: "Noto Sans KR", system-ui, -apple-system, Segoe UI, Roboto, Arial,
-    sans-serif;
   margin: 0px;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 #wrap {
@@ -45,7 +43,6 @@ body {
 }
 
 /* * * * * * main header style * * * * * */
-
 #main-header {
   width: 100%;
   max-width: 1200px;
@@ -239,6 +236,23 @@ footer {
 }
 
 /* 본문 스타일 */
+/* 로그인, 회원가입 공통 */
+.input-txt {
+  width: 410px;
+  height: 60px;
+  margin: 10px;
+  padding: 0px 15px;
+  border: 1px solid #989898;
+  border-radius: 14px;
+  font-size: 14px;
+}
+#login-container > h1,
+#signup-container > h1 {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 20px;
+}
+
 /* 로그인 페이지 */
 .login-container {
   display: flex;
@@ -257,15 +271,6 @@ footer {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-#login-id,
-#login-pw {
-  width: 410px;
-  height: 60px;
-  margin: 10px;
-  border: 1px solid #989898;
-  border-radius: 14px;
-  font-size: 14px;
 }
 #login-button {
   width: 410px;
@@ -297,6 +302,77 @@ footer {
   border: none;
   border-radius: 14px;
   background-color: var(--secondary);
+}
+
+/* 회원가입 페이지 */
+#signup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-box {
+  display: flex;
+  flex-direction: column;
+}
+
+select {
+  width: 410px;
+  height: 60px;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #989898;
+  border-radius: 14px;
+  font-size: 14px;
+  color: gray;
+}
+
+.signup-box {
+  display: flex;
+  justify-content: space-between;
+  width: 410px;
+  margin: 10px;
+}
+
+.signup-box-pace {
+  display: flex;
+  flex-direction: column;
+}
+
+.signup-box-pace > p {
+  margin-left: 10px;
+}
+
+#signup-button {
+  width: 410px;
+  height: 60px;
+  margin: 10px;
+  border: none;
+  border-radius: 14px;
+  background-color: var(--primary);
+  color: white;
+  font-size: 14px;
+}
+
+#gender-female,
+#gender-male {
+  width: 20px;
+  height: 20px;
+}
+
+#age {
+  width: 140px;
+  height: 60px;
+  margin: 10px;
+  padding: 0px 15px;
+  border: 1px solid #989898;
+  border-radius: 14px;
+  font-size: 14px;
+}
+
+#signup-box-gender {
+  display: flex;
+  align-items: center;
 }
 
 /* * * * * * main body style * * * * * */
