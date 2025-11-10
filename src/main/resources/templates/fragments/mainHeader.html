@@ -1,10 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>main-header</title>
+  </head>
+  <body>
+    <header th:fragment="header">
+      <div id="main-header">
+        <a href="#">
+          <img class="main_logo" src="./images/logo (1).png" alt="movemate" />
+        </a>
+        <div class="category-bar">
+          <ul class="category">
+            <li>
+              <a href="#">
+                <p>메이트 만들기</p>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <p>메이트 관리</p>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <p>게시판</p>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <p>마이페이지</p>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="user_hambuger">
+          <div class="user-bar">
+            <button class="login" th:onclick="|location.href='@{/login}'|">로그인</button>
+            <button class="signup" th:onclick="|location.href='@{/members/new}'|">회원가입</button>
+          </div>
+          <button class="hamburger-button" id="hamburger-btn">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+  </body>
 </html>
