@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 // @ 붙은 애들을 어노테이션이라고 부름
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 @RequiredArgsConstructor
 @Slf4j
+@RequestMapping("/login")
 public class LoginController {
     private final MemberServiceImpl memberService;
 
@@ -30,21 +32,21 @@ public class LoginController {
     // 조금 더 부정확하지만 일반적인 이야기를 하자면
     // 보안이 필요 없는 정보만 담거나 화면만 뿌려준다면 get 방식을
     // 보안이 필요한 정보들을 담거나 정보를 생성/수정 한다면 post 방식을 자주 씁니다.
-    @GetMapping("/")
+    @GetMapping
     public String mainPage() { return "login/login"; }  // resources/templates/login/login.html을 가리킴
 
     // 관찰해보니까 return "경로" 로 작성하는 건 resources/templates 밑의 html을 가리키고,
     // return "redirect:/경로" 로 작성하는 건 http://localhost:8282/경로 를 가리키는 것 같슴다
 
-    @PostMapping("/login")
+    @PostMapping
     public String login(@ModelAttribute Member member, HttpSession session) {
         Member memberRes = memberService.login(member);
         log.info("로그인 : {}", memberRes);
         if(memberRes == null) {
-            return "redirect:/";
+            return "redirect:/login";
         }
         session.setAttribute("loginMember", member);
-        return "main/main";
+        return "redirect:/";
     }
 
 }

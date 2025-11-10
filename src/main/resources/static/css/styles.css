@@ -1,62 +1,241 @@
 :root {
-  --primary: #007bff;
+  --primary: #4b5ae4;
   --secondary: #fb7163;
-  --accent: #14b8a6;
   --light: #f3f4f6;
   --dark: #0c414d;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "HCo Gotham", "Noto Sans KR", sans-serif;
 }
 
 body {
   font-family: "Noto Sans KR", system-ui, -apple-system, Segoe UI, Roboto, Arial,
     sans-serif;
+  margin: 0px;
+  height: 100vh;
 }
 
-/* header 스타일 */
-header {
-  width: 100vw;
-  height: 200px;
+#wrap {
+  height: auto;
+  min-height: calc(100%-150px);
+}
+
+#container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+/* login header 스타일 */
+#login-header {
+  height: 150px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-img {
+#login-logo {
   width: 180px;
   height: 180px;
 }
 
-/* footer 스타일 */
-.foot-container {
+/* * * * * * main header style * * * * * */
+
+#main-header {
+  width: 100%;
+  max-width: 1200px;
+  height: 200px;
+  margin: 0;
+  padding: 0 20px;
+  background-color: #f3f4f6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main_logo {
+  width: 200px;
+  height: 200px;
+  flex-shrink: 0;
+}
+
+.category-bar {
+  box-sizing: border-box;
+  flex-grow: 1;
+  overflow: hidden;
+  padding: 50px;
+}
+
+.category {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 200px;
+  padding: 0px;
+  flex-direction: row;
+}
+
+li {
+  list-style: none;
+}
+
+.category li {
+  height: 100px;
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+.category li a {
+  text-decoration: none;
+  color: black;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.5rem;
+}
+
+.category li p {
+  font-size: 1.1rem;
+  white-space: nowrap;
+}
+
+.user-bar {
+  flex-shrink: 0;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  gap: 20px;
+}
+
+.login {
+  width: 100px;
+  height: 50px;
+  border: solid 1px #4b5ae4;
+  border-radius: 5px;
+  background-color: #4b5ae4;
+  color: white;
+  font-size: 15px;
+}
+
+.signup {
+  width: 100px;
+  height: 50px;
+  border: solid 1px #fb7163;
+  border-radius: 5px;
+  background-color: #fb7163;
+  color: white;
+  font-size: 15px;
+}
+
+.hamburger-button {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 24px;
+  color: #333;
+}
+
+.user_hambuger {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.mobile-nav {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 80%;
+  max-width: 300px;
+  height: 100vh;
+  background-color: white;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+
+  transition: left 0.3s ease-in-out;
+
+  display: flex;
+  flex-direction: column;
+  padding: 40px 20px;
+}
+
+.mobile-nav.is-active {
+  left: 0;
+}
+
+.mobile-nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mobile-nav-list li {
+  margin-bottom: 20px;
+}
+
+.mobile-nav-list li a {
+  text-decoration: none;
+  color: #333;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.mobile-user-bar {
+  margin-top: auto;
+  display: flex;
+  gap: 10px;
+}
+
+/* footer 스타일 */
+footer {
+  height: 150px;
+}
+.foot-container {
+  display: flex;
+  justify-content: space-between;
   background-color: #f2f0f0;
 }
 .foot-etc {
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
   margin: 50px;
 }
 .foot-box {
   display: flex;
-  padding: 0px 0px 50px 0px;
+  padding: 0px 0px 30px 0px;
 }
 .foot-box > a {
-  margin-right: 8px;
+  margin-right: 10px;
+  font-size: 10px;
 }
 .foot-info > p {
-  margin-bottom: 10px;
+  font-size: 10px;
+  margin: 16px 0px;
 }
 .foot-cs {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  margin: 0px 50px;
 }
 .foot-cs > h1 {
-  font-size: 30px;
+  font-size: 14px;
   font-weight: bold;
 }
 .foot-cs > h2 {
-  font-size: 22px;
+  font-size: 14px;
 }
 
 /* 본문 스타일 */
@@ -96,25 +275,162 @@ img {
   border-radius: 14px;
   background-color: var(--primary);
   color: white;
+  font-size: 14px;
 }
-#not-member {
+#login-not-member {
   font-size: 36px;
-  margin-top: 140px;
+  margin: 15px 0px 5px 0px;
   display: flex;
   justify-content: center;
+  font-size: 14px;
 }
-#signup {
-  width: 800px;
-  height: 100px;
-  background-color: #fb7163;
+#login-signup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 410px;
+  height: 60px;
+  margin: 10px;
+  font-size: 14px;
+  text-decoration: none;
+  color: white;
+  border: none;
+  border-radius: 14px;
+  background-color: var(--secondary);
 }
 
-.id,
-.pw,
-.name,
-.email,
-.tel {
-  width: 800px;
-  height: 100px;
-  border-color: #989898;
+/* * * * * * main body style * * * * * */
+
+main {
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  width: 100%;
+  max-width: 1200px;
+  flex-wrap: wrap;
+}
+
+.main_banner {
+  width: 100%;
+}
+
+.swiper {
+  width: 100%;
+}
+
+.swiper-slide img {
+  width: 100%;
+  display: block;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #f3f4f6;
+}
+
+.sec_name {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* =================================================== */
+/* 미디어 쿼리 (태블릿 / 모바일 대응) */
+/* =================================================== */
+
+/* 태블릿 사이즈 (1024px 이하)
+ * - 화면이 1024px보다 작아지면 메뉴바(category-bar)를 숨김
+ * - 헤더와 로고 크기를 줄임 */
+
+@media (max-width: 1024px) {
+  /* 메뉴바가 화면을 차지하지 않도록 숨김
+  (이 지점에서 햄버거 메뉴 아이콘(☰)을 표시해야함)  */
+  .category-bar {
+    display: none;
+  }
+
+  .hamburger-button {
+    display: block;
+    /* [핵심] 햄버거 버튼 보이기 */
+  }
+
+  /* 햄버거 메뉴 Java Script에 내용 추가 필요
+  
+  // 1. 필요한 HTML 요소들을 가져옴
+const hamburgerButton = document.getElementById('hamburger-btn');
+const mobileNav = document.getElementById('mobile-nav');
+
+// 2. 햄버거 버튼에 'click' (클릭) 이벤트 리스너를 추가
+hamburgerButton.addEventListener('click', () => {
+  // 3. 모바일 메뉴(.mobile-nav)에 'is-active' 클래스를
+  //    있으면 제거하고, 없으면 추가 (토글)
+  mobileNav.classList.toggle('is-active');
+});
+
+// (선택) 메뉴 바깥의 어두운 배경을 클릭하면 닫히게 하는 기능
+// (나중에 추가 구현)
+  */
+
+  header {
+    height: 150px;
+  }
+
+  .main_logo {
+    width: 150px;
+    height: 150px;
+  }
+
+  .user-bar {
+    height: 150px;
+  }
+}
+
+/* 소형 태블릿 / 대형 모바일 (768px 이하) */
+
+@media (max-width: 768px) {
+  header {
+    height: 100px;
+    padding: 0 10px;
+  }
+
+  .main_logo {
+    width: 100px;
+    height: 100px;
+  }
+
+  .user-bar {
+    height: 100px;
+    gap: 10px;
+  }
+
+  .login,
+  .signup {
+    width: 80px;
+    height: 40px;
+    font-size: 14px;
+  }
+}
+
+/* 3. 소형 모바일 (480px 이하) */
+
+@media (max-width: 480px) {
+  header {
+    height: 80px;
+  }
+
+  .main_logo {
+    width: 80px;
+    height: 80px;
+  }
+
+  .user-bar {
+    height: 80px;
+    gap: 5px;
+  }
+
+  .login,
+  .signup {
+    width: 70px;
+    height: 35px;
+    font-size: 12px;
+  }
 }
