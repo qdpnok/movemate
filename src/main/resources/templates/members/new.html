@@ -20,47 +20,52 @@
           <div class="input-box">
             <input
               type="text"
-              class="name input-txt"
+              class="input-name input-txt"
               th:field="*{name}"
               placeholder="이름"
+              required
             />
-            <p class="signup-check name"></p>
+            <p class="signup-check"></p>
           </div>
           <div class="input-box">
             <input
               type="text"
-              class="id input-txt"
+              class="input-id input-txt"
               th:field="*{userId}"
               placeholder="아이디"
+              required
             />
-            <p class="signup-check id"></p>
+            <p class="signup-check check-id"></p>
           </div>
           <div class="input-box">
             <input
               type="email"
-              class="email input-txt"
+              class="input-email input-txt"
               th:field="*{email}"
               placeholder="이메일"
+              required
             />
-            <p class="signup-check id"></p>
+            <p class="signup-check check-email"></p>
           </div>
           <div class="input-box">
             <input
               type="password"
-              class="pwd input-txt"
+              class="input-pwd input-txt"
               th:field="*{password}"
               placeholder="비밀번호"
+              required
             />
-            <p class="signup-check id"></p>
+            <p class="signup-check check-pwd"></p>
           </div>
           <div class="input-box">
             <input
               type="tel"
-              class="tel input-txt"
+              class="input-tel input-txt"
               th:field="*{phoneNo}"
               placeholder="휴대폰번호"
+              required
             />
-            <p class="login-check id"></p>
+            <p class="signup-check check-tel"></p>
           </div>
           <div>
             <label>
@@ -72,10 +77,14 @@
           <div class="signup-box">
             <div id="signup-box-gender">
               <label class="type-label" for="male">성별</label>
-              <input type="radio" name="gender" id="male" value="male" />
-              남
-              <input type="radio" name="gender" id="female" value="female" />
-              여
+              <div class="choice">
+                <input type="radio" name="gender" id="male" value="male" />
+                남
+              </div>
+              <div class="choice">
+                <input type="radio" name="gender" id="female" value="female" />
+                여
+              </div>
             </div>
             <div id="signup-box-age">
               <label class="type-label" for="age">나이</label>
@@ -84,20 +93,26 @@
           </div>
           <div class="signup-box">
             <label class="type-label" for="sport">운동 종목</label>
-            <input type="radio" name="sport" id="sport" value="러닝" />러닝
-            <input type="radio" name="sport" value="웨이트" />웨이트
-            <input type="radio" name="sport" value="모두 선택" />모두 선택
+            <div class="choice">
+              <input type="radio" name="sport" id="sport" value="러닝" />러닝
+            </div>
+            <div class="choice">
+              <input type="radio" name="sport" value="웨이트" />웨이트
+            </div>
+            <div class="choice">
+              <input type="radio" name="sport" value="모두 선택" />모두 선택
+            </div>
           </div>
-          <div class="signup-box-pace">
-            <p class="type-label">러닝 페이스 입력</p>
+          <div id="signup-box-pace">
+            <p>러닝 페이스 입력</p>
             <div class="signup-box">
-              <label for="minute">분</label>
+              <label class="pace" for="minute">분</label>
               <input type="text" id="minute" />
-              <label for="second">초</label>
+              <label class="pace" for="second">초</label>
               <input type="text" id="second" />
             </div>
           </div>
-          <button id="signup-button" type="submit">회원가입</button>
+          <button id="signup-button" type="submit" disabled>회원가입</button>
         </form>
       </div>
       <script>
@@ -154,6 +169,7 @@
           "직산읍",
           "차암동",
         ];
+        // 드롭다운에 요소 생성
         const dropdown = document.querySelector("select");
         console.log(dropdown);
 
@@ -163,6 +179,70 @@
           newRegion.innerText = region;
           dropdown.appendChild(newRegion);
         });
+
+        const idInput = document.querySelector(".input-id");
+        const idCheck = document.querySelector(".check-id");
+
+        const mailInput = document.querySelector(".input-email");
+        const mailCheck = document.querySelector(".check-email");
+
+        const pwInput = document.querySelector(".input-pwd");
+        const pwCheck = document.querySelector(".check-pwd");
+
+        const telInput = document.querySelector(".input-tel");
+        const telCheck = document.querySelector(".check-tel");
+
+        const submitBtn = document.getElementById("signup-button");
+
+        const regexId = /^\w{8,20}$/;
+        const regexMail =
+          /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+        const regexPw = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,}$/;
+        const regexTel = /^0\d{1,2}-\d{3,4}-\d{4}$/;
+
+        // 조건식 검증
+        const validationInput = (input, regex, el) => {
+          if (input.value.trim() === "") {
+            el.textContent = "";
+            el.classList.remove("valid", "isvalid");
+            return null;
+          }
+
+          if (regex.test(input.value)) {
+            el.textContent = "사용 가능 합니다.";
+            el.style.color = "green";
+            el.classList.add("valid");
+            el.classList.remove("invalid");
+            return true;
+          } else {
+            el.textContent = "입력 조건이 맞지 않습니다.";
+            el.style.color = "red";
+            el.classList.remove("valid");
+            el.classList.add("isvalid");
+            return false;
+          }
+        };
+
+        // submit 활성화/비활성화
+        const updateSubmitBtn = () => {
+          const isIdValid = validationInput(idInput, regexId, idCheck);
+          const isPwValid = validationInput(pwInput, regexPw, pwCheck);
+          const isMailValid = validationInput(mailInput, regexMail, mailCheck);
+          const isPhoneValid = validationInput(telInput, regexTel, telCheck);
+
+          if (isIdValid && isPwValid && isMailValid && isPhoneValid) {
+            submitBtn.disalbed = false;
+            submitBtn.classList.add("enabled");
+          } else {
+            submitBtn.disalbed = true;
+            submitBtn.classList.remove("enabled");
+          }
+        };
+
+        idInput.addEventListener("input", updateSubmitBtn);
+        pwInput.addEventListener("input", updateSubmitBtn);
+        mailInput.addEventListener("input", updateSubmitBtn);
+        telInput.addEventListener("input", updateSubmitBtn);
       </script>
     </div>
   </body>

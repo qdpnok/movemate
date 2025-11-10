@@ -320,6 +320,13 @@ footer {
 .input-box {
   display: flex;
   flex-direction: column;
+  margin: 5px 0;
+}
+
+.signup-check {
+  height: 14px;
+  font-size: 14px;
+  margin: 0 10px;
 }
 
 select {
@@ -336,37 +343,47 @@ select {
 .signup-box {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 410px;
-  margin: 10px;
+  margin: 25px 10px;
   font-size: 14px;
 }
 
-.signup-box-pace {
+#signup-box-pace {
   display: flex;
   flex-direction: column;
 }
 
-.signup-box-pace > p {
+#signup-box-pace > p {
   margin-left: 10px;
+  font-size: 14px;
+  font-weight: bold;
 }
 
 #signup-button {
   width: 410px;
   height: 60px;
-  margin: 10px;
+  margin: 10px 10px 30px 10px;
   border: none;
   border-radius: 14px;
   background-color: var(--primary);
   color: white;
   font-size: 14px;
 }
+#signup-button:disabled {
+  background-color: var(--light);
+  color: black;
+}
 
 input[type="radio"] {
   width: 20px;
   height: 20px;
+  margin-right: 8px;
 }
 
-#age {
+#age,
+#minute,
+#second {
   width: 140px;
   height: 60px;
   padding: 0px 15px;
@@ -375,7 +392,8 @@ input[type="radio"] {
   font-size: 14px;
 }
 
-#signup-box-gender {
+#signup-box-gender,
+#signup-box-age {
   display: flex;
   align-items: center;
 }
@@ -384,6 +402,15 @@ input[type="radio"] {
   margin-right: 10px;
   font-size: 14px;
   font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.choice {
+  display: flex;
+  margin-right: 10px;
+  align-items: center;
 }
 
 /* * * * * * main body style * * * * * */
