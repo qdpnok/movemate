@@ -71,37 +71,25 @@
           </div>
           <div class="signup-box">
             <div id="signup-box-gender">
-              <label for="gender-male">성별</label>
-              <label>
-                <input
-                  type="radio"
-                  name="gender"
-                  id="gender-male"
-                  value="male"
-                />
-                남
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="gender"
-                  id="gender-female"
-                  value="female"
-                />
-                여
-              </label>
+              <label class="type-label" for="male">성별</label>
+              <input type="radio" name="gender" id="male" value="male" />
+              남
+              <input type="radio" name="gender" id="female" value="female" />
+              여
             </div>
-            <label for="age">나이</label>
-            <input type="text" id="age" placeholder="만나이 입력 ex)25세" />
+            <div id="signup-box-age">
+              <label class="type-label" for="age">나이</label>
+              <input type="text" id="age" placeholder="만나이 입력 ex)25세" />
+            </div>
           </div>
           <div class="signup-box">
-            <label for="sport">운동 종목</label>
+            <label class="type-label" for="sport">운동 종목</label>
             <input type="radio" name="sport" id="sport" value="러닝" />러닝
             <input type="radio" name="sport" value="웨이트" />웨이트
             <input type="radio" name="sport" value="모두 선택" />모두 선택
           </div>
           <div class="signup-box-pace">
-            <p>러닝 페이스 입력</p>
+            <p class="type-label">러닝 페이스 입력</p>
             <div class="signup-box">
               <label for="minute">분</label>
               <input type="text" id="minute" />

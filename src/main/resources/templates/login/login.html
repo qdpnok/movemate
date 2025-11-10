@@ -13,10 +13,15 @@
       <div id="login-container">
         <h1>로그인</h1>
         <form id="login-form" th:action="@{/login}" method="post">
-          <input type="text" id="login-id" name="userId" placeholder="아이디" />
+          <input
+            type="text"
+            class="input-txt"
+            name="userId"
+            placeholder="아이디"
+          />
           <input
             type="password"
-            id="login-pw"
+            class="input-txt"
             name="password"
             placeholder="비밀번호"
           />

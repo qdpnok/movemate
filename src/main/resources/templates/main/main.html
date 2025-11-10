@@ -7,7 +7,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./style.css" />
     <title>movemate</title>
     <link
       rel="stylesheet"
@@ -20,85 +19,87 @@
   </head>
 
   <body>
-    <div id="container">
-      <main>
-        <!-- -- -- -- -- 여기부터 main_banner -- -- -- -- -->
-        <div class="main_banner swiper">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <a href="#">
-                <img src="./images/main_banner (1).png" alt="메인 배너 1"
-              /></a>
+    <div layout:fragment="content">
+      <div id="container">
+        <main>
+          <!-- -- -- -- -- 여기부터 main_banner -- -- -- -- -->
+          <div class="main_banner swiper">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <a href="#">
+                  <img src="/images/main_banner (1).png" alt="메인 배너 1"
+                /></a>
+              </div>
+              <div class="swiper-slide">
+                <a href="#">
+                  <img src="/images/main_banner (2).png" alt="메인 배너 2" />
+                </a>
+              </div>
+              <div class="swiper-slide">
+                <a href="#">
+                  <img src="/images/main_banner (3).png" alt="메인 배너 3" />
+                </a>
+              </div>
             </div>
-            <div class="swiper-slide">
-              <a href="#">
-                <img src="./images/main_banner (2).png" alt="메인 배너 2" />
-              </a>
-            </div>
-            <div class="swiper-slide">
-              <a href="#">
-                <img src="./images/main_banner (3).png" alt="메인 배너 3" />
-              </a>
-            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
           </div>
-          <div class="swiper-pagination"></div>
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-        </div>
-        <!-- -- -- -- -- 여기까지 main_banner -- -- -- -- -->
+          <!-- -- -- -- -- 여기까지 main_banner -- -- -- -- -->
 
-        <!-- -- -- -- -- 여기부터 main_section -- -- -- -- -->
+          <!-- -- -- -- -- 여기부터 main_section -- -- -- -- -->
 
-        <div class="main_sec">
-          <div class="sec_runningcrew">
-            <div class="sec_name">
-              <p>🏃‍♂️🏃‍♀️ 요즘 인기있는 러닝크루 TOP 3</p>
+          <div class="main_sec">
+            <div class="sec_runningcrew">
+              <div class="sec_name">
+                <p>🏃‍♂️🏃‍♀️ 요즘 인기있는 러닝크루 TOP 3</p>
+              </div>
+              <div class="sec_runningcrew_1"></div>
+              <div class="sec_runningcrew_2"></div>
+              <div class="sec_runningcrew_3"></div>
             </div>
-            <div class="sec_runningcrew_1"></div>
-            <div class="sec_runningcrew_2"></div>
-            <div class="sec_runningcrew_3"></div>
-          </div>
-          <div class="sec_search">
-            <div class="sec_name">
-              <p>🔎 1:1 메이트 탐색</p>
+            <div class="sec_search">
+              <div class="sec_name">
+                <p>🔎 1:1 메이트 탐색</p>
+              </div>
+            </div>
+            <div class="sec_add">
+              <div class="sec_name">
+                <p>👍 추천 정보</p>
+                <button>add</button>
+              </div>
             </div>
           </div>
-          <div class="sec_add">
-            <div class="sec_name">
-              <p>👍 추천 정보</p>
-              <button>add</button>
-            </div>
-          </div>
-        </div>
-      </main>
+        </main>
 
-      <footer></footer>
+        <footer></footer>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+      <script src="./hamburger.js"></script>
+      <script>
+        const swiper = new Swiper(".swiper", {
+          // '.swiper' 클래스를 찾아서 실행
+          // 옵션
+          direction: "horizontal", // 가로 방향
+          loop: true, // 무한 반복
+          autoplay: {
+            delay: 3000, // 3초마다 자동 재생
+          },
+
+          // 페이지 점 (pagination)
+          pagination: {
+            el: ".swiper-pagination",
+            clickable: true, // 점 클릭 가능
+          },
+
+          // 좌우 화살표 (navigation buttons)
+          navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+          },
+        });
+      </script>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="./hamburger.js"></script>
-    <script>
-      const swiper = new Swiper(".swiper", {
-        // '.swiper' 클래스를 찾아서 실행
-        // 옵션
-        direction: "horizontal", // 가로 방향
-        loop: true, // 무한 반복
-        autoplay: {
-          delay: 3000, // 3초마다 자동 재생
-        },
-
-        // 페이지 점 (pagination)
-        pagination: {
-          el: ".swiper-pagination",
-          clickable: true, // 점 클릭 가능
-        },
-
-        // 좌우 화살표 (navigation buttons)
-        navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
-        },
-      });
-    </script>
   </body>
 </html>

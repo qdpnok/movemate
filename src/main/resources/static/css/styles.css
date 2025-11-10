@@ -12,14 +12,16 @@
   font-family: "HCo Gotham", "Noto Sans KR", sans-serif;
 }
 
+html,
 body {
+  height: 100%;
   margin: 0px;
-  min-height: 100vh;
 }
 
 #wrap {
   height: auto;
-  min-height: calc(100%-150px);
+  min-height: 100%;
+  padding-bottom: 260px;
 }
 
 #container {
@@ -32,8 +34,9 @@ body {
 
 /* login header 스타일 */
 #login-header {
-  height: 150px;
+  height: 180px;
   display: flex;
+  margin: 0;
   justify-content: center;
   align-items: center;
 }
@@ -195,7 +198,9 @@ li {
 
 /* footer 스타일 */
 footer {
-  height: 150px;
+  height: 260px;
+  position: relative;
+  transform: translateY(-100%);
 }
 .foot-container {
   display: flex;
@@ -254,7 +259,7 @@ footer {
 }
 
 /* 로그인 페이지 */
-.login-container {
+#login-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -262,10 +267,11 @@ footer {
   border-color: #eaeaea;
   padding: 0px 0px 50px 0px;
 }
-.login-container > h1 {
-  font-size: 20px;
+#login-container > h1 {
   font-weight: bold;
-  margin: 20px;
+  margin: 20px 0;
+  width: 100px;
+  text-align: center;
 }
 #login-form {
   display: flex;
@@ -332,6 +338,7 @@ select {
   justify-content: space-between;
   width: 410px;
   margin: 10px;
+  font-size: 14px;
 }
 
 .signup-box-pace {
@@ -354,8 +361,7 @@ select {
   font-size: 14px;
 }
 
-#gender-female,
-#gender-male {
+input[type="radio"] {
   width: 20px;
   height: 20px;
 }
@@ -363,7 +369,6 @@ select {
 #age {
   width: 140px;
   height: 60px;
-  margin: 10px;
   padding: 0px 15px;
   border: 1px solid #989898;
   border-radius: 14px;
@@ -373,6 +378,12 @@ select {
 #signup-box-gender {
   display: flex;
   align-items: center;
+}
+
+.type-label {
+  margin-right: 10px;
+  font-size: 14px;
+  font-weight: bold;
 }
 
 /* * * * * * main body style * * * * * */
