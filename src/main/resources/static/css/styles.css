@@ -9,12 +9,18 @@
 body {
   font-family: "Noto Sans KR", system-ui, -apple-system, Segoe UI, Roboto, Arial,
     sans-serif;
+  margin: 0px;
+  height: 100vh;
+}
+
+#wrap {
+  height: auto;
+  min-height: calc(100%-150px);
 }
 
 /* header 스타일 */
 header {
-  width: 100vw;
-  height: 200px;
+  height: 150px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -25,38 +31,45 @@ img {
 }
 
 /* footer 스타일 */
+footer {
+  height: 150px;
+}
 .foot-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   background-color: #f2f0f0;
 }
 .foot-etc {
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
   margin: 50px;
 }
 .foot-box {
   display: flex;
-  padding: 0px 0px 50px 0px;
+  padding: 0px 0px 30px 0px;
 }
 .foot-box > a {
-  margin-right: 8px;
+  margin-right: 10px;
+  font-size: 10px;
 }
 .foot-info > p {
-  margin-bottom: 10px;
+  font-size: 10px;
+  margin: 16px 0px;
 }
 .foot-cs {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  margin: 0px 50px;
 }
 .foot-cs > h1 {
-  font-size: 30px;
+  font-size: 14px;
   font-weight: bold;
 }
 .foot-cs > h2 {
-  font-size: 22px;
+  font-size: 14px;
 }
 
 /* 본문 스타일 */
@@ -96,17 +109,28 @@ img {
   border-radius: 14px;
   background-color: var(--primary);
   color: white;
+  font-size: 14px;
 }
-#not-member {
+#login-not-member {
   font-size: 36px;
-  margin-top: 140px;
+  margin: 15px 0px 5px 0px;
   display: flex;
   justify-content: center;
+  font-size: 14px;
 }
-#signup {
-  width: 800px;
-  height: 100px;
-  background-color: #fb7163;
+#login-signup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 410px;
+  height: 60px;
+  margin: 10px;
+  font-size: 14px;
+  text-decoration: none;
+  color: white;
+  border: none;
+  border-radius: 14px;
+  background-color: var(--secondary);
 }
 
 .id,

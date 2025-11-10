@@ -13,8 +13,10 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
   </head>
   <body>
-    <div th:replace="fragments/loginHeader.html :: header"></div>
-    <div layout:fragment="content"></div>
-    <div th:replace="fragments/footer :: footer"></div>
+    <div id="wrap">
+      <div th:replace="fragments/loginHeader.html :: header"></div>
+      <div layout:fragment="content"></div>
+      <div th:replace="fragments/footer :: footer"></div>
+    </div>
   </body>
 </html>
