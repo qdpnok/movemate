@@ -12,16 +12,16 @@
   font-family: "HCo Gotham", "Noto Sans KR", sans-serif;
 }
 
+html,
 body {
-  font-family: "Noto Sans KR", system-ui, -apple-system, Segoe UI, Roboto, Arial,
-    sans-serif;
+  height: 100%;
   margin: 0px;
-  height: 100vh;
 }
 
 #wrap {
   height: auto;
-  min-height: calc(100%-150px);
+  min-height: 100%;
+  padding-bottom: 260px;
 }
 
 #container {
@@ -34,8 +34,9 @@ body {
 
 /* login header 스타일 */
 #login-header {
-  height: 150px;
+  height: 180px;
   display: flex;
+  margin: 0;
   justify-content: center;
   align-items: center;
 }
@@ -45,7 +46,6 @@ body {
 }
 
 /* * * * * * main header style * * * * * */
-
 #main-header {
   width: 100%;
   max-width: 1200px;
@@ -198,7 +198,9 @@ li {
 
 /* footer 스타일 */
 footer {
-  height: 150px;
+  height: 260px;
+  position: relative;
+  transform: translateY(-100%);
 }
 .foot-container {
   display: flex;
@@ -239,8 +241,25 @@ footer {
 }
 
 /* 본문 스타일 */
+/* 로그인, 회원가입 공통 */
+.input-txt {
+  width: 410px;
+  height: 60px;
+  margin: 10px;
+  padding: 0px 15px;
+  border: 1px solid #989898;
+  border-radius: 14px;
+  font-size: 14px;
+}
+#login-container > h1,
+#signup-container > h1 {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 20px;
+}
+
 /* 로그인 페이지 */
-.login-container {
+#login-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -248,24 +267,16 @@ footer {
   border-color: #eaeaea;
   padding: 0px 0px 50px 0px;
 }
-.login-container > h1 {
-  font-size: 20px;
+#login-container > h1 {
   font-weight: bold;
-  margin: 20px;
+  margin: 20px 0;
+  width: 100px;
+  text-align: center;
 }
 #login-form {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-#login-id,
-#login-pw {
-  width: 410px;
-  height: 60px;
-  margin: 10px;
-  border: 1px solid #989898;
-  border-radius: 14px;
-  font-size: 14px;
 }
 #login-button {
   width: 410px;
@@ -297,6 +308,109 @@ footer {
   border: none;
   border-radius: 14px;
   background-color: var(--secondary);
+}
+
+/* 회원가입 페이지 */
+#signup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-box {
+  display: flex;
+  flex-direction: column;
+  margin: 5px 0;
+}
+
+.signup-check {
+  height: 14px;
+  font-size: 14px;
+  margin: 0 10px;
+}
+
+select {
+  width: 410px;
+  height: 60px;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #989898;
+  border-radius: 14px;
+  font-size: 14px;
+  color: gray;
+}
+
+.signup-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 410px;
+  margin: 25px 10px;
+  font-size: 14px;
+}
+
+#signup-box-pace {
+  display: flex;
+  flex-direction: column;
+}
+
+#signup-box-pace > p {
+  margin-left: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+#signup-button {
+  width: 410px;
+  height: 60px;
+  margin: 10px 10px 30px 10px;
+  border: none;
+  border-radius: 14px;
+  background-color: var(--primary);
+  color: white;
+  font-size: 14px;
+}
+#signup-button:disabled {
+  background-color: var(--light);
+  color: black;
+}
+
+input[type="radio"] {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+}
+
+#age,
+#minute,
+#second {
+  width: 140px;
+  height: 60px;
+  padding: 0px 15px;
+  border: 1px solid #989898;
+  border-radius: 14px;
+  font-size: 14px;
+}
+
+#signup-box-gender,
+#signup-box-age {
+  display: flex;
+  align-items: center;
+}
+
+.type-label {
+  margin-right: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.choice {
+  display: flex;
+  margin-right: 10px;
+  align-items: center;
 }
 
 /* * * * * * main body style * * * * * */
