@@ -231,10 +231,10 @@
           const isPhoneValid = validationInput(telInput, regexTel, telCheck);
 
           if (isIdValid && isPwValid && isMailValid && isPhoneValid) {
-            submitBtn.disalbed = false;
+            submitBtn.disabled = false;
             submitBtn.classList.add("enabled");
           } else {
-            submitBtn.disalbed = true;
+            submitBtn.disabled = true;
             submitBtn.classList.remove("enabled");
           }
         };
