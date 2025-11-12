@@ -1,6 +1,6 @@
 package com.human.movemate.controller;
 
-import com.human.movemate.model.Member;
+import com.human.movemate.model.User;
 import com.human.movemate.service.impl.MemberServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -37,13 +37,13 @@ public class LoginController {
     // return "redirect:/경로" 로 작성하는 건 http://localhost:8282/경로 를 가리키는 것 같슴다
 
     @PostMapping
-    public String login(@ModelAttribute Member member, HttpSession session) {
-        Member memberRes = memberService.login(member);
-        log.info("로그인 : {}", memberRes);
-        if(memberRes == null) {
+    public String login(@ModelAttribute User user, HttpSession session) {
+        User userRes = memberService.login(user);
+        log.info("로그인 : {}", userRes);
+        if(userRes == null) {
             return "redirect:/login";
         }
-        session.setAttribute("loginMember", member);
+        session.setAttribute("loginMember", user);
         return "redirect:/";
     }
 

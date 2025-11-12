@@ -1,7 +1,7 @@
 package com.human.movemate.service.impl;
 
 import com.human.movemate.dao.MemberDao;
-import com.human.movemate.model.Member;
+import com.human.movemate.model.User;
 import com.human.movemate.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,26 +20,26 @@ public class MemberServiceImpl implements MemberService {
     private final MemberDao memberDao;
 
     // 상속을 준 인터페이스 (MemberService) 에
-    // 생성자 (public), 반환타입 (boolean), 메서드 이름 (signup), 매개변수 (Member member)가
+    // 생성자 (public), 반환타입 (boolean), 메서드 이름 (signup), 매개변수 (User user)가
     // 모두 일치하게 정의되어 있어야 함.
     @Override
-    public boolean signup(Member member) {
-        return memberDao.save(member);
+    public boolean signup(User user) {
+        return memberDao.save(user);
     }
 
     @Override
-    public Member login(Member member) {
-        log.info("로그인을 위한 정보: {}", member);
-        Member memberRes = memberDao.findById(member.getUserId());
-        if(memberRes == null || !memberRes.getPassword().equals(member.getPassword())) {
+    public User login(User user) {
+        log.info("로그인을 위한 정보: {}", user);
+        User userRes = memberDao.findById(user.getUserId());
+        if(userRes == null || !userRes.getPassword().equals(user.getPassword())) {
             return null;
         }
-        return memberRes;
+        return userRes;
     }
 
     @Override
-    public boolean update(Long no, Member member) {
-        return memberDao.update(no, member);
+    public boolean update(Long no, User user) {
+        return memberDao.update(no, user);
     }
 
     @Override
