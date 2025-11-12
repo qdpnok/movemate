@@ -205,7 +205,7 @@ footer {
 .foot-container {
   display: flex;
   justify-content: space-between;
-  background-color: #f2f0f0;
+  background-color: var(--light);
 }
 .foot-etc {
   display: flex;
