@@ -1,35 +1,25 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{/layout/login}"
->
-  <head>
-    <meta charset="UTF-8" />
-    <title>login</title>
-  </head>
-  <body>
-    <div layout:fragment="content">
-      <div id="login-container">
-        <h1>로그인</h1>
-        <form id="login-form" th:action="@{/login}" method="post">
-          <input
-            type="text"
-            class="input-txt"
-            name="userId"
-            placeholder="아이디"
-          />
-          <input
-            type="password"
-            class="input-txt"
-            name="password"
-            placeholder="비밀번호"
-          />
-          <button id="login-button" type="submit">로그인</button>
-          <p id="login-not-user">아직 회원이 아니신가요?</p>
-          <a id="login-signup" th:href="@{/members/new}">회원가입</a>
-        </form>
-      </div>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{/layout/login}">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>login</title>
+</head>
+
+<body>
+  <div layout:fragment="content">
+    <div id="login-container">
+      <h1>로그인</h1>
+      <form id="login-form" th:action="@{/login}" method="post">
+        <input type="text" class="input-txt" name="userId" placeholder="아이디" />
+        <input type="password" class="input-txt" name="password" placeholder="비밀번호" />
+        <button id="login-button" type="submit">로그인</button>
+        <p id="login-not-user">아직 회원이 아니신가요?</p>
+        <a id="login-signup" th:href="@{/members/new}">회원가입</a>
+      </form>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>
