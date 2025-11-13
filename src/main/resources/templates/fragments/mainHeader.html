@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <title>main-header</title>
-      <link
-              rel="stylesheet"
-              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-      />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
   </head>
   <body>
     <header th:fragment="header">
@@ -14,38 +14,31 @@
         <a href="#">
           <img class="main_logo" src="/images/logo (1).png" alt="movemate" />
         </a>
-        <div class="category-bar">
-          <ul class="category">
-            <li>
-              <a href="#">
-                <p>메이트 만들기</p>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <p>메이트 관리</p>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <p>게시판</p>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <p>마이페이지</p>
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div class="user_hambuger">
-          <div class="user-bar">
-            <button class="login" th:onclick="|location.href='@{/login}'|">로그인</button>
-            <button class="signup" th:onclick="|location.href='@{/members/new}'|">회원가입</button>
+        <div class="user_hamburger">
+          <div th:if="${session.loginUser == null}" class="no-user-bar">
+            <button class="login" th:onclick="|location.href='@{/login}'|">
+              로그인
+            </button>
+            <button class="signup" th:onclick="|location.href='@{/users/new}'|">
+              회원가입
+            </button>
           </div>
-          <button class="hamburger-button" id="hamburger-btn">
-            <i class="fa-solid fa-bars"></i>
-          </button>
+          <div th:if="${session.loginUser} != null" class="user-bar">
+            <button class="my-page" th:onclick="|location.href='@{/mypage}'|">
+              마이페이지
+            </button>
+            <button class="logout" th:onclick="|location.href='@{/logout}'|">
+              로그아웃
+            </button>
+          </div>
+          <div class="hamburger-container">
+            <i class="fa-solid fa-bars hamburger"></i>
+            <div class="menu">
+              <a href="/#">메이트 만들기</a>
+              <a href="/#">메이트 관리</a>
+              <a href="/#">게시판</a>
+            </div>
+          </div>
         </div>
       </div>
     </header>
