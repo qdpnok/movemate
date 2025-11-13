@@ -5,5 +5,5 @@ import com.human.movemate.model.Post;
 import java.util.List;
 
 public interface PostService {
-    List<Post> find();
+    List<Post> find(Long boardTypeNo);
 }

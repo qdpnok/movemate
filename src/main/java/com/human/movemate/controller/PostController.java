@@ -17,13 +17,13 @@ public class PostController {
 
     @GetMapping // 러닝 게시판(디폴트 값으로 가져감)
     public String postPageRunning(Model model) {
-        model.addAttribute("postList", postService.find());
+        model.addAttribute("postList", postService.find(1L));
         return "post/running_post";
     }
 
     @GetMapping("/weight") // 웨이트 게시판
     public String postPageWeight(Model model) {
-        model.addAttribute("postList", postService.find());
+        model.addAttribute("postList", postService.find(2L));
         return "post/weight_post";
     }
 }

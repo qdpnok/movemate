@@ -15,8 +15,9 @@ import java.util.List;
 public class PostServiceImpl implements PostService {
     private final PostDao postDao;
 
+
     @Override
-    public List<Post> find() {
-        return postDao.get();
+    public List<Post> find(Long boardTypeNo) {
+        return postDao.get(boardTypeNo);
     }
 }

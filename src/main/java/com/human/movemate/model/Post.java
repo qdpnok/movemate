@@ -17,4 +17,5 @@ public class Post {
     private String content;
     private LocalDateTime createdAt;
     private String imageUrl;
+    private String authorId;
 }

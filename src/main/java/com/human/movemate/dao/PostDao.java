@@ -16,10 +16,16 @@ import java.util.List;
 public class PostDao {
     private final JdbcTemplate jdbc;
 
-    public List<Post> get() {
+    public List<Post> get(Long boardTypeNo) {
         @Language("SQL")
-        String sql = "SELECT * FROM POST";
-        return jdbc.query(sql, new PostRowMapper());
+        String sql = "SELECT " +
+                "  p.post_no, p.board_type_no, p.user_no, " +
+                "  p.title, p.content, p.created_at, p.image_url, " +
+                "  u.user_id " + // USERS 테이블의 user_id
+                "FROM POST p " +
+                "JOIN USERS u ON p.user_no = u.user_no " + // user_no로 JOIN
+                "WHERE p.board_type_no = ?"; // board_type_no로 필터링
+        return jdbc.query(sql, new PostRowMapper(), boardTypeNo);
     }
 
 
@@ -34,7 +40,8 @@ public class PostDao {
                     rs.getString("title"),
                     rs.getString("content"),
                     rs.getTimestamp("created_at").toLocalDateTime(),
-                    rs.getString("image_url")
+                    rs.getString("image_url"),
+                    rs.getString("user_id")
             );
         }
     }
