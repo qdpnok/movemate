@@ -55,16 +55,18 @@
         }
 
         /* 게시판 선택되면 스타일 적용 */
-        .running-post.active a,
-        .weight-post.active a {
+        .tab-running-post a,
+        .tab-weight-post a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             width: 525px;
             height: 70px;
             border-radius: 20px;
             background-color: #4B5AE4;
             color: white;
-            font-size: 30px;
+            font-size: 20px;
             text-decoration: none;
-            font-weight: bold;
         }
 
 
@@ -190,10 +192,10 @@
 
             <div class="post-box">
                 <div class="running-post">
-                    <a href="#">러닝 게시판</a>
+                    <a href="http://localhost:8282/posts">러닝 게시판</a>
                 </div>
-                <div class="weight-post">
-                    <a href="#">웨이트 게시판</a>
+                <div class="tab-weight-post">
+                    <a href="http://localhost:8282/posts/weight">웨이트 게시판</a>
                 </div>
             </div>
 
@@ -244,21 +246,6 @@
         </div>
     </div>
     <script>
-        // 클릭할 탭 요소
-        const runningTab = document.querySelector('.running-post');
-        const weightTab = document.querySelector('.weight-post');
-
-        // 2. '러닝 게시판'을 클릭했을 때의 동작
-        runningTab.addEventListener('click', (event) => {
-            event.preventDefault(); // a태그의 기본 링크 이동을 막음
-
-            // 러닝 탭에 'active' 추가
-            runningTab.classList.add('active');
-            // 웨이트 탭에서 'active' 제거
-            weightTab.classList.remove('active');
-
-            // (여기에 러닝 게시판 내용을 불러오는 코드를 추가)
-        });
 
 
     </script>

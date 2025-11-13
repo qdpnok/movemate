@@ -15,9 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PostController {
     private final PostService postService;
 
-    @GetMapping
-    public String postPage(Model model) {
+    @GetMapping // 러닝 게시판(디폴트 값으로 가져감)
+    public String postPageRunning(Model model) {
         model.addAttribute("postList", postService.find());
-        return "post/post";
+        return "post/running_post";
+    }
+
+    @GetMapping("/weight") // 웨이트 게시판
+    public String postPageWeight(Model model) {
+        model.addAttribute("postList", postService.find());
+        return "post/weight_post";
     }
 }

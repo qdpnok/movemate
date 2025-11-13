@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+    layout:decorate="~{/layout/main}">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+
+    <title>메이트 게시판</title>
+
+    <style>
+        /* * * * * * * * * * * * * * * * * * * * * * * */
+        /* * 여기부터 post.html 메이트 게시판 스타일 * * */
+        /* * * * * * * * * * * * * * * * * * * * * * * */
+
+        .postcontainer {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .board {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            height: 200px;
+        }
+
+        /* 탭 메뉴 (러닝/웨이트) */
+        .post-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+            height: 200px;
+        }
+
+        .weight-post a,
+        .running-post a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 525px;
+            height: 70px;
+            border-radius: 20px;
+            background-color: #F3F4F6;
+            color: BLACK;
+            font-size: 20px;
+            text-decoration: none;
+        }
+
+        /* 게시판 선택되면 스타일 적용 */
+        .tab-running-post a,
+        .tab-weight-post a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 525px;
+            height: 70px;
+            border-radius: 20px;
+            background-color: #4B5AE4;
+            color: white;
+            font-size: 20px;
+            text-decoration: none;
+        }
+
+
+        .add-post {
+            display: flex;
+            justify-content: flex-end;
+            margin: 10px;
+        }
+
+        .btn-write {
+            background-color: #4B5AE4;
+            color: #fff;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 15px;
+            text-decoration: none;
+            width: 100px;
+            height: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .post-card {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .card {
+            background-color: #fff;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0 0 10px 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .card-content {
+            font-size: 14px;
+            color: #555;
+            height: 63px;
+            line-height: 1.5;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #888;
+            border-top: 1px solid #f1f3f5;
+            padding-top: 15px;
+        }
+
+        .empty-message {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: #888;
+            padding: 50px 0;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        .page-link,
+        .page-arrow {
+            padding: 8px 12px;
+            margin: 0 5px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            color: #555;
+            text-decoration: none;
+        }
+
+        .page-arrow {
+            color: #888;
+        }
+
+        .page-link:hover,
+        .page-arrow:hover {
+            background-color: #e9ecef;
+        }
+
+        .page-link.active {
+            background-color: #007bff;
+            color: #fff;
+            border-color: #007bff;
+            font-weight: bold;
+        }
+
+        /* * * * * * * * * * * * * * * * * * * * * * * */
+        /* * 여기까지 post.html 메이트 게시판 스타일 * * */
+        /* * * * * * * * * * * * * * * * * * * * * * * */
+    </style>
+</head>
+
+
+
+<body>
+    <div layout:fragment="content">
+        <div class="postcontainer">
+            <h1 class="board">메이트 게시판</h1>
+
+            <div class="post-box">
+                <div class="tab-running-post">
+                    <a href="http://localhost:8282/posts">러닝 게시판</a>
+                </div>
+                <div class="weight-post">
+                    <a href="http://localhost:8282/posts/weight">웨이트 게시판</a>
+                </div>
+            </div>
+
+            <div class="add-post">
+                <a th:href="@{/write}" class="btn-write">글쓰기</a>
+            </div>
+            <div class="post-card">
+
+                <div class="card" th:each="post : ${postList}">
+
+                    <h3 class="card-title" th:text="${post.title}">게시글 제목 영역...</h3>
+                    <p class="card-content" th:text="${post.content}">
+                        게시글 내용 미리보기 영역입니다... 내용은 적당히 잘려서 보여야함...
+                    </p>
+                    <div class="card-footer">
+
+                        <!-- userNo와 id 조인 필요함 -->
+                        <span class="author" th:text="|작성자: ${post.userNo}|">작성자:제니</span>
+
+                        <span class="date" th:text="${#temporals.format(post.createdAt,'yy-MM-dd')}">25-11-12</span>
+                    </div>
+                </div>
+
+
+                <div class="empty-message" th:if="${#lists.isEmpty(postList)}">
+                    <p>등록된 게시글이 없습니다.</p>
+                </div>
+            </div>
+
+            <nav class="pagination">
+                <a href="#" class="page-arrow">&lt;&lt;</a>
+                <a href="#" class="page-arrow">&lt;</a>
+
+                <a href="#" class="page-link active">1</a>
+                <a href="#" class="page-link">2</a>
+                <a href="#" class="page-link">3</a>
+                <a href="#" class="page-link">4</a>
+                <a href="#" class="page-link">5</a>
+                <a href="#" class="page-link">6</a>
+                <a href="#" class="page-link">7</a>
+                <a href="#" class="page-link">8</a>
+                <a href="#" class="page-link">9</a>
+                <a href="#" class="page-link">10</a>
+
+                <a href="#" class="page-arrow">&gt;</a>
+                <a href="#" class="page-arrow">&gt;&gt;</a>
+            </nav>
+        </div>
+    </div>
+
+</body>
+
+</html>
