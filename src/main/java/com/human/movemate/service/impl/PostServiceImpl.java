@@ -1,6 +1,5 @@
 package com.human.movemate.service.impl;
 
-import com.human.movemate.dao.MemberDao;
 import com.human.movemate.dao.PostDao;
 import com.human.movemate.model.Post;
 import com.human.movemate.service.PostService;

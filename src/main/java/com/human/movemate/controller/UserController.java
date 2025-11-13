@@ -24,7 +24,7 @@ public class UserController {
         // members/new.html 을 렌더링할 때
         // memberForm 이라는 이름으로 새 User 객체를 생성하여 넘겨줌
         model.addAttribute("userForm", new User());
-        return "members/new"; }
+        return "users/new"; }
 
     @PostMapping("/new")
     // @ModelAttribute 어노테이션은 model.addAttribute 했던 객체를
