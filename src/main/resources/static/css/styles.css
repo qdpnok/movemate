@@ -40,6 +40,7 @@ body {
   justify-content: center;
   align-items: center;
 }
+
 #login-logo {
   width: 180px;
   height: 180px;
@@ -229,29 +230,35 @@ footer {
   position: relative;
   transform: translateY(-100%);
 }
+
 .foot-container {
   display: flex;
   justify-content: space-between;
   background-color: var(--light);
 }
+
 .foot-etc {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   margin: 50px;
 }
+
 .foot-box {
   display: flex;
   padding: 0px 0px 30px 0px;
 }
-.foot-box > a {
+
+.foot-box>a {
   margin-right: 10px;
   font-size: 10px;
 }
-.foot-info > p {
+
+.foot-info>p {
   font-size: 10px;
   margin: 16px 0px;
 }
+
 .foot-cs {
   display: flex;
   flex-direction: column;
@@ -259,11 +266,13 @@ footer {
   align-items: center;
   margin: 0px 50px;
 }
-.foot-cs > h1 {
+
+.foot-cs>h1 {
   font-size: 14px;
   font-weight: bold;
 }
-.foot-cs > h2 {
+
+.foot-cs>h2 {
   font-size: 14px;
 }
 
@@ -278,8 +287,9 @@ footer {
   border-radius: 14px;
   font-size: 14px;
 }
-#login-container > h1,
-#signup-container > h1 {
+
+#login-container>h1,
+#signup-container>h1 {
   font-size: 20px;
   font-weight: bold;
   margin: 20px;
@@ -294,17 +304,20 @@ footer {
   border-color: #eaeaea;
   padding: 0px 0px 50px 0px;
 }
-#login-container > h1 {
+
+#login-container>h1 {
   font-weight: bold;
   margin: 20px 0;
   width: 100px;
   text-align: center;
 }
+
 #login-form {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
 #login-button {
   width: 410px;
   height: 60px;
@@ -315,6 +328,7 @@ footer {
   color: white;
   font-size: 14px;
 }
+
 #login-not-member {
   font-size: 36px;
   margin: 15px 0px 5px 0px;
@@ -322,6 +336,7 @@ footer {
   justify-content: center;
   font-size: 14px;
 }
+
 #login-signup {
   display: flex;
   justify-content: center;
@@ -381,7 +396,7 @@ select {
   flex-direction: column;
 }
 
-#signup-box-pace > p {
+#signup-box-pace>p {
   margin-left: 10px;
   font-size: 14px;
   font-weight: bold;
@@ -397,6 +412,7 @@ select {
   color: white;
   font-size: 14px;
 }
+
 #signup-button:disabled {
   background-color: var(--light);
   color: black;
@@ -483,6 +499,7 @@ main {
  * - 헤더와 로고 크기를 줄임 */
 
 @media (max-width: 1024px) {
+
   /* 메뉴바가 화면을 차지하지 않도록 숨김
   (이 지점에서 햄버거 메뉴 아이콘(☰)을 표시해야함)  */
   .category-bar {
@@ -577,171 +594,242 @@ hamburgerButton.addEventListener('click', () => {
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * */
-        /* * 여기부터 post.html 메이트 게시판 스타일 * * */
-        /* * * * * * * * * * * * * * * * * * * * * * * */
+/* * 여기부터 post.html 메이트 게시판 스타일 * * */
+/* * * * * * * * * * * * * * * * * * * * * * * */
 
-        .postcontainer {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
+.postcontainer {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
 
-        .board {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 30px;
-            height: 200px;
-        }
+.board {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  height: 200px;
+}
 
-        /* 탭 메뉴 (러닝/웨이트) */
-        .post-box {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 50px;
-            height: 200px;
-        }
+/* 탭 메뉴 (러닝/웨이트) */
+.post-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  height: 200px;
+}
 
-        .weight-post a,
-        .running-post a {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 525px;
-            height: 70px;
-            border-radius: 20px;
-            background-color: #F3F4F6;
-            color: BLACK;
-            font-size: 20px;
-            text-decoration: none;
-            transition: all 0.2s ease;
-        }
+.weight-post a,
+.running-post a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 525px;
+  height: 70px;
+  border-radius: 20px;
+  background-color: #F3F4F6;
+  color: BLACK;
+  font-size: 20px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
 
-        /* 게시판 선택되면 스타일 적용 */
-        .tab-running-post a,
-        .tab-weight-post a {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 525px;
-            height: 70px;
-            border-radius: 20px;
-            background-color: #4B5AE4;
-            color: white;
-            font-size: 20px;
-            text-decoration: none;
-        }
-
-
-        .add-post {
-            display: flex;
-            justify-content: flex-end;
-            margin: 10px;
-        }
-
-        .btn-write {
-            background-color: #4B5AE4;
-            color: #fff;
-            border-radius: 5px;
-            font-weight: bold;
-            font-size: 15px;
-            text-decoration: none;
-            width: 100px;
-            height: 25px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .post-card {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
-        }
-
-        .card {
-            background-color: #fff;
-            border: 1px solid #e9ecef;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            transition: box-shadow 0.2s ease, transform 0.2s ease;
-        }
+/* 게시판 선택되면 스타일 적용 */
+.tab-running-post a,
+.tab-weight-post a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 525px;
+  height: 70px;
+  border-radius: 20px;
+  background-color: #4B5AE4;
+  color: white;
+  font-size: 20px;
+  text-decoration: none;
+}
 
 
-        .card-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin: 0 0 10px 0;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
+.add-post {
+  display: flex;
+  justify-content: flex-end;
+  margin: 10px;
+}
 
-        .card-content {
-            font-size: 14px;
-            color: #555;
-            height: 63px;
-            line-height: 1.5;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-        }
+.btn-write {
+  background-color: #4B5AE4;
+  color: #fff;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 15px;
+  text-decoration: none;
+  width: 100px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-        .card-footer {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-            font-size: 12px;
-            color: #888;
-            border-top: 1px solid #f1f3f5;
-            padding-top: 15px;
-        }
+.post-card {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+}
 
-        .empty-message {
-            grid-column: 1 / -1;
-            text-align: center;
-            color: #888;
-            padding: 50px 0;
-        }
+.card {
+  background-color: #fff;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
 
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 40px;
-        }
 
-        .page-link,
-        .page-arrow {
-            padding: 8px 12px;
-            margin: 0 5px;
-            border: 1px solid #dee2e6;
-            border-radius: 4px;
-            color: #555;
-            text-decoration: none;
-        }
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0 0 10px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
-        .page-arrow {
-            color: #888;
-        }
+.card-content {
+  font-size: 14px;
+  color: #555;
+  height: 63px;
+  line-height: 1.5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
 
-        .page-link:hover,
-        .page-arrow:hover {
-            background-color: #e9ecef;
-        }
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  font-size: 12px;
+  color: #888;
+  border-top: 1px solid #f1f3f5;
+  padding-top: 15px;
+}
 
-        .page-link.active {
-            background-color: #007bff;
-            color: #fff;
-            border-color: #007bff;
-            font-weight: bold;
-        }
+.empty-message {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #888;
+  padding: 50px 0;
+}
 
-        /* * * * * * * * * * * * * * * * * * * * * * * */
-        /* * 여기까지 post.html 메이트 게시판 스타일 * * */
-        /* * * * * * * * * * * * * * * * * * * * * * * */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+}
 
+.page-link,
+.page-arrow {
+  padding: 8px 12px;
+  margin: 0 5px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  color: #555;
+  text-decoration: none;
+}
+
+.page-arrow {
+  color: #888;
+}
+
+.page-link:hover,
+.page-arrow:hover {
+  background-color: #e9ecef;
+}
+
+.page-link.active {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+  font-weight: bold;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * */
+/* * 여기까지 post.html 메이트 게시판 스타일 * * */
+/* * * * * * * * * * * * * * * * * * * * * * * */
+
+
+/* =================================================== */
+/* 게시글 작성 폼 (write.html) 스타일 */
+/* =================================================== */
+
+.write-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  /* (이미지처럼 어두운 배경을 원하면 body에 background-color: #111; 추가) */
+}
+
+/* 폼 그룹 (라벨 + 입력창) */
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* 폼 라벨 (이미지엔 없으므로, 스크린 리더용으로 숨김) */
+.form-group label {
+  display: none;
+}
+
+/* 입력창 공통 스타일 (제목, 게시판 선택) */
+.form-group input[type="text"],
+.form-group select {
+  width: 100%;
+  height: 55px;
+  /* 높이 */
+  padding: 0 15px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  /* 이미지처럼 둥근 모서리 */
+  font-size: 1rem;
+  background-color: #f0f0f0;
+  /* 이미지의 밝은 회색 배경 */
+}
+
+/* 내용 입력창 스타일 (큰 박스) */
+.form-group textarea {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  font-size: 1rem;
+  background-color: #f0f0f0;
+  resize: vertical;
+  /* 세로 크기 조절만 허용 */
+}
+
+/* 등록 버튼 영역 (오른쪽 정렬) */
+.form-actions {
+  text-align: right;
+}
+
+/* 등록 버튼 */
+.btn-submit {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  background-color: #4B5AE4;
+  /* (기존에 사용하시던 파란/보라색) */
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-submit:hover {
+  background-color: #3a46b0;
+}

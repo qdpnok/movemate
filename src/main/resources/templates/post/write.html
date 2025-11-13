@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+    layout:decorate="~{/layout/main}">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <title>게시글 작성</title>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <div class="write-container">
+
+            <form th:action="@{/posts/write}" method="post" th:object="${postForm}">
+
+                <div class="form-group">
+                    <label for="boardTypeNo">게시판 선택</label>
+                    <select id="boardTypeNo" th:field="*{boardTypeNo}">
+                        <option value="">-- 게시판을 선택하세요 --</option>
+                        <option value="1">러닝 게시판</option>
+                        <option value="2">웨이트 게시판</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="title">제목</label>
+                    <input type="text" id="title" th:field="*{title}" placeholder="제목을 입력하세요">
+                </div>
+
+                <div class="form-group">
+                    <label for="content">내용</label>
+                    <textarea id="content" th:field="*{content}" rows="15" placeholder="내용을 입력하세요"></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-submit">등록</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</body>
+
+</html>
