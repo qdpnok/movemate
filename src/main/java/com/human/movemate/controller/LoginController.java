@@ -43,7 +43,7 @@ public class LoginController {
         if(userRes == null) {
             return "redirect:/login";
         }
-        session.setAttribute("loginMember", user);
+        session.setAttribute("loginUser", user);
         return "redirect:/";
     }
 
