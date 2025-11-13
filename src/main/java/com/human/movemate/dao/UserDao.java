@@ -17,7 +17,7 @@ import java.util.List;
 // RequiredArgsConstructor : 의존성 주입을 축약해줌
 @Repository
 @RequiredArgsConstructor
-public class MemberDao {
+public class UserDao {
     // 의존성 주입
     private final JdbcTemplate jdbc;
 

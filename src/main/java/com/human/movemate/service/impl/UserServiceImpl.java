@@ -1,8 +1,8 @@
 package com.human.movemate.service.impl;
 
-import com.human.movemate.dao.MemberDao;
+import com.human.movemate.dao.UserDao;
 import com.human.movemate.model.User;
-import com.human.movemate.service.MemberService;
+import com.human.movemate.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,22 +15,22 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class MemberServiceImpl implements MemberService {
-    // MemberDao 클래스의 기능을 사용하기 위한 의존성 주입
-    private final MemberDao memberDao;
+public class UserServiceImpl implements UserService {
+    // UserDao 클래스의 기능을 사용하기 위한 의존성 주입
+    private final UserDao userDao;
 
-    // 상속을 준 인터페이스 (MemberService) 에
+    // 상속을 준 인터페이스 (UserService) 에
     // 생성자 (public), 반환타입 (boolean), 메서드 이름 (signup), 매개변수 (User user)가
     // 모두 일치하게 정의되어 있어야 함.
     @Override
     public boolean signup(User user) {
-        return memberDao.save(user);
+        return userDao.save(user);
     }
 
     @Override
     public User login(User user) {
         log.info("로그인을 위한 정보: {}", user);
-        User userRes = memberDao.findById(user.getUserId());
+        User userRes = userDao.findById(user.getUserId());
         if(userRes == null || !userRes.getPassword().equals(user.getPassword())) {
             return null;
         }
@@ -39,11 +39,11 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public boolean update(Long no, User user) {
-        return memberDao.update(no, user);
+        return userDao.update(no, user);
     }
 
     @Override
     public boolean delete(Long no) {
-        return memberDao.delete(no);
+        return userDao.delete(no);
     }
 }
