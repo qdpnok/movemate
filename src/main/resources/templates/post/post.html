@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
-      layout:decorate="~{/layout/main}">
+    layout:decorate="~{/layout/main}">
 
 <head>
     <meta charset="UTF-8">
@@ -12,67 +12,80 @@
     <title>메이트 게시판</title>
 
     <style>
+        /* * * * * * * * * * * * * * * * * * * * * * * */
+        /* * 여기부터 post.html 메이트 게시판 스타일 * * */
+        /* * * * * * * * * * * * * * * * * * * * * * * */
+
         .postcontainer {
             max-width: 1200px;
             margin: 30px auto;
             padding: 0 20px;
         }
 
-        h1 {
-            text-align: center;
-            font-size: 28px;
-            margin-bottom: 20px;
+        .board {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            height: 200px;
         }
 
         /* 탭 메뉴 (러닝/웨이트) */
         .post-box {
             display: flex;
             justify-content: center;
-            margin-bottom: 30px;
-            border-bottom: 1px solid #dee2e6;
+            align-items: center;
+            gap: 50px;
+            height: 200px;
         }
 
         .weight-post a,
         .running-post a {
-            display: block;
-            padding: 10px 20px;
-            font-size: 16px;
-            color: #888;
-            border-bottom: 2px solid transparent;
-            margin-bottom: -1px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 525px;
+            height: 70px;
+            border-radius: 20px;
+            background-color: #F3F4F6;
+            color: BLACK;
+            font-size: 20px;
             text-decoration: none;
+            transition: all 0.2s ease;
         }
 
+        /* 게시판 선택되면 스타일 적용 */
         .running-post.active a,
         .weight-post.active a {
-            color: #007bff;
+            width: 525px;
+            height: 70px;
+            border-radius: 20px;
+            background-color: #4B5AE4;
+            color: white;
+            font-size: 30px;
+            text-decoration: none;
             font-weight: bold;
-            border-bottom-color: #007bff;
         }
-
-        .running-post a {
-            color: #007bff;
-            font-weight: bold;
-            border-bottom-color: #007bff;
-        }
-
 
 
         .add-post {
             display: flex;
             justify-content: flex-end;
-            margin-bottom: 20px;
-
+            margin: 10px;
         }
 
         .btn-write {
-            background-color: #007bff;
+            background-color: #4B5AE4;
             color: #fff;
-            padding: 10px 20px;
             border-radius: 5px;
             font-weight: bold;
             font-size: 15px;
             text-decoration: none;
+            width: 100px;
+            height: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .post-card {
@@ -161,72 +174,94 @@
             border-color: #007bff;
             font-weight: bold;
         }
+
+        /* * * * * * * * * * * * * * * * * * * * * * * */
+        /* * 여기까지 post.html 메이트 게시판 스타일 * * */
+        /* * * * * * * * * * * * * * * * * * * * * * * */
     </style>
 </head>
 
 
 
 <body>
-<div layout:fragment="content">
-    <div class="postcontainer">
-        <h1>메이트 게시판</h1>
+    <div layout:fragment="content">
+        <div class="postcontainer">
+            <h1 class="board">메이트 게시판</h1>
 
-        <div class="post-box">
-            <div class="running-post active">
-                <a href="#">러닝 게시판</a>
-            </div>
-            <div class="weight-post">
-                <a href="#">웨이트 게시판</a>
-            </div>
-        </div>
-
-        <div class="add-post">
-            <a th:href="@{/write}" class="btn-write">글쓰기</a>
-        </div>
-        <div class="post-card">
-
-            <div class="card" th:each="post : ${postList}">
-
-                <h3 class="card-title" th:text="${post.title}">게시글 제목 영역...</h3>
-                <p class="card-content" th:text="${post.content}">
-                    게시글 내용 미리보기 영역입니다... 내용은 적당히 잘려서 보여야함...
-                </p>
-                <div class="card-footer">
-
-                    <span class="author" th:text="|작성자: ${post.author}|">작성자:제니</span>
-
-                    <span class="date" th:text="${#temporals.format(post.date,'yy-MM-dd')}">25-11-12</span>
+            <div class="post-box">
+                <div class="running-post">
+                    <a href="#">러닝 게시판</a>
+                </div>
+                <div class="weight-post">
+                    <a href="#">웨이트 게시판</a>
                 </div>
             </div>
 
-
-            <div class="empty-message" th:if="${#lists.isEmpty(postList)}">
-                <p>등록된 게시글이 없습니다.</p>
+            <div class="add-post">
+                <a th:href="@{/write}" class="btn-write">글쓰기</a>
             </div>
+            <div class="post-card">
+
+                <div class="card" th:each="post : ${postList}">
+
+                    <h3 class="card-title" th:text="${post.title}">게시글 제목 영역...</h3>
+                    <p class="card-content" th:text="${post.content}">
+                        게시글 내용 미리보기 영역입니다... 내용은 적당히 잘려서 보여야함...
+                    </p>
+                    <div class="card-footer">
+
+                        <!-- userNo와 id 조인 필요함 -->
+                        <span class="author" th:text="|작성자: ${post.userNo}|">작성자:제니</span>
+
+                        <span class="date" th:text="${#temporals.format(post.createdAt,'yy-MM-dd')}">25-11-12</span>
+                    </div>
+                </div>
+
+
+                <div class="empty-message" th:if="${#lists.isEmpty(postList)}">
+                    <p>등록된 게시글이 없습니다.</p>
+                </div>
+            </div>
+
+            <nav class="pagination">
+                <a href="#" class="page-arrow">&lt;&lt;</a>
+                <a href="#" class="page-arrow">&lt;</a>
+
+                <a href="#" class="page-link active">1</a>
+                <a href="#" class="page-link">2</a>
+                <a href="#" class="page-link">3</a>
+                <a href="#" class="page-link">4</a>
+                <a href="#" class="page-link">5</a>
+                <a href="#" class="page-link">6</a>
+                <a href="#" class="page-link">7</a>
+                <a href="#" class="page-link">8</a>
+                <a href="#" class="page-link">9</a>
+                <a href="#" class="page-link">10</a>
+
+                <a href="#" class="page-arrow">&gt;</a>
+                <a href="#" class="page-arrow">&gt;&gt;</a>
+            </nav>
         </div>
-
-        <nav class="pagination">
-            <a href="#" class="page-arrow">&lt;&lt;</a>
-            <a href="#" class="page-arrow">&lt;</a>
-
-            <a href="#" class="page-link active">1</a>
-            <a href="#" class="page-link">2</a>
-            <a href="#" class="page-link">3</a>
-            <a href="#" class="page-link">4</a>
-            <a href="#" class="page-link">5</a>
-            <a href="#" class="page-link">6</a>
-            <a href="#" class="page-link">7</a>
-            <a href="#" class="page-link">8</a>
-            <a href="#" class="page-link">9</a>
-            <a href="#" class="page-link">10</a>
-
-            <a href="#" class="page-arrow">&gt;</a>
-            <a href="#" class="page-arrow">&gt;&gt;</a>
-        </nav>
-
-
     </div>
-</div>
+    <script>
+        // 클릭할 탭 요소
+        const runningTab = document.querySelector('.running-post');
+        const weightTab = document.querySelector('.weight-post');
+
+        // 2. '러닝 게시판'을 클릭했을 때의 동작
+        runningTab.addEventListener('click', (event) => {
+            event.preventDefault(); // a태그의 기본 링크 이동을 막음
+
+            // 러닝 탭에 'active' 추가
+            runningTab.classList.add('active');
+            // 웨이트 탭에서 'active' 제거
+            weightTab.classList.remove('active');
+
+            // (여기에 러닝 게시판 내용을 불러오는 코드를 추가)
+        });
+
+
+    </script>
 </body>
 
 </html>
