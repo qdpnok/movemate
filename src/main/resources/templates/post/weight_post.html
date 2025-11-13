@@ -21,6 +21,13 @@
         <div class="postcontainer">
             <h1 class="board">메이트 게시판</h1>
 
+                    <div th:if="${successMessage}" class="alert alert-success">
+                        <p th:text="${successMessage}"></p>
+                    </div>
+                    <div th:if="${errorMessage}" class="alert alert-danger">
+                        <p th:text="${errorMessage}"></p>
+                    </div>
+
             <div class="post-box">
                 <div class="running-post">
                     <a href="http://localhost:8282/posts">러닝 게시판</a>

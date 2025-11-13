@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
@@ -37,11 +38,25 @@ public class PostController {
     }
 
     @PostMapping("/write") // 진짜 글 등록하는 메소드
-    public String writePost(PostFormDto postFormDto) {
+    public String writePost(PostFormDto postFormDto,
+                            RedirectAttributes redirectAttributes) {
         Long loginUserNo = 1L;
-        log.info("게시판 제목: {}", postFormDto.getTitle());
-        log.info("게시판 내용: {}", postFormDto.getContent());
-        log.info("게시판 타입: {}", postFormDto.getBoardTypeNo());
+        try {
+            postService.save(postFormDto, loginUserNo);
+
+            // 4. [성공 시] 리다이렉트 페이지로 "successMessage"를 보냄
+            redirectAttributes.addFlashAttribute("successMessage", "게시글이 성공적으로 등록되었습니다.");
+
+        } catch (Exception e) {
+            log.error("게시글 저장 실패: {}", e.getMessage());
+            // 5. [실패 시] 리다이렉트 페이지로 "errorMessage"를 보냄
+            redirectAttributes.addFlashAttribute("errorMessage", "게시글 등록에 실패했습니다.");
+
+            // (실패 시 목록이 아닌, 글쓰기 폼으로 다시 돌려보낼 수도 있음)
+            // return "redirect:/posts/write";
+        }
+
+        // 6. 저장이 성공하든 실패하든, 메시지를 담아서 목록 페이지로 리다이렉트
         return "redirect:/posts"; // 추후 이(가) 완료되었습니다 공통 페이지로 변경 필요
     }
 }

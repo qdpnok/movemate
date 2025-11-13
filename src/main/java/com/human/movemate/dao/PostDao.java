@@ -28,6 +28,15 @@ public class PostDao {
         return jdbc.query(sql, new PostRowMapper(), boardTypeNo);
     }
 
+    public void save(Post post) {
+        @Language("SQL")
+        String sql = "INSERT INTO POST (board_type_no, user_no, title, content) VALUES (?,?,?,?)";
+        jdbc.update(sql,
+                post.getBoardTypeNo(),
+                post.getUserNo(),
+                post.getTitle(),
+                post.getContent());
+    }
 
     static class PostRowMapper implements RowMapper<Post> {
 
