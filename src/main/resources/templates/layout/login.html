@@ -1,22 +1,19 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
->
-  <head>
-    <meta charset="UTF-8" />
-    <title>login-layout</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"
-    />
-    <link rel="stylesheet" th:href="@{/css/styles.css}" />
-  </head>
-  <body>
-    <div id="wrap">
-      <div th:replace="fragments/loginHeader.html :: header"></div>
-      <div layout:fragment="content"></div>
-    </div>
-    <div th:replace="fragments/footer :: footer"></div>
-  </body>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>login-layout</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+
+<body>
+  <div id="wrap">
+    <div th:replace="fragments/loginHeader.html :: header"></div>
+    <div layout:fragment="content"></div>
+  </div>
+  <div th:replace="fragments/footer :: footer"></div>
+</body>
+
 </html>

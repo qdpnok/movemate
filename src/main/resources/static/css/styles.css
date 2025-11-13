@@ -64,46 +64,39 @@ body {
   flex-shrink: 0;
 }
 
-.category-bar {
-  box-sizing: border-box;
-  flex-grow: 1;
-  overflow: hidden;
-  padding: 50px;
-}
-
-.category {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 200px;
-  padding: 0px;
-  flex-direction: row;
-}
-
 li {
   list-style: none;
 }
 
-.category li {
-  height: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.category li a {
-  text-decoration: none;
-  color: black;
-  height: 100px;
+.nouser-bar {
+  flex-shrink: 0;
+  height: 200px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 0 1.5rem;
+  justify-content: right;
+  gap: 20px;
 }
 
-.category li p {
-  font-size: 1.1rem;
-  white-space: nowrap;
+.login,
+.mypage {
+  width: 100px;
+  height: 50px;
+  border: solid 1px var(--primary);
+  border-radius: 5px;
+  background-color: var(--primary);
+  color: white;
+  font-size: 15px;
+}
+
+.signup,
+.logout {
+  width: 100px;
+  height: 50px;
+  border: solid 1px var(--secondary);
+  border-radius: 5px;
+  background-color: var(--secondary);
+  color: white;
+  font-size: 15px;
 }
 
 .user-bar {
@@ -115,28 +108,7 @@ li {
   gap: 20px;
 }
 
-.login {
-  width: 100px;
-  height: 50px;
-  border: solid 1px #4b5ae4;
-  border-radius: 5px;
-  background-color: #4b5ae4;
-  color: white;
-  font-size: 15px;
-}
-
-.signup {
-  width: 100px;
-  height: 50px;
-  border: solid 1px #fb7163;
-  border-radius: 5px;
-  background-color: #fb7163;
-  color: white;
-  font-size: 15px;
-}
-
 .hamburger-button {
-  display: none;
   background: none;
   border: none;
   cursor: pointer;
@@ -145,10 +117,65 @@ li {
   color: #333;
 }
 
-.user_hambuger {
+.user_hamburger {
   display: flex;
   align-items: center;
   gap: 20px;
+}
+
+.hamburger-container {
+  position: relative;
+  display: inline-block;
+  z-index: 50;
+}
+
+/* 햄버거 아이콘 */
+.hamburger {
+  font-size: 28px;
+  cursor: pointer;
+  color: #333;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+/* 메뉴 */
+.menu {
+  position: absolute;
+  top: 45px;
+  right: 0;
+  width: 180px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.menu a {
+  display: block;
+  padding: 12px 20px;
+  text-decoration: none;
+  color: #333;
+  transition: 0.2s;
+}
+
+.menu a:hover {
+  background: #f5f5f5;
+}
+
+/* hover 시 메뉴 등장 */
+.hamburger-container:hover .menu {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* hover 시 햄버거 아이콘 변환 */
+.hamburger-container:hover .hamburger {
+  transform: rotate(90deg);
+  color: var(--primary);
 }
 
 .mobile-nav {
@@ -205,7 +232,7 @@ footer {
 .foot-container {
   display: flex;
   justify-content: space-between;
-  background-color: #f2f0f0;
+  background-color: var(--light);
 }
 .foot-etc {
   display: flex;

@@ -1,7 +1,7 @@
 package com.human.movemate.controller;
 
-import com.human.movemate.model.Member;
-import com.human.movemate.service.impl.MemberServiceImpl;
+import com.human.movemate.model.User;
+import com.human.movemate.service.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Slf4j
 @RequestMapping("/login")   // 해당 클래스의 기본 경로를 localhost:포트번호/login 으로 설정
 public class LoginController {
-    private final MemberServiceImpl memberService;
+    private final UserServiceImpl memberService;
 
     // get 방식 vs post 방식
     // get은 경로에 정보를 바로 담는 반면, post는 인코딩(암호화)된 정보를 body에 담는다.
@@ -37,13 +37,13 @@ public class LoginController {
     // return "redirect:/경로" 로 작성하는 건 http://localhost:8282/경로 를 가리키는 것 같슴다
 
     @PostMapping
-    public String login(@ModelAttribute Member member, HttpSession session) {
-        Member memberRes = memberService.login(member);
-        log.info("로그인 : {}", memberRes);
-        if(memberRes == null) {
+    public String login(@ModelAttribute User user, HttpSession session) {
+        User userRes = memberService.login(user);
+        log.info("로그인 : {}", userRes);
+        if(userRes == null) {
             return "redirect:/login";
         }
-        session.setAttribute("loginMember", member);
+        session.setAttribute("loginUser", user);
         return "redirect:/";
     }
 
