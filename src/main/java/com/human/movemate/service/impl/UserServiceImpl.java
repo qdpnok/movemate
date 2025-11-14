@@ -51,6 +51,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserPro getByNo(Long no) {
+        log.info("유저번호: {}", no);
+        return userProfileDao.findByNo(no);
+    }
+
+    @Override
     public boolean update(Long no, User user) {
         return userDao.update(no, user);
     }

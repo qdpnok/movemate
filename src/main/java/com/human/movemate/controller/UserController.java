@@ -3,6 +3,7 @@ package com.human.movemate.controller;
 import com.human.movemate.dto.UserPro;
 import com.human.movemate.model.User;
 import com.human.movemate.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -35,6 +36,13 @@ public class UserController {
         log.error("멤버 객체: {}", userPro);
         userService.signup(userPro);
         return "redirect:/";
+    }
+
+    @GetMapping("/mypage")
+    public String myPageForm(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("loginUser");
+        model.addAttribute("user", userService.getByNo(user.getUserNo()));
+        return "users/mypage";
     }
 
 }

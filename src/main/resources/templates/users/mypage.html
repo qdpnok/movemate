@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{/layout/main}"
+>
+<head>
+    <meta charset="UTF-8" />
+    <title>my page</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div id="mypage-container">
+        <div id="mypage">
+            <h1>마이페이지</h1>
+            <div id="my-info">
+                <div id="my-profile">
+                    <img th:src="${user.profileImageUrl} ! = null ? @{'/files/'+${member.profileImageUrl}} : @{'/images/profile.png'}"
+                         alt="프로필" style="width:120px;height:120px;object-fit:cover;border-radius:60px;">
+                    <div id="profile">
+                        <p>이름 : <span th:text="${user.name}"></span></p>
+                        <p>아이디 : <span th:text="${user.userId}"></span></p>
+                        <p>휴대폰번호 : <span th:text="${user.phoneNo}"></span></p>
+                        <p>성별 : <span th:text="${user.gender}"></span></p>
+                        <p>나이 : <span th:text="${user.age}"></span></p>
+                    </div>
+                </div>
+                <div id="my-button-filed">
+                    <div id="my-button">
+                        <button>회원정보수정</button>
+                        <button>회원탈퇴</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

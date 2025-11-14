@@ -13,6 +13,9 @@ public interface UserService {
     // 로그인
     User login(User user);
 
+    // user_no로 user + user_profile 가져오기
+    UserPro getByNo(Long no);
+
     // 회원 정보 수정
     boolean update(Long no, User user);
 
