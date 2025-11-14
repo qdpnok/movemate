@@ -773,31 +773,89 @@ hamburgerButton.addEventListener('click', () => {
   padding: 20px;
 }
 
-/* 폼 그룹 (라벨 + 입력창) */
+/* 폼 그룹 공통 */
 .form-group {
   margin-bottom: 20px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
 }
 
-.form-group label {
+/* 폼 라벨 공통 */
+.form-group>label {
+  width: 100px;
+  font-size: 1.1rem;
+  font-weight: normal;
+  flex-shrink: 0;
+}
+
+/* 폼 입력창 공통 */
+.form-group input[type="text"],
+.form-group select,
+.file-input-wrapper {
   flex-grow: 1;
+  height: 50px;
+  display: flex;
+  align-items: center;
 }
 
-
-/* 입력창 공통 스타일 (제목, 게시판 선택) */
 .form-group input[type="text"],
 .form-group select {
-  display: flex;
-  justify-content: flex-end;
-  width: 600px;
-  height: 50px;
+  display: block;
+  width: 100%;
+  padding: 10px 15px;
   border: 1px solid #ddd;
   border-radius: 12px;
   font-size: 1rem;
   background-color: #F3F4F6;
 }
+
+#boardTypeNo {
+  color: gray;
+}
+
+.file-input-wrapper {
+  position: relative;
+}
+
+.file-input-fake {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0 15px;
+  background-color: #F3F4F6;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  cursor: pointer;
+  /* 클릭하고 싶게 생긴 커서 */
+  overflow: hidden;
+  /* 텍스트가 넘치면 숨겨버려 */
+}
+
+.file-placeholder {
+  color: gray;
+  font-size: 1rem;
+  white-space: nowrap;
+  /* 줄바꿈 방지 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file-input-real {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  z-index: 10;
+}
+
 
 /* 내용 입력창 스타일 (큰 박스) */
 .form-group textarea {
@@ -824,7 +882,7 @@ hamburgerButton.addEventListener('click', () => {
   background-color: #4B5AE4;
   color: white;
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: normal;
   cursor: pointer;
   transition: background-color 0.2s;
 }

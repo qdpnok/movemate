@@ -14,13 +14,15 @@
 <body>
     <div layout:fragment="content">
         <div class="write-container">
+            <h1 class="board">게시판 글 작성</h1>
+
 
             <form th:action="@{/posts/write}" method="post" th:object="${postForm}">
 
                 <div class="form-group">
                     <label for="boardTypeNo">게시판 선택</label>
                     <select id="boardTypeNo" th:field="*{boardTypeNo}">
-                        <option value="">-- 게시판을 선택하세요 --</option>
+                        <option value="">게시판을 선택해주세요</option>
                         <option value="1">러닝 게시판</option>
                         <option value="2">웨이트 게시판</option>
                     </select>
@@ -28,14 +30,26 @@
 
                 <div class="form-group">
                     <label for="title">제목</label>
-                    <input type="text" id="title" th:field="*{title}" placeholder="제목을 입력하세요">
+                    <input type="text" id="title" th:field="*{title}" placeholder="제목을 입력해주세요">
+                </div>
+
+                <div class="form-group file-group">
+                    <label class="file-label">사진 업로드</label>
+                    <div class="file-input-wrapper">
+                        <input id="postImageInput" class="file-input-real" type="file" name="postImage"
+                            accept="image/*" />
+                        <label for="postImageInput" class="file-input-fake">
+                            <span class="file-placeholder">(선택) 업로드할 이미지를 선택해주세요.</span>
+                        </label>
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label for="content">내용</label>
-                    <textarea id="content" th:field="*{content}" rows="15" placeholder="내용을 입력하세요"></textarea>
                 </div>
-
+                <div class="form-group">
+                    <textarea id="content" th:field="*{content}" rows="15" placeholder="내용을 입력해주세요"></textarea>
+                </div>
                 <div class="form-actions">
                     <button type="submit" class="btn-submit">등록</button>
                 </div>
