@@ -16,7 +16,7 @@
         <!-- 좌측: 현재/미리보기 아바타 -->
         <div class="profile-left">
             <div class="avatar-box">
-                <img id="avatarPreview" class="avatar"
+                <img id="avatarPreview" class="avatar img-round-big"
                      th:src="${userForm.profileImageUrl} != null ?
                         @{/files/{file}(file=${userForm.profileImageUrl})} :
                         @{/images/profile.png}"
@@ -41,9 +41,11 @@
         >
             <div class="input-box">
 
-                <div>
-                    <label class="label" for="profileImageInput">프로필 이미지 (선택)</label>
-                    <input id="profileImageInput" class="input" type="file" name="profileImage" accept="image/*" />
+                <div id="signup">
+                    <label id="label-signup-profile" for="profileImageInput">
+                        <button class="btn-signup-profile">프로필 사진 업로드</button>
+                        <input id="profileImageInput" class="input" type="file" name="profileImage" accept="image/*" />
+                    </label>
                     <div class="hint">JPG/PNG/WebP 권장, 5MB 이하</div>
                 </div>
 
@@ -276,7 +278,7 @@
         (function() {
           const input = document.getElementById('profileImageInput');
           const img = document.getElementById('avatarPreview');
-          const resetBtn = document.getElementById('resetPreviewBtn');
+          const label = document.getElementById('label-signup-profile');
 
           // 서버에서 내려온 원본 이미지 경로 저장(없으면 빈 문자열)
           const originalSrc = /*[[${userForm != null}]]*/ false
@@ -310,12 +312,6 @@
             revoke();
             objectUrl = URL.createObjectURL(file);
             img.src = objectUrl;
-          });
-
-          resetBtn?.addEventListener('click', function() {
-            revoke();
-            if (originalSrc) img.src = originalSrc;
-            if (input) input.value = '';
           });
 
           window.addEventListener('beforeunload', revoke);
