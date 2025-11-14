@@ -17,7 +17,7 @@
             <h1 class="board">게시판 글 작성</h1>
 
 
-            <form th:action="@{/posts/write}" method="post" th:object="${postForm}">
+            <form th:action="@{/posts/write}" method="post" th:object="${postForm}" enctype="multipart/form-data">
 
                 <div class="form-group">
                     <label for="boardTypeNo">게시판 선택</label>

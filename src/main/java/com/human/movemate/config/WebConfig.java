@@ -11,6 +11,9 @@ public class WebConfig implements WebMvcConfigurer {
     @Value("${app.upload.dir}")
     private String uploadDir;
 
+    @Value("${file.upload-dir}")
+    private String uploadDir2;
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         // /files/xxx → 프로젝트루트/uploads/xxx

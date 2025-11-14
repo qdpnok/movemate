@@ -6,4 +6,6 @@ public interface FileStorageService {
     String saveImage(MultipartFile file, String subDir, Long userNo);
 
     void deleteIfExists(String relativePath);
+
+    String storeFile(MultipartFile file);
 }
