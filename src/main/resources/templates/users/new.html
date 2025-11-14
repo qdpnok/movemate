@@ -1,226 +1,255 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{/layout/login}">
-
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{/layout/login}"
+>
 <head>
-  <meta charset="UTF-8" />
-  <title>sign up</title>
+    <meta charset="UTF-8" />
+    <title>sign up</title>
 </head>
-
 <body>
-  <div layout:fragment="content">
+<div layout:fragment="content">
     <div id="signup-container">
-      <h1>회원가입</h1>
-      <!-- th:로 시작하는 것들은 thymeleaf 문법을 사용했다는 의미 -->
+        <h1>회원가입</h1>
+        <!-- th:로 시작하는 것들은 thymeleaf 문법을 사용했다는 의미 -->
 
-      <!-- @{경로} : form이 작동하면 해당 경로로 요청한다 -->
+        <!-- @{경로} : form이 작동하면 해당 경로로 요청한다 -->
 
-      <!-- th:object="${이름}" model.addAttribute 로 넘겨준 객체를 사용한다. -->
-      <!-- model.addAttribute("이름", 객체) 의 이름과 th:object = "${이름}" 의 이름이 동일해야 함-->
+        <!-- th:object="${이름}" model.addAttribute 로 넘겨준 객체를 사용한다. -->
+        <!-- model.addAttribute("이름", 객체) 의 이름과 th:object = "${이름}" 의 이름이 동일해야 함-->
 
-      <!-- method="post" 해당 경로로 요청을 보낼 때 post 방식을 사용해서 요청을 보내겠다 -->
-      <!-- 기본값은 get 입니다. -->
-      <form th:action="@{/users/new}" th:object="${userForm}" method="post">
-        <div class="input-box">
-          <!-- th:field="*{필드이름}" : 객체의 "필드이름" 필드에 값을 넣겠다는 의미 -->
-          <!-- 앞의 별은 부모의 객체 (여기서는 ${memberForm}을 의미함) 을 선택했다는 뜻입니다.-->
-          <input type="text" class="input-name input-txt" th:field="*{name}" placeholder="이름" required />
-          <p class="signup-check"></p>
-        </div>
-        <div class="input-box">
-          <input type="text" class="input-id input-txt" th:field="*{userId}" placeholder="아이디" required />
-          <p class="signup-check check-id"></p>
-        </div>
-        <div class="input-box">
-          <input type="email" class="input-email input-txt" th:field="*{email}" placeholder="이메일" required />
-          <p class="signup-check check-email"></p>
-        </div>
-        <div class="input-box">
-          <input type="password" class="input-pwd input-txt" th:field="*{password}" placeholder="비밀번호" required />
-          <p class="signup-check check-pwd"></p>
-        </div>
-        <div class="input-box">
-          <input type="tel" class="input-tel input-txt" th:field="*{phoneNo}" placeholder="휴대폰번호" required />
-          <p class="signup-check check-tel"></p>
-        </div>
-        <div>
-          <label>
-            <select id="new_select" name="region" class="region">
-              <option disabled hidden="hidden" selected>지역 선택</option>
-            </select>
-          </label>
-        </div>
-        <div class="signup-box">
-          <div id="signup-box-gender">
-            <label class="type-label" for="male">성별</label>
-            <div class="choice">
-              <input type="radio" name="gender" id="male" value="male" />
-              남
+        <!-- method="post" 해당 경로로 요청을 보낼 때 post 방식을 사용해서 요청을 보내겠다 -->
+        <!-- 기본값은 get 입니다. -->
+        <form
+                th:action="@{/users/new}"
+                th:object="${userForm}"
+                method="post"
+        >
+            <div class="input-box">
+                <!-- th:field="*{필드이름}" : 객체의 "필드이름" 필드에 값을 넣겠다는 의미 -->
+                <!-- 앞의 별은 부모의 객체 (여기서는 ${memberForm}을 의미함) 을 선택했다는 뜻입니다.-->
+                <input
+                        type="text"
+                        class="input-name input-txt"
+                        th:field="*{name}"
+                        placeholder="이름"
+                        required
+                />
+                <p class="signup-check"></p>
             </div>
-            <div class="choice">
-              <input type="radio" name="gender" id="female" value="female" />
-              여
+            <div class="input-box">
+                <input
+                        type="text"
+                        class="input-id input-txt"
+                        th:field="*{userId}"
+                        placeholder="아이디"
+                        required
+                />
+                <p class="signup-check check-id"></p>
             </div>
-          </div>
-          <div id="signup-box-age">
-            <label class="type-label" for="age">나이</label>
-            <input type="text" id="age" placeholder="만나이 입력 ex)25세" />
-          </div>
-        </div>
-        <div class="signup-box">
-          <label class="type-label" for="sport">운동 종목</label>
-          <div class="choice">
-            <input type="radio" name="sport" id="sport" value="러닝" />러닝
-          </div>
-          <div class="choice">
-            <input type="radio" name="sport" value="웨이트" />웨이트
-          </div>
-          <div class="choice">
-            <input type="radio" name="sport" value="모두 선택" />모두 선택
-          </div>
-        </div>
-        <div id="signup-box-pace">
-          <p>러닝 페이스 입력</p>
-          <div class="signup-box">
-            <label class="pace" for="minute">분</label>
-            <input type="text" id="minute" />
-            <label class="pace" for="second">초</label>
-            <input type="text" id="second" />
-          </div>
-        </div>
-        <button id="signup-button" type="submit" disabled>회원가입</button>
-      </form>
+            <div class="input-box">
+                <input
+                        type="email"
+                        class="input-email input-txt"
+                        th:field="*{email}"
+                        placeholder="이메일"
+                        required
+                />
+                <p class="signup-check check-email"></p>
+            </div>
+            <div class="input-box">
+                <input
+                        type="password"
+                        class="input-pwd input-txt"
+                        th:field="*{password}"
+                        placeholder="비밀번호"
+                        required
+                />
+                <p class="signup-check check-pwd"></p>
+            </div>
+            <div class="input-box">
+                <input
+                        type="tel"
+                        class="input-tel input-txt"
+                        th:field="*{phoneNo}"
+                        placeholder="휴대폰번호"
+                        required
+                />
+                <p class="signup-check check-tel"></p>
+            </div>
+            <div>
+                <label>
+                    <select id="new_select" name="region" class="region">
+                        <option disabled hidden="hidden" selected>지역 선택</option>
+                    </select>
+                </label>
+            </div>
+            <div class="signup-box">
+                <div id="signup-box-gender">
+                    <label class="type-label" for="male">성별</label>
+                    <div class="choice">
+                        <input type="radio" name="gender" id="male" th:field="*{gender}" value="male" />
+                        남
+                    </div>
+                    <div class="choice">
+                        <input type="radio" name="gender" id="female" th:field="*{gender}" value="female" />
+                        여
+                    </div>
+                </div>
+                <div id="signup-box-age">
+                    <label class="type-label" for="age">나이</label>
+                    <input type="text" id="age" th:field="*{age}" placeholder="만나이 입력 ex)25세" />
+                </div>
+            </div>
+            <div class="signup-box">
+                <label class="type-label" for="sport">운동 종목</label>
+                <div class="choice">
+                    <input type="radio" name="sport" id="sport" th:field="*{sportType}" value="running" />러닝
+                </div>
+                <div class="choice">
+                    <input type="radio" name="sport" th:field="*{sportType}" value="weight" />웨이트
+                </div>
+                <div class="choice">
+                    <input type="radio" name="sport" th:field="*{sportType}" value="all" />모두 선택
+                </div>
+            </div>
+            <div id="signup-box-pace">
+                <p>러닝 페이스 입력</p>
+                <input type="text" class="input-txt" th:field="*{paceDetail}" placeholder="MM:ss" />
+            </div>
+            <button id="signup-button" type="submit" disabled>회원가입</button>
+        </form>
     </div>
     <script>
-      const regions = [
-        "광덕면",
-        "구룡동",
-        "구성동",
-        "다가동",
-        "대흥동",
-        "동면",
-        "목천읍",
-        "문화동",
-        "병천면",
-        "봉명동",
-        "북면",
-        "사직동",
-        "삼룡동",
-        "성남면",
-        "성황동",
-        "수신면",
-        "신방동",
-        "신부동",
-        "안서동",
-        "영성동",
-        "오룡동",
-        "용곡동",
-        "원성1동",
-        "원성2동",
-        "원성동",
-        "유량동",
-        "청당동",
-        "청수동",
-        "풍세면",
-        "두정동",
-        "백석동",
-        "부대동",
-        "부성1동",
-        "부성2동",
-        "불당동",
-        "성거읍",
-        "성성동",
-        "성정1동",
-        "성정2동",
-        "성정동",
-        "성환읍",
-        "신당동",
-        "쌍용1동",
-        "쌍용2동",
-        "쌍용3동",
-        "쌍용동",
-        "업성동",
-        "와촌동",
-        "입장면",
-        "직산읍",
-        "차암동",
-      ];
-      // 드롭다운에 요소 생성
-      const dropdown = document.querySelector("select");
-      console.log(dropdown);
+        const regions = [
+          "광덕면",
+          "구룡동",
+          "구성동",
+          "다가동",
+          "대흥동",
+          "동면",
+          "목천읍",
+          "문화동",
+          "병천면",
+          "봉명동",
+          "북면",
+          "사직동",
+          "삼룡동",
+          "성남면",
+          "성황동",
+          "수신면",
+          "신방동",
+          "신부동",
+          "안서동",
+          "영성동",
+          "오룡동",
+          "용곡동",
+          "원성1동",
+          "원성2동",
+          "원성동",
+          "유량동",
+          "청당동",
+          "청수동",
+          "풍세면",
+          "두정동",
+          "백석동",
+          "부대동",
+          "부성1동",
+          "부성2동",
+          "불당동",
+          "성거읍",
+          "성성동",
+          "성정1동",
+          "성정2동",
+          "성정동",
+          "성환읍",
+          "신당동",
+          "쌍용1동",
+          "쌍용2동",
+          "쌍용3동",
+          "쌍용동",
+          "업성동",
+          "와촌동",
+          "입장면",
+          "직산읍",
+          "차암동",
+        ];
+        // 드롭다운에 요소 생성
+        const dropdown = document.querySelector("select");
+        console.log(dropdown);
 
-      regions.forEach((region) => {
-        const newRegion = document.createElement("option");
-        newRegion.value = region;
-        newRegion.innerText = region;
-        dropdown.appendChild(newRegion);
-      });
+        regions.forEach((region) => {
+          const newRegion = document.createElement("option");
+          newRegion.value = region;
+          newRegion.innerText = region;
+          dropdown.appendChild(newRegion);
+        });
 
-      const idInput = document.querySelector(".input-id");
-      const idCheck = document.querySelector(".check-id");
+        const idInput = document.querySelector(".input-id");
+        const idCheck = document.querySelector(".check-id");
 
-      const mailInput = document.querySelector(".input-email");
-      const mailCheck = document.querySelector(".check-email");
+        const mailInput = document.querySelector(".input-email");
+        const mailCheck = document.querySelector(".check-email");
 
-      const pwInput = document.querySelector(".input-pwd");
-      const pwCheck = document.querySelector(".check-pwd");
+        const pwInput = document.querySelector(".input-pwd");
+        const pwCheck = document.querySelector(".check-pwd");
 
-      const telInput = document.querySelector(".input-tel");
-      const telCheck = document.querySelector(".check-tel");
+        const telInput = document.querySelector(".input-tel");
+        const telCheck = document.querySelector(".check-tel");
 
-      const submitBtn = document.getElementById("signup-button");
+        const submitBtn = document.getElementById("signup-button");
 
-      const regexId = /^\w{8,20}$/;
-      const regexMail =
-        /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
-      const regexPw = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,}$/;
-      const regexTel = /^0\d{1,2}-\d{3,4}-\d{4}$/;
+        const regexId = /^\w{8,20}$/;
+        const regexMail =
+          /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+        const regexPw = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,}$/;
+        const regexTel = /^0\d{1,2}-\d{3,4}-\d{4}$/;
 
-      // 조건식 검증
-      const validationInput = (input, regex, el) => {
-        if (input.value.trim() === "") {
-          el.textContent = "";
-          el.classList.remove("valid", "isvalid");
-          return null;
-        }
+        // 조건식 검증
+        const validationInput = (input, regex, el) => {
+          if (input.value.trim() === "") {
+            el.textContent = "";
+            el.classList.remove("valid", "isvalid");
+            return null;
+          }
 
-        if (regex.test(input.value)) {
-          el.textContent = "사용 가능 합니다.";
-          el.style.color = "green";
-          el.classList.add("valid");
-          el.classList.remove("invalid");
-          return true;
-        } else {
-          el.textContent = "입력 조건이 맞지 않습니다.";
-          el.style.color = "red";
-          el.classList.remove("valid");
-          el.classList.add("isvalid");
-          return false;
-        }
-      };
+          if (regex.test(input.value)) {
+            el.textContent = "사용 가능 합니다.";
+            el.style.color = "green";
+            el.classList.add("valid");
+            el.classList.remove("invalid");
+            return true;
+          } else {
+            el.textContent = "입력 조건이 맞지 않습니다.";
+            el.style.color = "red";
+            el.classList.remove("valid");
+            el.classList.add("isvalid");
+            return false;
+          }
+        };
 
-      // submit 활성화/비활성화
-      const updateSubmitBtn = () => {
-        const isIdValid = validationInput(idInput, regexId, idCheck);
-        const isPwValid = validationInput(pwInput, regexPw, pwCheck);
-        const isMailValid = validationInput(mailInput, regexMail, mailCheck);
-        const isPhoneValid = validationInput(telInput, regexTel, telCheck);
+        // submit 활성화/비활성화
+        const updateSubmitBtn = () => {
+          const isIdValid = validationInput(idInput, regexId, idCheck);
+          const isPwValid = validationInput(pwInput, regexPw, pwCheck);
+          const isMailValid = validationInput(mailInput, regexMail, mailCheck);
+          const isPhoneValid = validationInput(telInput, regexTel, telCheck);
 
-        if (isIdValid && isPwValid && isMailValid && isPhoneValid) {
-          submitBtn.disabled = false;
-          submitBtn.classList.add("enabled");
-        } else {
-          submitBtn.disabled = true;
-          submitBtn.classList.remove("enabled");
-        }
-      };
+          if (isIdValid && isPwValid && isMailValid && isPhoneValid) {
+            submitBtn.disabled = false;
+            submitBtn.classList.add("enabled");
+          } else {
+            submitBtn.disabled = true;
+            submitBtn.classList.remove("enabled");
+          }
+        };
 
-      idInput.addEventListener("input", updateSubmitBtn);
-      pwInput.addEventListener("input", updateSubmitBtn);
-      mailInput.addEventListener("input", updateSubmitBtn);
-      telInput.addEventListener("input", updateSubmitBtn);
+        idInput.addEventListener("input", updateSubmitBtn);
+        pwInput.addEventListener("input", updateSubmitBtn);
+        mailInput.addEventListener("input", updateSubmitBtn);
+        telInput.addEventListener("input", updateSubmitBtn);
     </script>
-  </div>
+</div>
 </body>
-
 </html>

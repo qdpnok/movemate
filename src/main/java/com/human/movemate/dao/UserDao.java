@@ -28,7 +28,7 @@ public class UserDao {
     // boolean -> 반환 타입. boolean 타입으로 반환. [return] 으로 반환하려는 값과 [같은 자료형]을 적어야 함.
     // (User user) -> User 타입의 user 매개변수.
     //                    User 타입의 값를 받아서 해당 매서드 내에서 member라는 이름으로 부름
-    public boolean save(User user) {
+    public Long save(User user) {
         // INSERT INTO [테이블명] ( [칼럼1], [칼럼2], ... , [칼럼n] )
         // VALUES ( ?, ?, ..., ? ) <- 위에서 작성한 [삽입할 칼럼 개수]와 [? 개수]가 맞아야 함.
         @Language("SQL")
@@ -40,11 +40,11 @@ public class UserDao {
         // jdbc.update : 데이터 삽입, 수정, 삭제에 사용함.
         // update( sql, ?에 담을 값 1, ... , ?에 담을 값 n);
 
-        // return 으로 반환하는 값은 메서드의 반환 타입과 일치해야함.
-
         // jdbc.update는 삽입, 수정, 삭제에 성공한 행의 갯수를 반환함.
-        // 때문에 결과값이 0보다 큰지 검사해서 성공/실패 여부를 확인
-        return jdbc.update(sql, user.getName(), user.getUserId(), user.getPassword(), user.getEmail(), user.getPhoneNo()) > 0;
+        jdbc.update(sql, user.getName(), user.getUserId(), user.getPassword(), user.getEmail(), user.getPhoneNo());
+
+        // return 으로 반환하는 값은 메서드의 반환 타입과 일치해야함.
+        return jdbc.queryForObject("SELECT seq_user.CURRVAL FROM dual", Long.class);
     }
 
 

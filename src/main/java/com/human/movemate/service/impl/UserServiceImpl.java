@@ -1,11 +1,15 @@
 package com.human.movemate.service.impl;
 
 import com.human.movemate.dao.UserDao;
+import com.human.movemate.dao.UserProfileDao;
+import com.human.movemate.dto.UserPro;
 import com.human.movemate.model.User;
+import com.human.movemate.model.UserProfile;
 import com.human.movemate.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 // @ 붙은 애들을 어노테이션이라고 부름
 
@@ -18,13 +22,22 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     // UserDao 클래스의 기능을 사용하기 위한 의존성 주입
     private final UserDao userDao;
+    private final UserProfileDao userProfileDao;
 
     // 상속을 준 인터페이스 (UserService) 에
     // 생성자 (public), 반환타입 (boolean), 메서드 이름 (signup), 매개변수 (User user)가
     // 모두 일치하게 정의되어 있어야 함.
     @Override
-    public boolean signup(User user) {
-        return userDao.save(user);
+    @Transactional
+    public Long signup(UserPro userPro) {
+        Long userId = userDao.save(new User(0L, userPro.getName(),
+                userPro.getUserId(), userPro.getPassword(), userPro.getEmail(), userPro.getPhoneNo()));
+
+        userProfileDao.save(new UserProfile(0L, userId, userPro.getGender(),
+                userPro.getAge(), null, userPro.getRegion(),
+                userPro.getSportType(), userPro.getPaceDetail(), userPro.getProfileImageUrl()) );
+
+        return userId;
     }
 
     @Override
