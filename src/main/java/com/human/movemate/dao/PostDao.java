@@ -30,12 +30,15 @@ public class PostDao {
 
     public void save(Post post) {
         @Language("SQL")
-        String sql = "INSERT INTO POST (board_type_no, user_no, title, content) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO POST (board_type_no, user_no, title, content, image_url) " +
+                "VALUES (?, ?, ?, ?, ?)";
         jdbc.update(sql,
                 post.getBoardTypeNo(),
                 post.getUserNo(),
                 post.getTitle(),
-                post.getContent());
+                post.getContent(),
+                post.getImageUrl()
+        );
     }
 
     static class PostRowMapper implements RowMapper<Post> {
