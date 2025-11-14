@@ -15,7 +15,7 @@
           <img class="main_logo" src="/images/logo (1).png" alt="movemate" th:onclick="|location.href='@{/}'|"/>
         </a>
         <div class="user_hamburger">
-          <div th:if="${session.loginUser == null}" class="no-user-bar">
+          <div th:if="${session.loginUser == null}" class="user-bar">
             <button class="login" th:onclick="|location.href='@{/login}'|">
               로그인
             </button>

@@ -69,15 +69,6 @@ li {
   list-style: none;
 }
 
-.nouser-bar {
-  flex-shrink: 0;
-  height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: right;
-  gap: 20px;
-}
-
 .login,
 .my-page {
   width: 100px;
@@ -561,7 +552,9 @@ hamburgerButton.addEventListener('click', () => {
   }
 
   .login,
-  .signup {
+  .signup,
+  .my-page,
+  .logout {
     width: 80px;
     height: 40px;
     font-size: 14px;
