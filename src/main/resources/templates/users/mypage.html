@@ -15,14 +15,14 @@
             <h1>마이페이지</h1>
             <div id="my-info">
                 <div id="my-profile">
-                    <img th:src="${user.profileImageUrl} ! = null ? @{'/files/'+${member.profileImageUrl}} : @{'/images/profile.png'}"
+                    <img th:src="${userInfo.profileImageUrl} != null ? @{'/files/'+${userInfo.profileImageUrl}} : @{'/images/profile.png'}"
                          alt="프로필" style="width:120px;height:120px;object-fit:cover;border-radius:60px;">
                     <div id="profile">
-                        <p>이름 : <span th:text="${user.name}"></span></p>
-                        <p>아이디 : <span th:text="${user.userId}"></span></p>
-                        <p>휴대폰번호 : <span th:text="${user.phoneNo}"></span></p>
-                        <p>성별 : <span th:text="${user.gender}"></span></p>
-                        <p>나이 : <span th:text="${user.age}"></span></p>
+                        <p>이름 : <span th:text="${userInfo.name}"></span></p>
+                        <p>아이디 : <span th:text="${userInfo.userId}"></span></p>
+                        <p>휴대폰번호 : <span th:text="${userInfo.phoneNo}"></span></p>
+                        <p>성별 : <span th:text="${userInfo.gender}"></span></p>
+                        <p>나이 : <span th:text="${userInfo.age}"></span></p>
                     </div>
                 </div>
                 <div id="my-button-filed">

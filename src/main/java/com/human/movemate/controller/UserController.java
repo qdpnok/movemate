@@ -41,7 +41,8 @@ public class UserController {
     @GetMapping("/mypage")
     public String myPageForm(Model model, HttpSession session) {
         User user = (User) session.getAttribute("loginUser");
-        model.addAttribute("user", userService.getByNo(user.getUserNo()));
+        if(user == null) return "redirect:/";
+        model.addAttribute("userInfo", userService.getByNo(user.getUserNo()));
         return "users/mypage";
     }
 
