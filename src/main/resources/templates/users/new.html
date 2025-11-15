@@ -43,7 +43,7 @@
 
                 <div id="signup">
                     <label id="label-signup-profile" for="profileImageInput">
-                        <button class="btn-signup-profile">프로필 사진 업로드</button>
+                        <button type="button" id="btn-upload-profile">프로필 사진 업로드</button>
                         <input id="profileImageInput" class="input" type="file" name="profileImage" accept="image/*" />
                     </label>
                     <div class="hint">JPG/PNG/WebP 권장, 5MB 이하</div>
@@ -279,6 +279,7 @@
           const input = document.getElementById('profileImageInput');
           const img = document.getElementById('avatarPreview');
           const label = document.getElementById('label-signup-profile');
+          const button = document.getElementById('btn-upload-profile');
 
           // 서버에서 내려온 원본 이미지 경로 저장(없으면 빈 문자열)
           const originalSrc = /*[[${userForm != null}]]*/ false
@@ -292,6 +293,12 @@
               objectUrl = null;
             }
           }
+
+          // 커스텀 버튼을 클릭하면 file 업로드 시작
+          button?.addEventListener('click', () => {
+            input.click()
+            console.log("버튼 클릭")
+          });
 
           input?.addEventListener('change', function(e) {
             const file = e.target.files && e.target.files[0];
