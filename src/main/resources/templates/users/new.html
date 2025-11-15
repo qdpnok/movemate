@@ -125,15 +125,15 @@
                 </div>
             </div>
             <div class="signup-box">
-                <label class="type-label" for="sport">운동 종목</label>
+                <label class="type-label" for="sportR">운동 종목</label>
                 <div class="choice">
-                    <input type="radio" name="sport" id="sport" th:field="*{sportType}" value="running" />러닝
+                    <input type="radio" name="sport" id="sportR" th:field="*{sportType}" value="running" />러닝
                 </div>
                 <div class="choice">
-                    <input type="radio" name="sport" th:field="*{sportType}" value="weight" />웨이트
+                    <input type="radio" name="sport" id="sportW" th:field="*{sportType}" value="weight" />웨이트
                 </div>
                 <div class="choice">
-                    <input type="radio" name="sport" th:field="*{sportType}" value="all" />모두 선택
+                    <input type="radio" name="sport" id="sportA" th:field="*{sportType}" value="all" />모두 선택
                 </div>
             </div>
             <div id="signup-box-pace">
@@ -271,6 +271,21 @@
         pwInput.addEventListener("input", updateSubmitBtn);
         mailInput.addEventListener("input", updateSubmitBtn);
         telInput.addEventListener("input", updateSubmitBtn);
+
+        // 운동 종목 선택에 따라 페이스 입력란 보이기
+        const sportRunning = document.getElementById('sportR');
+        const sportWeight = document.getElementById('sportW');
+        const sportAll = document.getElementById('sportA');
+
+        const paceBox = document.getElementById("signup-box-pace");
+
+        const paceOpen = () => paceBox.style.display = 'flex';
+        const paceClose = () => paceBox.style.display = 'none';
+      
+
+        sportRunning.addEventListener("click", paceOpen);
+        sportWeight.addEventListener("click", paceClose);
+        sportAll.addEventListener("click", paceOpen);
     </script>
 
     <script th:inline="javascript">

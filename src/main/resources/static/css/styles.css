@@ -431,7 +431,7 @@ footer {
 }
 
 #signup-box-pace {
-  display: flex;
+  display: none;
   flex-direction: column;
 }
 
