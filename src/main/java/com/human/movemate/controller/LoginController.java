@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 // @ 붙은 애들을 어노테이션이라고 부름
 
@@ -37,10 +38,11 @@ public class LoginController {
     // return "redirect:/경로" 로 작성하는 건 http://localhost:8282/경로 를 가리키는 것 같슴다
 
     @PostMapping
-    public String login(@ModelAttribute User user, HttpSession session) {
+    public String login(@ModelAttribute User user, HttpSession session, RedirectAttributes redirectAttributes) {
         User userRes = memberService.login(user);
         log.info("로그인 : {}", userRes);
         if(userRes == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "아이디 또는 비밀번호가 잘못되었습니다.");
             return "redirect:/login";
         }
         session.setAttribute("loginUser", userRes);
