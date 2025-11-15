@@ -38,9 +38,12 @@ public class UserController {
         log.error("멤버 객체: {}", userPro);
         Long no = userService.signup(userPro);
 
+        String newImagePath = null;
         if (profileImage != null && !profileImage.isEmpty()) {
-            fileStorageService.saveImage(profileImage, "users", no);
+            newImagePath = fileStorageService.saveImage(profileImage, "users", no);
         }
+
+        userService.updateProfile(no, newImagePath);
 
         return "redirect:/";
     }

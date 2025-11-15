@@ -1,6 +1,7 @@
 package com.human.movemate.dao;
 
 import com.human.movemate.dto.UserPro;
+import com.human.movemate.model.User;
 import com.human.movemate.model.UserProfile;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,12 +23,12 @@ public class UserProfileDao {
     public void save(UserProfile profile) {
         @Language("SQL")
         String sql = """
-        INSERT INTO USER_PROFILE (user_no, gender, age, region, sport_type, pace_detail)
-        VALUES (?, ?, ?, ?, ?, ?)
+        INSERT INTO USER_PROFILE (user_no, gender, age, region, sport_type, pace_detail, profile_image_url)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
         """;
         jdbc.update(sql, profile.getUserNo(), profile.getGender(),
                 profile.getAge(), profile.getRegion(), profile.getSportType(),
-                profile.getPaceDetail());
+                profile.getPaceDetail(), profile.getProfileImageUrl());
     }
 
     public UserPro findByNo(Long no) {
@@ -44,6 +45,23 @@ public class UserProfileDao {
         List<UserPro> list = jdbc.query(sql, new UserProRowMapper(), no);
         return list.isEmpty() ? null : list.get(0);
     }
+
+    // 유저 번호로 이미지 경로 업로드
+    public boolean updateProfile(Long userNo, String path){
+        // UPDATE [테이블명] SET [변경할 칼럼명1] = ?, ... , [변경할 칼럼명n] = ? WHERE [조건]
+        @Language("SQL")
+        String sql = "UPDATE USER_PROFILE SET profile_image_url = ? WHERE user_no = ?";
+
+        // jdbc.update : 데이터 삽입, 수정, 삭제에 사용함.
+        // update( sql, ?에 담을 값 1, ... , ?에 담을 값 n);
+
+        // return 으로 반환하는 값은 메서드의 반환 타입과 일치해야함.
+
+        // jdbc.update는 삽입, 수정, 삭제에 성공한 행의 갯수를 반환함.
+        // 때문에 결과값이 0보다 큰지 검사해서 성공/실패 여부를 확인
+        return jdbc.update(sql, path, userNo) > 0;
+    }
+
 
     static class  UserProRowMapper implements RowMapper<UserPro> {
 

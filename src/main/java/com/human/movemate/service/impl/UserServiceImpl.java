@@ -57,6 +57,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean updateProfile(Long no, String path) {
+        return userProfileDao.updateProfile(no, path);
+    }
+
+    @Override
     public boolean update(Long no, User user) {
         return userDao.update(no, user);
     }

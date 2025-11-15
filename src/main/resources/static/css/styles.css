@@ -48,11 +48,10 @@ body {
 
 /* * * * * * main header style * * * * * */
 #main-header {
-  width: 100%;
-  max-width: 1200px;
+  width: 100vw;
   height: 200px;
   margin: 0;
-  padding: 0 20px;
+  padding: 0 60px 0 20px;
   background-color: #f3f4f6;
   display: flex;
   justify-content: space-between;
