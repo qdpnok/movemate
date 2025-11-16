@@ -229,42 +229,56 @@
         const regexTel = /^0\d{1,2}-\d{3,4}-\d{4}$/;
 
         // 조건식 검증
-        const validationInput = (input, regex, el) => {
-          if (input.value.trim() === "") {
+        const validate = (input, regex, el, okMsg, badMsg) => {
+          const v = input.value.trim();
+
+          if (v === "") {
             el.textContent = "";
-            el.classList.remove("valid", "isvalid");
+            el.classList.remove("valid");
             return null;
           }
 
-          if (regex.test(input.value)) {
-            el.textContent = "사용 가능 합니다.";
+          if (regex.test(v)) {
+            el.textContent = okMsg;
             el.style.color = "green";
             el.classList.add("valid");
-            el.classList.remove("invalid");
             return true;
           } else {
             el.textContent = "입력 조건이 맞지 않습니다.";
             el.style.color = "red";
             el.classList.remove("valid");
-            el.classList.add("isvalid");
             return false;
           }
         };
 
         // submit 활성화/비활성화
         const updateSubmitBtn = () => {
-          const isIdValid = validationInput(idInput, regexId, idCheck);
-          const isPwValid = validationInput(pwInput, regexPw, pwCheck);
-          const isMailValid = validationInput(mailInput, regexMail, mailCheck);
-          const isPhoneValid = validationInput(telInput, regexTel, telCheck);
+          const i = validate(
+            idInput,
+            regexId,
+            idCheck,
+            "사용 가능합니다.",
+            "아이디는 밑줄을 포함한 영숫자 8~20자");
+          const p = validate(
+            pwInput,
+            regexPw,
+            pwCheck,
+            "안전한 비밀번호입니다.",
+            "대/소문자+숫자+특수문자 포함 8자 이상");
+          const m = validate(
+            mailInput,
+            regexMail,
+            mailCheck,
+            "사용 가능합니다.",
+            "올바른 이메일 형식으로 입력해주세요.");
+          const pn = validate(
+            telInput,
+            regexTel,
+            telCheck,
+            "사용 가능합니다.",
+            " - 을 포함하여 올바른 휴대폰번호 형식으로 입력해주세요.");
 
-          if (isIdValid && isPwValid && isMailValid && isPhoneValid) {
-            submitBtn.disabled = false;
-            submitBtn.classList.add("enabled");
-          } else {
-            submitBtn.disabled = true;
-            submitBtn.classList.remove("enabled");
-          }
+          submitBtn.disabled = !(i && p && m && pn);
         };
 
         idInput.addEventListener("input", updateSubmitBtn);
