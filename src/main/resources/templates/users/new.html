@@ -92,6 +92,15 @@
             </div>
             <div class="input-box">
                 <input
+                        type="password"
+                        class="input-pwd-check input-txt"
+                        placeholder="비밀번호 확인"
+                        required
+                />
+                <p class="signup-check check-pwd-check"></p>
+            </div>
+            <div class="input-box">
+                <input
                         type="tel"
                         class="input-tel input-txt"
                         th:field="*{phoneNo}"
@@ -111,11 +120,11 @@
                 <div id="signup-box-gender">
                     <label class="type-label" for="male">성별</label>
                     <div class="choice">
-                        <input type="radio" name="gender" id="male" th:field="*{gender}" value="male" />
+                        <input type="radio" name="gender" id="male" th:field="*{gender}" value="남" />
                         남
                     </div>
                     <div class="choice">
-                        <input type="radio" name="gender" id="female" th:field="*{gender}" value="female" />
+                        <input type="radio" name="gender" id="female" th:field="*{gender}" value="여" />
                         여
                     </div>
                 </div>
@@ -127,13 +136,13 @@
             <div class="signup-box">
                 <label class="type-label" for="sportR">운동 종목</label>
                 <div class="choice">
-                    <input type="radio" name="sport" id="sportR" th:field="*{sportType}" value="running" />러닝
+                    <input type="radio" name="sport" id="sportR" th:field="*{sportType}" value="러닝" />러닝
                 </div>
                 <div class="choice">
-                    <input type="radio" name="sport" id="sportW" th:field="*{sportType}" value="weight" />웨이트
+                    <input type="radio" name="sport" id="sportW" th:field="*{sportType}" value="웨이트" />웨이트
                 </div>
                 <div class="choice">
-                    <input type="radio" name="sport" id="sportA" th:field="*{sportType}" value="all" />모두 선택
+                    <input type="radio" name="sport" id="sportA" th:field="*{sportType}" value="모두" />모두 선택
                 </div>
             </div>
             <div id="signup-box-pace">
@@ -145,57 +154,13 @@
     </div>
     <script>
         const regions = [
-          "광덕면",
-          "구룡동",
-          "구성동",
-          "다가동",
-          "대흥동",
-          "동면",
-          "목천읍",
-          "문화동",
-          "병천면",
-          "봉명동",
-          "북면",
-          "사직동",
-          "삼룡동",
-          "성남면",
-          "성황동",
-          "수신면",
-          "신방동",
-          "신부동",
-          "안서동",
-          "영성동",
-          "오룡동",
-          "용곡동",
-          "원성1동",
-          "원성2동",
-          "원성동",
-          "유량동",
-          "청당동",
-          "청수동",
-          "풍세면",
-          "두정동",
-          "백석동",
-          "부대동",
-          "부성1동",
-          "부성2동",
-          "불당동",
-          "성거읍",
-          "성성동",
-          "성정1동",
-          "성정2동",
-          "성정동",
-          "성환읍",
-          "신당동",
-          "쌍용1동",
-          "쌍용2동",
-          "쌍용3동",
-          "쌍용동",
-          "업성동",
-          "와촌동",
-          "입장면",
-          "직산읍",
-          "차암동",
+          "광덕면", "구룡동", "구성동", "다가동", "대흥동", "동면", "목천읍", "문화동",
+          "병천면", "봉명동", "북면", "사직동", "삼룡동", "성남면", "성황동", "수신면",
+          "신방동", "신부동", "안서동", "영성동", "오룡동", "용곡동", "원성1동", "원성2동",
+          "원성동", "유량동", "청당동", "청수동", "풍세면", "두정동", "백석동", "부대동",
+          "부성1동", "부성2동", "불당동", "성거읍", "성성동", "성정1동", "성정2동", "성정동",
+          "성환읍", "신당동", "쌍용1동", "쌍용2동", "쌍용3동", "쌍용동", "업성동", "와촌동",
+          "입장면", "직산읍", "차암동"
         ];
         // 드롭다운에 요소 생성
         const dropdown = document.querySelector("select");
@@ -208,6 +173,7 @@
           dropdown.appendChild(newRegion);
         });
 
+        // 가입 정보 검증
         const idInput = document.querySelector(".input-id");
         const idCheck = document.querySelector(".check-id");
 
@@ -217,8 +183,14 @@
         const pwInput = document.querySelector(".input-pwd");
         const pwCheck = document.querySelector(".check-pwd");
 
+        const pwcInput = document.querySelector(".input-pwd-check");
+        const pwcCheck = document.querySelector(".check-pwd-check");
+
         const telInput = document.querySelector(".input-tel");
         const telCheck = document.querySelector(".check-tel");
+
+        const mInput = document.getElementById("male");
+        const fInput = document.getElementById("female");
 
         const submitBtn = document.getElementById("signup-button");
 
@@ -237,19 +209,39 @@
             el.classList.remove("valid");
             return null;
           }
-
           if (regex.test(v)) {
             el.textContent = okMsg;
             el.style.color = "green";
             el.classList.add("valid");
             return true;
           } else {
-            el.textContent = "입력 조건이 맞지 않습니다.";
+            el.textContent = badMsg;
             el.style.color = "red";
             el.classList.remove("valid");
             return false;
           }
         };
+
+        const pwdCheck = () => {
+          if (pwcInput.value.trim() === "") {
+            pwcCheck.textContent = "";
+            pwcCheck.classList.remove("valid");
+            return null;
+          }
+          if(pwInput.value === pwcInput.value) {
+            pwcCheck.textContent = "비밀번호가 일치합니다."
+            pwcCheck.style.color = "green";
+            pwcCheck.classList.add("valid");
+            return true;
+          } else {
+            pwcCheck.textContent = "비밀번호가 일치하지 않습니다.";
+            pwcCheck.style.color = "red";
+            pwcCheck.classList.remove("valid");
+            return false;
+          }
+        }
+
+        const gCheck = () => { return mInput.checked || fInput.checked; }
 
         // submit 활성화/비활성화
         const updateSubmitBtn = () => {
@@ -265,6 +257,7 @@
             pwCheck,
             "안전한 비밀번호입니다.",
             "대/소문자+숫자+특수문자 포함 8자 이상");
+          const pc = pwdCheck();
           const m = validate(
             mailInput,
             regexMail,
@@ -278,13 +271,18 @@
             "사용 가능합니다.",
             " - 을 포함하여 올바른 휴대폰번호 형식으로 입력해주세요.");
 
-          submitBtn.disabled = !(i && p && m && pn);
+          const r = gCheck();
+
+          submitBtn.disabled = !(i && p && pc && m && pn && r);
         };
 
         idInput.addEventListener("input", updateSubmitBtn);
         pwInput.addEventListener("input", updateSubmitBtn);
+        pwcInput.addEventListener("input", updateSubmitBtn);
         mailInput.addEventListener("input", updateSubmitBtn);
         telInput.addEventListener("input", updateSubmitBtn);
+        mInput.addEventListener("click", updateSubmitBtn);
+        fInput.addEventListener("click", updateSubmitBtn);
 
         // 운동 종목 선택에 따라 페이스 입력란 보이기
         const sportRunning = document.getElementById('sportR');
