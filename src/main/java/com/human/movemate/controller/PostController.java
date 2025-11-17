@@ -76,4 +76,63 @@ public class PostController {
         // templates/post/view_post.html 페이지로 이동
         return "post/view_post";
     }
+
+    @GetMapping("/edit/{postId}") // 게시글 수정을 위해 수정하기 폼으로 이동
+    public String editPostForm(@PathVariable("postId") Long postId, Model model, HttpSession session) {
+
+        Post post = postService.findById(postId);
+
+        // 로그인한 사용자와 게시글 작성자가 같은지 확인
+        User loginUser = (User) session.getAttribute("loginUser");
+        if (loginUser == null || !loginUser.getUserNo().equals(post.getUserNo())) {
+            // 권한이 없다면 글 목록으로 리다이렉트)
+            return "redirect:/posts";
+        }
+
+        // DB에서 가져온 Post 모델을 PostFormDto로 변환
+        PostFormDto postForm = new PostFormDto();
+        postForm.setTitle(post.getTitle());
+        postForm.setContent(post.getContent());
+        postForm.setBoardTypeNo(post.getBoardTypeNo());
+        // 이미지는 수정 시 새로 첨부하므로 DTO에 담지 않음
+
+        // 폼에 기존 데이터를 채우기 위해 모델에 담음
+        model.addAttribute("postForm", postForm);
+        // 어떤 게시글을 수정하는지 ID를 모델에 담음
+        model.addAttribute("postId", postId);
+
+        // 글쓰기 폼(write.html)을 재활용
+        return "post/write";
+    }
+
+    @PostMapping("/update/{postId}") // 게시글 수정
+    public String updatePost(@PathVariable("postId") Long postId,
+                             PostFormDto postFormDto,
+                             RedirectAttributes redirectAttributes,
+                             HttpSession session) {
+        try {
+            postService.update(postId, postFormDto);
+            redirectAttributes.addFlashAttribute("successMessage", "게시글이 성공적으로 수정되었습니다.");
+        } catch (Exception e) {
+            log.error("게시글 수정 실패: {}", e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", "게시글 수정에 실패했습니다.");
+        }
+        // 수정 완료 후 해당 게시글 상세 페이지로 리다이렉트
+        return "redirect:/posts/" + postId;
+    }
+
+    @GetMapping("/delete/{postId}") // 게시글 삭제
+    public String deletePost(@PathVariable("postId") Long postId,
+                             RedirectAttributes redirectAttributes,
+                             HttpSession session) {
+        try {
+            postService.deleteById(postId);
+            redirectAttributes.addFlashAttribute("successMessage", "게시글이 삭제되었습니다.");
+        } catch (Exception e) {
+            log.error("게시글 삭제 실패: {}", e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", "게시글 삭제에 실패했습니다.");
+        }
+        // 삭제 후 목록 페이지로 리다이렉트
+        return "redirect:/posts";
+    }
 }
