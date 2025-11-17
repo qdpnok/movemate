@@ -14,10 +14,12 @@
 <body>
     <div layout:fragment="content">
         <div class="write-container">
-            <h1 class="board">게시판 글 작성</h1>
+            <h1 class="board" th:if="${postId == null}">게시판 글 작성</h1>
+            <h1 class="board" th:unless="${postId == null}">게시판 글 수정</h1>
 
 
-            <form th:action="@{/posts/write}" method="post" th:object="${postForm}" enctype="multipart/form-data">
+            <form th:action="${postId == null} ? @{/posts/write} : @{/posts/update/{id}(id=${postId})}"
+                  method="post" th:object="${postForm}" enctype="multipart/form-data">
 
                 <div class="form-group">
                     <label for="boardTypeNo">게시판 선택</label>
@@ -51,7 +53,7 @@
                     <textarea id="content" th:field="*{content}" rows="15" placeholder="내용을 입력해주세요"></textarea>
                 </div>
                 <div class="form-actions">
-                    <button type="submit" class="btn-submit">등록</button>
+                    <button type="submit" class="btn-submit" th:text="${postId == null} ? '등록' : '수정'">등록</button>
                 </div>
             </form>
 

@@ -41,7 +41,8 @@ public class PostDao {
                 "FROM POST p " +
                 "JOIN USERS u ON p.user_no = u.user_no " +
                 "LEFT JOIN USER_PROFILE up ON u.user_no = up.user_no " + // USER_PROFILE 조인
-                "WHERE p.post_no = ?"; // post_no로 조회
+                "WHERE p.post_no = ?" + // post_no로 조회
+                "ORDER BY p.created_at DESC";
         try {
             // queryForObject : 결과가 1개가 아니면(없거나 많으면) 예외를 던짐
             return jdbc.queryForObject(sql, new PostRowMapper(), postId);
@@ -62,6 +63,38 @@ public class PostDao {
                 post.getContent(),
                 post.getImageUrl()
         );
+    }
+
+    // 게시글 수정
+    public void update(Post post) {
+        String sql;
+        if (post.getImageUrl() != null) {
+            // 이미지를 새로 첨부한 경우
+            sql = "UPDATE POST SET board_type_no = ?, title = ?, content = ?, image_url = ? " +
+                    "WHERE post_no = ?";
+            jdbc.update(sql,
+                    post.getBoardTypeNo(),
+                    post.getTitle(),
+                    post.getContent(),
+                    post.getImageUrl(),
+                    post.getPostNo());
+        } else {
+            // 이미지를 수정하지 않은 경우 (기존 이미지 유지)
+            sql = "UPDATE POST SET board_type_no = ?, title = ?, content = ? " +
+                    "WHERE post_no = ?";
+            jdbc.update(sql,
+                    post.getBoardTypeNo(),
+                    post.getTitle(),
+                    post.getContent(),
+                    post.getPostNo());
+        }
+    }
+
+    // 게시글 삭제
+    public void deleteById(Long postId) {
+        @Language("SQL")
+        String sql = "DELETE FROM POST WHERE post_no = ?";
+        jdbc.update(sql, postId);
     }
 
     // RowMapper

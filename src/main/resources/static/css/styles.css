@@ -1066,6 +1066,37 @@ hamburgerButton.addEventListener('click', () => {
   min-height: 200px;
 }
 
+.post-btn-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn-view-edit,
+.btn-view-delete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.btn-view-edit {
+  background-color: var(--primary, #4B5AE4);
+  color: white;
+}
+
+.btn-view-delete {
+  background-color: #FB7163;
+  color: white;
+}
+
 /* =================================================== */
 /* 댓글 섹션 (Comment Section) */
 /* =================================================== */
@@ -1158,6 +1189,7 @@ hamburgerButton.addEventListener('click', () => {
 /* 댓글 액션 버튼 (수정/삭제) */
 .comment-actions {
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 8px;
   font-size: 0.85rem;
@@ -1334,14 +1366,6 @@ hamburgerButton.addEventListener('click', () => {
   border-color: #f5c6cb;
 }
 
-
-:root {
-  --primary: #4B59E4;
-  --secondary: #F3F4F6;
-  --success: #28a745;
-  --danger: #dc3545;
-
-}
 
 /* * * * * * * * * * * * * * * * * * * * * * * * */
 /* * 여기까지 view_post.html 글 상세조회 스타일 * * */
