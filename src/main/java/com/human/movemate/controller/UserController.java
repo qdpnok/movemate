@@ -62,6 +62,7 @@ public class UserController {
     public String editPage(Model model, HttpSession session) {
         User user = (User) session.getAttribute("loginUser");
         if(user == null) return "redirect:/";
+        model.addAttribute("userForm", new UserProDto());
         model.addAttribute("userInfo", userService.getByNo(user.getUserNo()));
         return "users/edit";
     }

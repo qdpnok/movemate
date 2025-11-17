@@ -147,6 +147,14 @@
           dropdown.appendChild(newRegion);
         });
 
+        const regionValue = /*[[${userInfo.region}]]*/;
+        const currentUserRegion = regionValue ? regionValue : '';
+
+        if (currentUserRegion) {
+          dropdown.value = currentUserRegion;
+          console.log("현재 지역 설정됨: " + currentUserRegion);
+        }
+
         /*<![CDATA[*/
         (function() {
           const input = document.getElementById('profileImageInput');
@@ -196,10 +204,6 @@
 
           window.addEventListener('beforeunload', revoke);
         })();
-
-        const currentUserRegion = /* [[${userInfo.region}]] */'';
-
-        console.log(currentUserRegion);
         /*]]>*/
     </script>
 </div>
