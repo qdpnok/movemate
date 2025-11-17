@@ -135,7 +135,7 @@ li {
   right: 0;
   width: 180px;
   background: #fff;
-  border-radius: 8px;
+  border-radius: 5px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   opacity: 0;
   transform: translateY(-10px);
@@ -1041,7 +1041,7 @@ hamburgerButton.addEventListener('click', () => {
 .post-title {
   font-size: 1.2rem;
   font-weight: 700;
-  padding: 25px 25px 10px 25px;
+  padding: 25px 25px 25px 25px;
 }
 
 .post-image-box {
@@ -1078,9 +1078,10 @@ hamburgerButton.addEventListener('click', () => {
   background-color: #fcfcfc;
 }
 
-.comment-section h3 {
-  font-size: 1.5rem;
+.comment-section-name {
+  font-size: 1.2rem;
   color: #333;
+  font-weight: bold;
   margin-bottom: 25px;
   text-align: center;
 }
@@ -1161,13 +1162,20 @@ hamburgerButton.addEventListener('click', () => {
   gap: 8px;
   font-size: 0.85rem;
   flex-shrink: 0;
+  width: 80px;
+  height: 40px;
 }
 
 .comment-actions .btn-comment-edit,
 .comment-actions .btn-comment-delete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 35px;
   background: none;
   border: none;
-  padding: 5px 8px;
+  padding: 5px 5px;
   border-radius: 5px;
   cursor: pointer;
   font-weight: 500;
@@ -1193,7 +1201,8 @@ hamburgerButton.addEventListener('click', () => {
 /* 댓글 입력 폼 */
 .comment-form {
   display: flex;
-  gap: 10px;
+  align-items: flex-start;
+  gap: 15px;
   padding-top: 20px;
   border-top: 1px solid #eee;
 }
@@ -1209,13 +1218,14 @@ hamburgerButton.addEventListener('click', () => {
 }
 
 .btn-comment-submit {
-  height: 100px;
-  align-self: flex-end;
-  padding: 10px 25px;
+  flex-shrink: 0;
+  width: 80px;
+  height: 40px;
   border: none;
   border-radius: 8px;
   background-color: #4B59E4;
-  font-size: 1rem;
+  color: white;
+  font-size: 0.8rem;
   font-weight: normal;
   cursor: pointer;
 }
@@ -1239,14 +1249,14 @@ hamburgerButton.addEventListener('click', () => {
   width: 100%;
 }
 
-/* [핵심] li.comment-item에 'editing' 클래스가 붙었을 때 */
+/* li.comment-item에 'editing' 클래스가 붙었을 때 */
 
-/* (A) '조회 모드'를 숨김 */
+/* '조회 모드'를 숨김 */
 .comment-item.editing .comment-view-mode {
   display: none;
 }
 
-/* (B) '수정 모드'를 보여줌 */
+/* '수정 모드'를 보여줌 */
 .comment-item.editing .comment-edit-form {
   display: flex;
   /* flex로 변경하여 버튼과 정렬 */
@@ -1258,10 +1268,8 @@ hamburgerButton.addEventListener('click', () => {
 /* 수정 폼 내부 스타일 */
 .comment-edit-textarea {
   flex-grow: 1;
-  /* 남는 공간 모두 차지 */
   min-height: 80px;
   border: 2px solid var(--primary);
-  /* 수정 중임을 티나게 파란색 테두리 */
   border-radius: 8px;
   padding: 12px;
   font-size: 0.95rem;
@@ -1271,11 +1279,9 @@ hamburgerButton.addEventListener('click', () => {
 .comment-edit-actions {
   display: flex;
   flex-direction: column;
-  /* 버튼 세로 정렬 */
   gap: 8px;
   flex-shrink: 0;
   margin-top: 0;
-  /* 기존 comment-actions와 분리 */
 }
 
 .btn-comment-cancel,
@@ -1306,7 +1312,7 @@ hamburgerButton.addEventListener('click', () => {
   background-color: #4B59E4;
 }
 
-/* [추가] alert 메시지 스타일 */
+/* alert 메시지 스타일 */
 .alert {
   padding: 15px;
   margin-bottom: 20px;
