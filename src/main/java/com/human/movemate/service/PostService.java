@@ -9,4 +9,5 @@ public interface PostService {
     Post findById(Long postId); // 게시글 상세 조회
     void update(Long postId, PostFormDto postFormDto); // 게시글 수정
     void deleteById(Long postId); // 게시글 삭제
+    List<Post> findMyPosts(Long userNo, Long boardTypeNo); // 내가 쓴 글만 조회
 }

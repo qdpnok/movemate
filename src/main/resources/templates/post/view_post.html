@@ -18,7 +18,7 @@
             <h1 class="board">게시판 글 조회</h1>
 
             <div class="view-top-header">
-                <a href="#" class="btn-view-list">내가 쓴 글 조회</a>
+                <a th:href="@{/posts/my_post}" class="btn-view-list">내가 쓴 글 조회</a>
             </div>
 
             <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>

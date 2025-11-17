@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.PathVariable;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -37,6 +38,40 @@ public class PostController {
         return "post/weight_post";
     }
 
+    @GetMapping("/my_post") // 내가 쓴 "러닝"글만 보기
+    public String myPostPageRunning(Model model, HttpSession session) {
+        // 세션에서 로그인한 사용자 정보 가져오기
+        User loginUser = (User) session.getAttribute("loginUser");
+        // 로그인을 안 했으면 로그인 페이지로 리다이렉트
+        if (loginUser == null) {
+            return "redirect:/login";
+        }
+        // 로그인한 사용자의 userNo로 게시글 조회
+        Long loginUserNo = loginUser.getUserNo();
+        List<Post> myPostList = postService.findMyPosts(loginUserNo,1L);
+        // 모델에 "postList"라는 이름으로 담기
+        model.addAttribute("postList", myPostList);
+        // '내가 쓴 러닝 글' 전용 HTML 페이지 반환
+        return "post/my_posts_running";
+    }
+
+    @GetMapping("/my_post/weight") // 내가 쓴 "웨이트"글만 보기
+    public String myPostPageWeight(Model model, HttpSession session) {
+        // 세션에서 로그인한 사용자 정보 가져오기
+        User loginUser = (User) session.getAttribute("loginUser");
+        // 로그인을 안 했으면 로그인 페이지로 리다이렉트
+        if (loginUser == null) {
+            return "redirect:/login";
+        }
+        // 로그인한 사용자의 userNo로 게시글 조회
+        Long loginUserNo = loginUser.getUserNo();
+        List<Post> myPostList = postService.findMyPosts(loginUserNo,2L);
+        // 모델에 "postList"라는 이름으로 담기
+        model.addAttribute("postList", myPostList);
+        // '내가 쓴 러닝 글' 전용 HTML 페이지 반환
+        return "post/my_posts_weight";
+    }
+
     @GetMapping("/write") // 글쓰기 폼
     public String writePostForm(Model model) {
         // "postForm"이라는 이름으로 빈 DTO 객체를 모델에 담아 전달
@@ -51,17 +86,16 @@ public class PostController {
         log.info("글쓴이 : {}", loginUserNo);
         try {
             postService.save(postFormDto, loginUserNo);
-            // 4. [성공 시] 리다이렉트 페이지로 "successMessage"를 보냄
+            // [성공 시] 리다이렉트 페이지로 "successMessage"를 보냄
             redirectAttributes.addFlashAttribute("successMessage", "게시글이 성공적으로 등록되었습니다.");
         } catch (Exception e) {
             log.error("게시글 저장 실패: {}", e.getMessage());
-            // 5. [실패 시] 리다이렉트 페이지로 "errorMessage"를 보냄
+            // [실패 시] 리다이렉트 페이지로 "errorMessage"를 보냄
             redirectAttributes.addFlashAttribute("errorMessage", "게시글 등록에 실패했습니다.");
             // (실패 시 목록이 아닌, 글쓰기 폼으로 다시 돌려보낼 수도 있음)
             // return "redirect:/posts/write";
         }
-
-        // 6. 저장이 성공하든 실패하든, 메시지를 담아서 목록 페이지로 리다이렉트
+        // 저장이 성공하든 실패하든, 메시지를 담아서 목록 페이지로 리다이렉트
         return "redirect:/posts"; // 추후 이(가) 완료되었습니다 공통 페이지로 변경 필요
     }
 
@@ -85,7 +119,7 @@ public class PostController {
         // 로그인한 사용자와 게시글 작성자가 같은지 확인
         User loginUser = (User) session.getAttribute("loginUser");
         if (loginUser == null || !loginUser.getUserNo().equals(post.getUserNo())) {
-            // 권한이 없다면 글 목록으로 리다이렉트)
+            // 권한이 없다면 글 목록으로 리다이렉트
             return "redirect:/posts";
         }
 
@@ -100,7 +134,6 @@ public class PostController {
         model.addAttribute("postForm", postForm);
         // 어떤 게시글을 수정하는지 ID를 모델에 담음
         model.addAttribute("postId", postId);
-
         // 글쓰기 폼(write.html)을 재활용
         return "post/write";
     }
