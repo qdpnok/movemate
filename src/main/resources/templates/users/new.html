@@ -111,7 +111,7 @@
             </div>
             <div>
                 <label>
-                    <select id="new_select" name="region" class="region" required>
+                    <select id="new_select" name="region" class="region" th:field="*{region}" required>
                         <option disabled hidden="hidden" selected value="">지역 선택</option>
                     </select>
                 </label>

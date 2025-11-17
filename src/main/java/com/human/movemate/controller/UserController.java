@@ -62,9 +62,21 @@ public class UserController {
     public String editPage(Model model, HttpSession session) {
         User user = (User) session.getAttribute("loginUser");
         if(user == null) return "redirect:/";
-        model.addAttribute("userForm", new UserProDto());
-        model.addAttribute("userInfo", userService.getByNo(user.getUserNo()));
+        UserProDto userProDto = userService.getByNo(user.getUserNo());
+        log.info("유저 정보(비번) : {}", userProDto.getPassword());
+        model.addAttribute("userInfo", userProDto);
         return "users/edit";
+    }
+
+    @PostMapping("/{no}/edit")
+    public String edit(@ModelAttribute UserProDto userProDto,
+                         @RequestParam(value = "profileImage", required = false) MultipartFile profileImage,
+                       @PathVariable Long no) {
+
+        log.info("멤버 id: {}, 멤버 객체: {}", no, userProDto);
+        userService.update(no, userProDto, profileImage);
+
+        return "redirect:/";
     }
 
 }

@@ -77,6 +77,7 @@ public class FileStorageServiceImpl implements FileStorageService {
         try {
             Path p = Paths.get(uploadDir, relativePath);
             Files.deleteIfExists(p);
+            log.trace("파일을 삭제했습니다.");
         } catch (IOException ignore) {}
     }
 

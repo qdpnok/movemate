@@ -5,11 +5,13 @@ import com.human.movemate.dao.UserProfileDao;
 import com.human.movemate.dto.UserProDto;
 import com.human.movemate.model.User;
 import com.human.movemate.model.UserProfile;
+import com.human.movemate.service.FileStorageService;
 import com.human.movemate.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 // @ 붙은 애들을 어노테이션이라고 부름
 
@@ -23,6 +25,7 @@ public class UserServiceImpl implements UserService {
     // UserDao 클래스의 기능을 사용하기 위한 의존성 주입
     private final UserDao userDao;
     private final UserProfileDao userProfileDao;
+    private final FileStorageService fileStorageService;
 
     // 상속을 준 인터페이스 (UserService) 에
     // 생성자 (public), 반환타입 (boolean), 메서드 이름 (signup), 매개변수 (User user)가
@@ -62,8 +65,32 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean update(Long no, User user) {
-        return userDao.update(no, user);
+    @Transactional
+    public boolean update(Long userNo, UserProDto userProDto, MultipartFile profileImage) {
+        UserProDto originalInfo = userProfileDao.findByNo(userNo);
+
+        String pwd = userProDto.getPassword();
+        if(pwd == null || pwd.isEmpty()) {
+            pwd = originalInfo.getPassword();
+            log.info("기존의 비밀번호: {}", pwd);
+        }
+
+        String imagePath = originalInfo.getProfileImageUrl();
+        if(profileImage != null && !profileImage.isEmpty()) {
+            fileStorageService.deleteIfExists(imagePath);
+            imagePath = fileStorageService.storeFile(profileImage, "users", userNo);
+        }
+
+        boolean userUpdateSuccess = userDao.update(userNo, new User(userNo, userProDto.getName(),
+                userProDto.getUserId(), pwd,
+                userProDto.getEmail(), userProDto.getPhoneNo()));
+
+        boolean profileUpdateSuccess = userProfileDao.update(userNo, new UserProfile(
+                userProDto.getProfileId(), userNo, userProDto.getGender(),
+                userProDto.getAge(), userProDto.getPreferMatchingType(), userProDto.getRegion(),
+                userProDto.getSportType(), userProDto.getPaceDetail(), imagePath));
+
+        return userUpdateSuccess && profileUpdateSuccess;
     }
 
     @Override

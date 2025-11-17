@@ -75,7 +75,6 @@ public class UserDao {
         return list.isEmpty() ? null : list.get(0);
     }
 
-
     // ID로 값 변경 UPDATE 예제
 
     // public -> 접근제한자. 해당 메서드를 이 클래스 외부에서도 호출할 수 있음을 의미
@@ -86,7 +85,10 @@ public class UserDao {
     public boolean update(Long no, User user){
         // UPDATE [테이블명] SET [변경할 칼럼명1] = ?, ... , [변경할 칼럼명n] = ? WHERE [조건]
         @Language("SQL")
-        String sql = "UPDATE USERS SET pwd = ?, name =? WHERE user_no = ?";
+        String sql = """
+        UPDATE USERS SET name = ?, user_id = ?, password = ?, email = ?, phone_no = ?
+        WHERE user_no = ?
+        """;
 
         // jdbc.update : 데이터 삽입, 수정, 삭제에 사용함.
         // update( sql, ?에 담을 값 1, ... , ?에 담을 값 n);
@@ -95,7 +97,8 @@ public class UserDao {
 
         // jdbc.update는 삽입, 수정, 삭제에 성공한 행의 갯수를 반환함.
         // 때문에 결과값이 0보다 큰지 검사해서 성공/실패 여부를 확인
-        return jdbc.update(sql, user.getPassword(), user.getName(), no) > 0;
+        return jdbc.update(sql,user.getName(), user.getUserId(), user.getPassword(),
+                user.getEmail(), user.getPhoneNo(), no) > 0;
     }
 
 

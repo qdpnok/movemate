@@ -12,8 +12,9 @@
 <div layout:fragment="content">
   <h1>회원 정보 수정</h1>
   <form
-                th:action="@{/users/edit}"
-                th:object="${userForm}"
+                th:action="@{/users/{userNo}/edit(userNo=${userInfo.userNo})}"
+                th:object="${userInfo}"
+                method="post"
                 enctype="multipart/form-data"
         >
     <div id="user-info-edit-container">
@@ -31,7 +32,7 @@
           <p>프로필 사진</p>
           <div id="profile-img-button">
             <label for="profileImageInput" >
-              <button>사진 변경</button>
+              <button id="edit-profile-button" type="button">사진 변경</button>
               <input id="profileImageInput" type="file" name="profileImage" accept="image/*">
             </label>
             <button>사진 삭제</button>
@@ -44,49 +45,49 @@
         <tr>
           <td>이름:</td>
           <td>
-            <input type="text" class="input-txt" placeholder="변경할 이름을 입력해주세요." th:value="${userInfo.name}">
+            <input type="text" class="input-txt" placeholder="변경할 이름을 입력해주세요." th:field="*{name}" required>
             <p class="signup-check"></p>
           </td>
         </tr>
         <tr>
           <td>아이디:</td>
           <td>
-            <input type="text" class="input-txt" placeholder="변경할 아이디를 입력해주세요." th:value="${userInfo.userId}">
+            <input type="text" class="input-txt" placeholder="변경할 아이디를 입력해주세요." th:field="*{userId}" required>
             <p class="signup-check"></p>
           </td>
         </tr>
         <tr>
           <td>이메일:</td>
           <td>
-            <input type="text" class="input-txt" placeholder="변경할 이메일을 입력해주세요." th:value="${userInfo.email}">
+            <input type="text" class="input-txt" placeholder="변경할 이메일을 입력해주세요." th:field="*{email}" required>
             <p class="signup-check"></p>
           </td>
         </tr>
         <tr>
           <td>비밀번호:</td>
           <td>
-            <input type="password" class="input-txt" placeholder="변경할 비밀번호를 입력해주세요." th:value="${userInfo.password}">
+            <input type="password" class="input-txt" placeholder="변경할 비밀번호를 입력해주세요. (비워두면 기존 유지)" name="password">
             <p class="signup-check"></p>
           </td>
         </tr>
         <tr>
           <td>비밀번호 확인:</td>
           <td>
-            <input type="password" class="input-txt" placeholder="비밀번호를 한번 더 입력해주세요." th:value="${userInfo.password}">
+            <input type="password" class="input-txt" placeholder="비밀번호를 한번 더 입력해주세요.">
             <p class="signup-check"></p>
           </td>
         </tr>
         <tr>
           <td>휴대폰번호:</td>
           <td>
-            <input type="text" class="input-txt" placeholder="변경할 휴대폰번호를 입력해주세요." th:value="${userInfo.phoneNo}">
+            <input type="text" class="input-txt" placeholder="변경할 휴대폰번호를 입력해주세요." th:value="${userInfo.phoneNo}" th:field="*{phoneNo}" required>
             <p class="signup-check"></p>
           </td>
         </tr>
         <tr>
           <td>지역:</td>
           <td>
-            <select name="region" id="select-region">
+            <select name="region" id="select-region" th:field="*{region}">
               <option disabled hidden="hidden" value="">변경할 지역을 선택해주세요</option>
             </select>
         <p class="signup-check"></p>
@@ -99,21 +100,30 @@
         <tr>
           <td>나이:</td>
           <td>
-            <input type="text" class="input-txt" placeholder="변경할 나이를 만 나이로 입력해주세요." th:value="${userInfo.age}">
+            <input type="text" class="input-txt" placeholder="변경할 나이를 만 나이로 입력해주세요." th:field="*{age}" required>
         <p class="signup-check"></p>
           </td>
         </tr>
         <tr>
           <td>운동종목:</td>
           <td>
-            <input type="text" class="input-txt" placeholder="변경할 나이를 만 나이로 입력해주세요.">
-        <p>변경할 운동종목을 선택해주세요.</p>
+            <label class="type-label" for="sportR">운동 종목</label>
+                <div class="choice">
+                    <input type="radio" name="sport" id="sportR" th:field="*{sportType}" value="러닝" />러닝
+                </div>
+                <div class="choice">
+                    <input type="radio" name="sport" id="sportW" th:field="*{sportType}" value="웨이트" />웨이트
+                </div>
+                <div class="choice">
+                    <input type="radio" name="sport" id="sportA" th:field="*{sportType}" value="모두" />모두 선택
+                </div>
+                <p>변경할 운동종목을 선택해주세요.</p>
           </td>
         </tr>
         <tr>
           <td>러닝페이스:</td>
           <td>
-            <input type="text" class="input-txt" placeholder="MM:ss" th:value="${userInfo.paceDetail}" />
+            <input type="text" class="input-txt" placeholder="MM:ss" th:field="*{paceDetail}"/>
             <p class="signup-check"></p>
           </td>
         </tr>
@@ -160,11 +170,11 @@
           const input = document.getElementById('profileImageInput');
           const img = document.getElementById('avatarPreview');
           const label = document.getElementById('label-signup-profile');
-          const button = document.getElementById('btn-upload-profile');
+          const button = document.getElementById('edit-profile-button');
 
           // 서버에서 내려온 원본 이미지 경로 저장(없으면 빈 문자열)
-          const originalSrc = /*[[${userForm != null}]]*/ false
-                  ? /*[[${userForm.profileImageUrl} != null ? @{/files/{file}(file=${userForm.profileImageUrl})} : @{/images/profile.png}]]*/ ''
+          const originalSrc = /*[[${userInfo != null}]]*/ false
+                  ? /*[[${userInfo.profileImageUrl} != null ? @{/files/{file}(file=${userInfo.profileImageUrl})} : @{/images/profile.png}]]*/ ''
                   : '';
 
           let objectUrl = null;
