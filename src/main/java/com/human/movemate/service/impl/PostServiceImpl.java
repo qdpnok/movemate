@@ -105,4 +105,10 @@ public class PostServiceImpl implements PostService {
         }
 
     }
+
+    // 내가 쓴 글만 조회하기
+    @Override
+    public List<Post> findMyPosts(Long userNo, Long boardTypeNo) {
+        return postDao.findByUserNo(userNo, boardTypeNo);
+    }
 }

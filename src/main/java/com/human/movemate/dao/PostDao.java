@@ -17,6 +17,7 @@ import java.util.List;
 public class PostDao {
     private final JdbcTemplate jdbc;
 
+    // 게시글 조회
     public List<Post> get(Long boardTypeNo) {
         @Language("SQL")
         String sql = "SELECT " +
@@ -27,11 +28,11 @@ public class PostDao {
                 "FROM POST p " +
                 "JOIN USERS u ON p.user_no = u.user_no " + // user_no로 JOIN
                 "LEFT JOIN USER_PROFILE up ON u.user_no = up.user_no " +
-                "WHERE p.board_type_no = ?"; // board_type_no로 필터링
+                "WHERE p.board_type_no = ? " + // board_type_no로 필터링
+                "ORDER BY p.created_at DESC"; //최신순 정렬
         return jdbc.query(sql, new PostRowMapper(), boardTypeNo);
     }
 
-    // 게시글 조회
     public Post getById(Long postId) {
         @Language("SQL")
         String sql = "SELECT " +
@@ -41,14 +42,29 @@ public class PostDao {
                 "FROM POST p " +
                 "JOIN USERS u ON p.user_no = u.user_no " +
                 "LEFT JOIN USER_PROFILE up ON u.user_no = up.user_no " + // USER_PROFILE 조인
-                "WHERE p.post_no = ?" + // post_no로 조회
-                "ORDER BY p.created_at DESC";
+                "WHERE p.post_no = ? "; // post_no로 조회
         try {
             // queryForObject : 결과가 1개가 아니면(없거나 많으면) 예외를 던짐
             return jdbc.queryForObject(sql, new PostRowMapper(), postId);
         } catch (EmptyResultDataAccessException e) {
             return null; // 게시글 없으면 null 반환
         }
+    }
+
+    // 내가 쓴 글만 조회하기
+    public List<Post> findByUserNo(Long userNo, Long boardTypeNo) {
+        @Language("SQL")
+        String sql = "SELECT " +
+                "  p.post_no, p.board_type_no, p.user_no, " +
+                "  p.title, p.content, p.created_at, p.image_url, " +
+                "  u.user_id, " +
+                "  up.profile_image_url " +
+                "FROM POST p " +
+                "JOIN USERS u ON p.user_no = u.user_no " +
+                "LEFT JOIN USER_PROFILE up ON u.user_no = up.user_no " +
+                "WHERE p.user_no = ? AND p.board_type_no = ? " + // user_no, 게시판 종류로 필터링
+                "ORDER BY p.created_at DESC"; // 최신순 정렬
+        return jdbc.query(sql, new PostRowMapper(), userNo, boardTypeNo);
     }
 
     // 게시글 저장

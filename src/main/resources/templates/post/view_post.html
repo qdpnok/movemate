@@ -18,7 +18,7 @@
             <h1 class="board">게시판 글 조회</h1>
 
             <div class="view-top-header">
-                <a href="#" class="btn-view-list">내가 쓴 글 조회</a>
+                <a th:href="@{/posts/my_post}" class="btn-view-list">내가 쓴 글 조회</a>
             </div>
 
             <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
@@ -71,13 +71,14 @@
                                 </div>
                                 <p class="comment-text" th:text="${comment.content}"></p>
                             </div>
+                            <div class="comment-actions"
+                                th:if="${session.loginUser != null and session.loginUser.userNo == comment.userNo}">
+                                <button type="button" class="btn-comment-edit">수정</button>
+                                <a th:href="@{/comments/delete/{id}(id=${comment.commentNo})}"
+                                    class="btn-comment-delete" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
+                            </div>
                         </div>
-                        <div class="comment-actions"
-                            th:if="${session.loginUser != null and session.loginUser.userNo == comment.userNo}">
-                            <button type="button" class="btn-comment-edit">수정</button>
-                            <a th:href="@{/comments/delete/{id}(id=${comment.commentNo})}" class="btn-comment-delete"
-                                onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
-                        </div>
+
 
                         <form th:action="@{/comments/update}" method="post" class="comment-edit-form">
                             <input type="hidden" name="commentNo" th:value="${comment.commentNo}" />
