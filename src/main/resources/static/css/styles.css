@@ -638,7 +638,7 @@ hamburgerButton.addEventListener('click', () => {
 /* * 여기부터 post.html 메이트 게시판 스타일 * * */
 /* * * * * * * * * * * * * * * * * * * * * * * */
 
-.postcontainer {
+.post-container {
   max-width: 1200px;
   margin: 30px auto;
   padding: 0 20px;
