@@ -27,7 +27,7 @@
         <div class="post-view-box">
             <div class="post-author-box">
                 <div class="author-profile">
-                    <img th:src="*{authorProfileUrl == null} ? @{/images/default_profile.png} : @{'/files/' + *{authorProfileUrl}}"
+                    <img th:src="${post.authorProfileUrl == null} ? @{/images/default_profile.png} : @{'/files/' + ${post.authorProfileUrl}}"
                          alt="프로필 사진">
                     <span class="author-name" th:text="${post.authorId}"></span>
                 </div>
@@ -38,7 +38,7 @@
             <h2 class="post-title" th:text="${post.title}"></h2>
 
             <div class="post-image-box" th:if="${post.imageUrl != null}">
-                <img th:src="@{'/files/' + *{imageUrl}}" alt="게시글 첨부 이미지">
+                <img th:src="@{'/files/' + ${post.imageUrl}}" alt="게시글 첨부 이미지">
             </div>
 
             <div class="post-content" th:text="${post.content}">
@@ -52,8 +52,7 @@
                 <li class="comment-item" th:each="comment : ${comments}" th:id="|comment-${comment.commentNo}|">
 
                     <div class="comment-view-mode">
-                        <img th:src="${comment.authorProfileUrl == null} ? @{/images/default_profile.png} : @{'/files/' + ${comment.authorProfileUrl}}"
-                             alt="프로필" class="comment-profile-img">
+                        <img th:src="${comment.authorProfileUrl == null} ? @{/images/default_profile.png} : @{'/files/' + ${comment.authorProfileUrl}}" alt="프로필" class="comment-profile-img">
 
                         <div class="comment-content-box">
                             <div class="comment-author-info">

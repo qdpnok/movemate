@@ -17,7 +17,7 @@ import java.util.UUID;
 @Slf4j
 public class FileStorageServiceImpl implements FileStorageService {
     // application.properties에서 'file.upload-dir' 값을 주입받음
-    @Value("${app.upload.dir}")
+    @Value("${file.upload-dir}")
     private String uploadDir;
 
     // PostController가 호출하는 메서드
@@ -38,6 +38,7 @@ public class FileStorageServiceImpl implements FileStorageService {
             }
 
             // 파일명 중복 방지를 위한 UUID, id가 있으면 id 값으로 저장
+            // (파일명 생성)
             String original = file.getOriginalFilename();
             String ext = "";
             if (original != null && original.lastIndexOf('.') > -1) {
@@ -53,11 +54,10 @@ public class FileStorageServiceImpl implements FileStorageService {
             storedFileName += ext;
 
             // 최종 저장 경로
+            // (파일 저장)
             Path filePath = uploadPath.resolve(storedFileName);
-
             // 디버깅 로그
             log.info("파일 저장 시도: {}", filePath);
-
             // 파일 저장 (Files.copy)
             Files.copy(file.getInputStream(), filePath);
 

@@ -69,6 +69,7 @@ public class PostController {
     public String postView(@PathVariable("postId") Long postId, Model model) {
         // 게시글 정보 조회 (작성자 프로필 사진 포함) / Service를 호출해 1개의 게시글 정보를 가져옴
         Post post = postService.findById(postId);
+        log.info("회원 이미지 링크 : {}", post.getAuthorProfileUrl());
         // 댓글 목록 조회
         model.addAttribute("post", post);
         model.addAttribute("comments", commentService.findByPostId(postId));
