@@ -111,8 +111,8 @@
             </div>
             <div>
                 <label>
-                    <select id="new_select" name="region" class="region">
-                        <option disabled hidden="hidden" selected>지역 선택</option>
+                    <select id="new_select" name="region" class="region" required>
+                        <option disabled hidden="hidden" selected value="">지역 선택</option>
                     </select>
                 </label>
             </div>
@@ -189,6 +189,8 @@
         const telInput = document.querySelector(".input-tel");
         const telCheck = document.querySelector(".check-tel");
 
+        const regionInput = document.querySelector(".region");
+
         const mInput = document.getElementById("male");
         const fInput = document.getElementById("female");
 
@@ -251,6 +253,8 @@
           return sportRunning.checked || sportWeight.checked || sportAll.checked
         }
 
+        const rCheck = () => { return regionInput.value !== "" }
+
         // submit 활성화/비활성화
         const updateSubmitBtn = () => {
           const i = validate(
@@ -279,10 +283,11 @@
             "사용 가능합니다.",
             " - 을 포함하여 올바른 휴대폰번호 형식으로 입력해주세요.");
 
-          const r = gCheck();
+          const g = gCheck();
           const s = sportCheck();
+          const r = rCheck();
 
-          submitBtn.disabled = !(i && p && pc && m && pn && r && s);
+          submitBtn.disabled = !(i && p && pc && m && pn && g && s && r);
         };
 
         idInput.addEventListener("input", updateSubmitBtn);
@@ -295,6 +300,7 @@
         sportRunning.addEventListener("click", updateSubmitBtn);
         sportWeight.addEventListener("click", updateSubmitBtn);
         sportAll.addEventListener("click", updateSubmitBtn);
+        regionInput.addEventListener("change", updateSubmitBtn)
 
         // 운동 종목 선택에 따라 페이스 입력란 보이기
         const paceBox = document.getElementById("signup-box-pace");
