@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
-      layout:decorate="~{/layout/main}">
+    layout:decorate="~{/layout/main}">
+
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
@@ -9,63 +10,71 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
     <title>게시판 글 조회</title>
 </head>
+
 <body>
-<div layout:fragment="content">
+    <div layout:fragment="content">
 
-    <div class="view-container" th:object="${post}">
+        <div class="view-container" th:object="${post}">
 
-        <div class="view-top-header">
-            <h1 class="view-page-title">게시판 글 조회</h1>
-            <a href="#" class="btn-view-list">내가 쓴 글 조회</a>
-        </div>
 
-        <div class="post-view-box">
-            <div class="post-author-box">
-                <div class="author-profile">
-                    <img th:src="*{authorProfileUrl == null} ? @{/images/default_profile.png} : @{/images/{filename}(filename=*{authorProfileUrl})}"
-                         alt="프로필 사진">
-                    <span class="author-name" th:text="*{authorId}"></span>
-                </div>
-                <span class="post-date" th:text="${#temporals.format(post.createdAt,'yyyy-MM-dd')}">2025-11-10</span>
+            <h1 class="board">게시판 글 조회</h1>
+
+            <div class="view-top-header">
+                <a href="#" class="btn-view-list">내가 쓴 글 조회</a>
             </div>
 
-            <h2 class="post-title" th:text="*{title}"></h2>
 
-            <div class="post-image-box" th:if="*{imageUrl != null}">
-                <img th:src="@{/images/{filename}(filename=*{imageUrl})}" alt="게시글 첨부 이미지">
-            </div>
-
-            <div class="post-content" th:text="*{content}">
-
-            </div>
-        </div>
-
-        <div class="comment-section">
-
-            <ul class="comment-list">
-                <li class="comment-item" th:each="comment : ${comments}">
-                    <img th:src="${comment.authorProfileUrl == null} ? @{/images/default_profile.png} : @{/images/{filename}(filename=${comment.authorProfileUrl})}"
-                         alt="프로필" class="comment-profile-img">
-
-                    <div class="comment-content-box">
-                        <div class="comment-author-info">
-                            <span class="comment-author-name" th:text="${comment.authorId}"></span>
-                            <span class="comment-date" th:text="${#temporals.format(comment.createdAt, 'MM-dd HH:mm')}"></span>
-                        </div>
-                        <p class="comment-text" th:text="${comment.content}"></p>
+            <div class="post-view-box">
+                <div class="post-author-box">
+                    <div class="author-profile">
+                        <img th:src="*{authorProfileUrl == null} ? @{/images/default_profile.png} : @{/images/{filename}(filename=*{authorProfileUrl})}"
+                            alt="프로필 사진">
+                        <span class="author-name" th:text="*{authorId}"></span>
                     </div>
+                    <span class="post-date"
+                        th:text="${#temporals.format(post.createdAt,'yyyy-MM-dd')}">2025-11-10</span>
+                </div>
 
-                </li>
-            </ul>
+                <h2 class="post-title" th:text="*{title}"></h2>
 
-            <form action="#" class="comment-form">
-                <textarea class="comment-textarea" placeholder="댓글 입력..."></textarea>
-                <button type="submit" class="btn-comment-submit">등록</button>
-            </form>
+                <div class="post-image-box" th:if="*{imageUrl != null}">
+                    <img th:src="@{/images/{filename}(filename=*{imageUrl})}" alt="게시글 첨부 이미지">
+                </div>
 
+                <div class="post-content" th:text="*{content}">
+
+                </div>
+            </div>
+
+            <div class="comment-section">
+
+                <ul class="comment-list">
+                    <li class="comment-item" th:each="comment : ${comments}">
+                        <img th:src="${comment.authorProfileUrl == null} ? @{/images/default_profile.png} : @{/images/{filename}(filename=${comment.authorProfileUrl})}"
+                            alt="프로필" class="comment-profile-img">
+
+                        <div class="comment-content-box">
+                            <div class="comment-author-info">
+                                <span class="comment-author-name" th:text="${comment.authorId}"></span>
+                                <span class="comment-date"
+                                    th:text="${#temporals.format(comment.createdAt, 'MM-dd HH:mm')}"></span>
+                            </div>
+                            <p class="comment-text" th:text="${comment.content}"></p>
+                        </div>
+
+                    </li>
+                </ul>
+
+                <form action="#" class="comment-form">
+                    <textarea class="comment-textarea" placeholder="댓글 입력..."></textarea>
+                    <button type="submit" class="btn-comment-submit">등록</button>
+                </form>
+
+            </div>
         </div>
-    </div>
 
-</div>
+    </div>
+    </div>
 </body>
+
 </html>
