@@ -24,19 +24,19 @@
                 <div class="author-profile">
                     <img th:src="*{authorProfileUrl == null} ? @{/images/default_profile.png} : @{/images/{filename}(filename=*{authorProfileUrl})}"
                          alt="프로필 사진">
-                    <span class="author-name" th:text="*{authorId}">로제</span>
+                    <span class="author-name" th:text="*{authorId}"></span>
                 </div>
                 <span class="post-date" th:text="${#temporals.format(post.createdAt,'yyyy-MM-dd')}">2025-11-10</span>
             </div>
 
-            <h2 class="post-title" th:text="*{title}">몸짱클럽 가입인사</h2>
+            <h2 class="post-title" th:text="*{title}"></h2>
 
             <div class="post-image-box" th:if="*{imageUrl != null}">
                 <img th:src="@{/images/{filename}(filename=*{imageUrl})}" alt="게시글 첨부 이미지">
             </div>
 
             <div class="post-content" th:text="*{content}">
-                안녕하세요. 반갑습니다! ...
+
             </div>
         </div>
 
@@ -49,10 +49,10 @@
 
                     <div class="comment-content-box">
                         <div class="comment-author-info">
-                            <span class="comment-author-name" th:text="${comment.authorId}">리사</span>
-                            <span class="comment-date" th:text="${#temporals.format(comment.createdAt, 'MM-dd HH:mm')}">11-10 14:30</span>
+                            <span class="comment-author-name" th:text="${comment.authorId}"></span>
+                            <span class="comment-date" th:text="${#temporals.format(comment.createdAt, 'MM-dd HH:mm')}"></span>
                         </div>
-                        <p class="comment-text" th:text="${comment.content}">트가뭔용~</p>
+                        <p class="comment-text" th:text="${comment.content}"></p>
                     </div>
 
                 </li>
