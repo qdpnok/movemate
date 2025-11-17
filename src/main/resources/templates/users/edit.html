@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{/layout/main}"
+>
+<head>
+    <meta charset="UTF-8" />
+    <title>my info edit</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <h1>회원 정보 수정</h1>
+    <div id="user-info-edit-container">
+      <div id="profile-img-edit">
+        <div id="profile-img"></div>
+        <div id="profile-img-box">
+          <p>프로필 사진</p>
+          <div id="profile-img-button">
+            <button>사진 변경</button>
+            <button>사진 삭제</button>
+          </div>
+        </div>
+      </div>
+      <div class="edit-box">
+        <p>이름:</p>
+        <input type="text" class="input-txt" placeholder="변경할 이름을 입력해주세요.">
+        <p class="signup-check"></p>
+      </div>
+      <div class="edit-box">
+        <p>아이디:</p>
+        <input type="text" class="input-txt" placeholder="변경할 아이디를 입력해주세요.">
+        <p class="signup-check"></p>
+      </div>
+      <div class="edit-box">
+        <p>이메일:</p>
+        <input type="text" class="input-txt" placeholder="변경할 이메일을 입력해주세요.">
+        <p class="signup-check"></p>
+      </div>
+      <div class="edit-box">
+        <p>비밀번호:</p>
+        <input type="text" class="input-txt" placeholder="변경할 비밀번호를 입력해주세요.">
+        <p class="signup-check"></p>
+      </div>
+      <div class="edit-box">
+        <p>비밀번호 확인:</p>
+        <input type="text" class="input-txt" placeholder="비밀번호를 한번 더 입력해주세요.">
+        <p class="signup-check"></p>
+      </div>
+      <div class="edit-box">
+        <p>휴대폰번호:</p>
+        <input type="text" class="input-txt" placeholder="변경할 휴대폰번호를 입력해주세요.">
+        <p class="signup-check"></p>
+      </div>
+      <div class="edit-box">
+        <p>지역:</p>
+        <input type="text" class="input-txt" placeholder="변경할 지역을 선택해주세요.">
+        <p class="signup-check"></p>
+      </div>
+      <div class="edit-box">
+        <p>성별:</p>
+        <p>여성</p>
+      </div>
+      <div class="edit-box">
+        <p>나이:</p>
+        <input type="text" class="input-txt" placeholder="변경할 나이를 만 나이로 입력해주세요.">
+        <p class="signup-check"></p>
+      </div>
+      <div class="edit-box">
+        <p>운동종목:</p>
+        <input type="text" class="input-txt" placeholder="변경할 나이를 만 나이로 입력해주세요.">
+        <p>변경할 운동종목을 선택해주세요.</p>
+        <p class="signup-check"></p>
+      </div>
+      <div>
+        
+      </div>
+    </div>
+</div>
+</body>
+</html>
