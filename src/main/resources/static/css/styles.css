@@ -675,8 +675,8 @@ hamburgerButton.addEventListener('click', () => {
 }
 
 /* 게시판 선택되면 스타일 적용 */
-.tab-running-post a,
-.tab-weight-post a {
+.weight-post.active a,
+.running-post.active a {
   display: flex;
   justify-content: center;
   align-items: center;
