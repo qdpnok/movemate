@@ -47,4 +47,10 @@ public class PostServiceImpl implements PostService {
         postDao.save(post);
 
     }
+
+    // 게시글 상세 조회
+    @Override
+    public Post findById(Long postId) {
+        return postDao.getById(postId);
+    }
 }

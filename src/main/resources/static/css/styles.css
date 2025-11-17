@@ -804,9 +804,9 @@ hamburgerButton.addEventListener('click', () => {
 /* * * * * * * * * * * * * * * * * * * * * * * */
 
 
-/* =================================================== */
-/* 게시글 작성 폼 (write.html) 스타일 */
-/* =================================================== */
+/* * * * * * * * * * * * * * * * * * * * * * * */
+/* * 여기부터 write.html 게시판 작성 폼 스타일 * * */
+/* * * * * * * * * * * * * * * * * * * * * * * */
 
 .write-container {
   max-width: 800px;
@@ -953,3 +953,203 @@ hamburgerButton.addEventListener('click', () => {
   color: #721c24;
   border: 1px solid #f5c6cb;
 }
+
+/* * * * * * * * * * * * * * * * * * * * * * * */
+/* * 여기까지 write.html 게시판 작성 폼 스타일 * * */
+/* * * * * * * * * * * * * * * * * * * * * * * */
+
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * */
+/* * 여기부터 view_post.html 글 상세조회 스타일 * * */
+/* * * * * * * * * * * * * * * * * * * * * * * * */
+
+.view-container {
+ max-width: 900px;
+ margin: 40px auto;
+ padding: 20px;
+}
+
+/* 상단 (제목 + 버튼) */
+.view-top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.view-page-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-align: center;
+  flex-grow: 1; /* 중앙 차지 */
+  padding-left: 140px; /* 버튼 너비만큼 왼쪽 여백 줘서 중앙 정렬 */
+}
+.btn-view-list {
+  background-color: var(--primary);
+  color: white;
+  text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* 게시글 영역 */
+.post-view-box {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+/* 게시글 헤더 (작성자) */
+.post-author-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  border-bottom: 1px solid #f0f0f0;
+}
+.author-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.author-profile img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #ddd;
+}
+.author-name {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+.post-date {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+/* 게시글 제목, 이미지, 내용 */
+.post-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  padding: 25px 25px 10px 25px;
+}
+.post-image-box {
+  padding: 10px 25px;
+  text-align: center;
+}
+.post-image-box img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+.post-content {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #333;
+  padding: 20px 25px 40px 25px;
+  white-space: pre-wrap; /* \n 줄바꿈 적용 */
+  min-height: 200px;
+}
+
+/* 댓글 */
+
+.comment-section {
+  margin-top: 30px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+/* 댓글 목록 */
+.comment-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.comment-item {
+  display: flex;
+  padding: 20px 25px;
+  border-bottom: 1px solid #f0f0f0;
+  gap: 15px;
+}
+.comment-item:last-child {
+  border-bottom: none;
+}
+.comment-profile-img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #ddd;
+}
+.comment-content-box {
+  flex-grow: 1;
+}
+.comment-author-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.comment-author-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.comment-date {
+  font-size: 0.8rem;
+  color: #999;
+}
+.comment-text {
+  font-size: 0.95rem;
+  color: #444;
+  line-height: 1.6;
+}
+/* (댓글 수정/삭제 버튼 - 생략) */
+.comment-actions {
+  margin-left: auto;
+}
+.btn-comment-edit, .btn-comment-delete {
+  background: none; border: none; font-size: 0.8rem; color: #888; cursor: pointer;
+}
+.btn-comment-delete { color: var(--secondary); }
+
+
+/* 댓글 입력 폼 */
+.comment-form {
+  display: flex;
+  padding: 20px 25px;
+  background-color: #f8f9fa; /* 폼 배경색 */
+  border-top: 1px solid #eee;
+  gap: 10px;
+}
+.comment-textarea {
+  flex-grow: 1;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 0.95rem;
+  resize: vertical;
+  min-height: 80px;
+}
+.btn-comment-submit {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  padding: 0 25px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.btn-comment-submit:hover {
+  background-color: #3a46b0;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * */
+/* * 여기까지 view_post.html 글 상세조회 스타일 * * */
+/* * * * * * * * * * * * * * * * * * * * * * * * */

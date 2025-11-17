@@ -6,6 +6,7 @@ import org.intellij.lang.annotations.Language;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,13 +22,35 @@ public class PostDao {
         String sql = "SELECT " +
                 "  p.post_no, p.board_type_no, p.user_no, " +
                 "  p.title, p.content, p.created_at, p.image_url, " +
-                "  u.user_id " + // USERS 테이블의 user_id
+                "  u.user_id, " + // USERS 테이블의 user_id
+                "  up.profile_image_url " +
                 "FROM POST p " +
                 "JOIN USERS u ON p.user_no = u.user_no " + // user_no로 JOIN
+                "LEFT JOIN USER_PROFILE up ON u.user_no = up.user_no " +
                 "WHERE p.board_type_no = ?"; // board_type_no로 필터링
         return jdbc.query(sql, new PostRowMapper(), boardTypeNo);
     }
 
+    // 게시글 조회
+    public Post getById(Long postId) {
+        @Language("SQL")
+        String sql = "SELECT " +
+                "  p.post_no, p.board_type_no, p.user_no, " +
+                "  p.title, p.content, p.created_at, p.image_url, " +
+                "  u.user_id, up.profile_image_url " +
+                "FROM POST p " +
+                "JOIN USERS u ON p.user_no = u.user_no " +
+                "LEFT JOIN USER_PROFILE up ON u.user_no = up.user_no " + // USER_PROFILE 조인
+                "WHERE p.post_no = ?"; // post_no로 조회
+        try {
+            // queryForObject : 결과가 1개가 아니면(없거나 많으면) 예외를 던짐
+            return jdbc.queryForObject(sql, new PostRowMapper(), postId);
+        } catch (EmptyResultDataAccessException e) {
+            return null; // 게시글 없으면 null 반환
+        }
+    }
+
+    // 게시글 저장
     public void save(Post post) {
         @Language("SQL")
         String sql = "INSERT INTO POST (board_type_no, user_no, title, content, image_url) " +
@@ -41,8 +64,8 @@ public class PostDao {
         );
     }
 
+    // RowMapper
     static class PostRowMapper implements RowMapper<Post> {
-
         @Override
         public Post mapRow(ResultSet rs, int rowNum) throws SQLException {
             return new Post(
@@ -53,7 +76,8 @@ public class PostDao {
                     rs.getString("content"),
                     rs.getTimestamp("created_at").toLocalDateTime(),
                     rs.getString("image_url"),
-                    rs.getString("user_id")
+                    rs.getString("user_id"),
+                    rs.getString("profile_image_url")
             );
         }
     }
