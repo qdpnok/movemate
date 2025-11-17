@@ -44,7 +44,9 @@
 
                 <div class="card" th:each="post : ${postList}">
 
-                    <h3 class="card-title" th:text="${post.title}">게시글 제목 영역...</h3>
+                    <a th:href="@{/posts/{postId}(postId=${post.postNo})}" class="card-title-link">
+                        <h3 class="card-title" th:text="${post.title}">게시글 제목 영역...</h3>
+                    </a>
                     <p class="card-content" th:text="${post.content}">
                         게시글 내용 미리보기 영역입니다... 내용은 적당히 잘려서 보여야함...
                     </p>
