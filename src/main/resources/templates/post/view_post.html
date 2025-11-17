@@ -62,11 +62,21 @@
                             <p class="comment-text" th:text="${comment.content}"></p>
                         </div>
 
+                        <div class="comment-actions">
+                            <a th:href="@{/comments/edit/{id}(id=${comment.commentNo})}" class="btn-comment-edit">수정</a>
+                            <a th:href="@{/comments/delete/{id}(id=${comment.commentNo})}" class="btn-comment-delete"
+                                onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
+                        </div>
+
                     </li>
                 </ul>
 
-                <form action="#" class="comment-form">
-                    <textarea class="comment-textarea" placeholder="댓글 입력..."></textarea>
+                <form th:action="@{/comments/save}" method="post" class="comment-form">
+
+                    <input type="hidden" name="postId" th:value="${post.postNo}" />
+
+                    <textarea class="comment-textarea" name="content" placeholder="댓글 입력..."></textarea>
+
                     <button type="submit" class="btn-comment-submit">등록</button>
                 </form>
 
