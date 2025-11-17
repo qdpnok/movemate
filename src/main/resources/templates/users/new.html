@@ -192,6 +192,10 @@
         const mInput = document.getElementById("male");
         const fInput = document.getElementById("female");
 
+        const sportRunning = document.getElementById('sportR');
+        const sportWeight = document.getElementById('sportW');
+        const sportAll = document.getElementById('sportA');
+
         const submitBtn = document.getElementById("signup-button");
 
         const regexId = /^\w{8,20}$/;
@@ -243,6 +247,10 @@
 
         const gCheck = () => { return mInput.checked || fInput.checked; }
 
+        const sportCheck = () => {
+          return sportRunning.checked || sportWeight.checked || sportAll.checked
+        }
+
         // submit 활성화/비활성화
         const updateSubmitBtn = () => {
           const i = validate(
@@ -272,8 +280,9 @@
             " - 을 포함하여 올바른 휴대폰번호 형식으로 입력해주세요.");
 
           const r = gCheck();
+          const s = sportCheck();
 
-          submitBtn.disabled = !(i && p && pc && m && pn && r);
+          submitBtn.disabled = !(i && p && pc && m && pn && r && s);
         };
 
         idInput.addEventListener("input", updateSubmitBtn);
@@ -283,17 +292,14 @@
         telInput.addEventListener("input", updateSubmitBtn);
         mInput.addEventListener("click", updateSubmitBtn);
         fInput.addEventListener("click", updateSubmitBtn);
+        sportRunning.addEventListener("click", updateSubmitBtn);
+        sportWeight.addEventListener("click", updateSubmitBtn);
+        sportAll.addEventListener("click", updateSubmitBtn);
 
         // 운동 종목 선택에 따라 페이스 입력란 보이기
-        const sportRunning = document.getElementById('sportR');
-        const sportWeight = document.getElementById('sportW');
-        const sportAll = document.getElementById('sportA');
-
         const paceBox = document.getElementById("signup-box-pace");
-
         const paceOpen = () => paceBox.style.display = 'flex';
         const paceClose = () => paceBox.style.display = 'none';
-      
 
         sportRunning.addEventListener("click", paceOpen);
         sportWeight.addEventListener("click", paceClose);
