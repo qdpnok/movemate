@@ -4,11 +4,13 @@ import com.human.movemate.dao.CommentDao;
 import com.human.movemate.dto.CommentDto;
 import com.human.movemate.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
@@ -23,8 +25,10 @@ public class CommentServiceImpl implements CommentService {
 
     // 저장
     @Override
-    public void save(Long postId, Long userId, String content) {
-        commentDao.commentSave(postId, userId, content);
+    public void save(Long postId, Long userNo, String content) {
+        log.info("댓글 저장 시도: postId={}, userNo={}, content={}", postId, userNo, content);
+        commentDao.commentSave(postId, userNo, content);
+        log.info("댓글 저장 성공");
     }
 
     // 삭제

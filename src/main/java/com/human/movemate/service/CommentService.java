@@ -8,7 +8,7 @@ public interface CommentService {
     List<CommentDto> findByPostId(Long postId);
 
     // 저장
-    void save(Long postId, Long userId, String content);
+    void save(Long postId, Long userNo, String content);
 
     // 삭제
     @Transactional

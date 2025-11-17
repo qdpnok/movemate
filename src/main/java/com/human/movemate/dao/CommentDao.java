@@ -34,10 +34,10 @@ public class CommentDao {
     }
 
     // 댓글 저장
-    public void commentSave(Long postId, Long userId, String content) {
+    public void commentSave(Long postId, Long userNo, String content) {
         @Language("SQL")
         String sql = "INSERT INTO COMMENTS (post_id, user_id, content) VALUES (?, ?, ?)";
-        jdbc.update(sql, postId, userId, content);
+        jdbc.update(sql, postId, userNo, content);
     }
 
     // 댓글 삭제

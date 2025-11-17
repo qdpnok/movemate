@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
-    layout:decorate="~{/layout/main}">
+      layout:decorate="~{/layout/main}">
 
 <head>
     <meta charset="UTF-8">
@@ -12,79 +12,127 @@
 </head>
 
 <body>
-    <div layout:fragment="content">
+<div layout:fragment="content">
 
-        <div class="view-container" th:object="${post}">
+    <div class="view-container"> <h1 class="board">게시판 글 조회</h1>
+
+        <div class="view-top-header">
+            <a href="#" class="btn-view-list">내가 쓴 글 조회</a>
+        </div>
+
+        <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+        <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
 
 
-            <h1 class="board">게시판 글 조회</h1>
-
-            <div class="view-top-header">
-                <a href="#" class="btn-view-list">내가 쓴 글 조회</a>
+        <div class="post-view-box">
+            <div class="post-author-box">
+                <div class="author-profile">
+                    <img th:src="${post.authorProfileUrl == null} ? @{/images/default_profile.png} : @{/images/{filename}(filename=${post.authorProfileUrl})}"
+                         alt="프로필 사진">
+                    <span class="author-name" th:text="${post.authorId}"></span>
+                </div>
+                <span class="post-date"
+                      th:text="${#temporals.format(post.createdAt,'yyyy-MM-dd HH:mm')}">2025-11-10</span>
             </div>
 
+            <h2 class="post-title" th:text="${post.title}"></h2>
 
-            <div class="post-view-box">
-                <div class="post-author-box">
-                    <div class="author-profile">
-                        <img th:src="*{authorProfileUrl == null} ? @{/images/default_profile.png} : @{/images/{filename}(filename=*{authorProfileUrl})}"
-                            alt="프로필 사진">
-                        <span class="author-name" th:text="*{authorId}"></span>
-                    </div>
-                    <span class="post-date"
-                        th:text="${#temporals.format(post.createdAt,'yyyy-MM-dd')}">2025-11-10</span>
-                </div>
-
-                <h2 class="post-title" th:text="*{title}"></h2>
-
-                <div class="post-image-box" th:if="*{imageUrl != null}">
-                    <img th:src="@{/images/{filename}(filename=*{imageUrl})}" alt="게시글 첨부 이미지">
-                </div>
-
-                <div class="post-content" th:text="*{content}">
-
-                </div>
+            <div class="post-image-box" th:if="${post.imageUrl != null}">
+                <img th:src="@{/images/{filename}(filename=${post.imageUrl})}" alt="게시글 첨부 이미지">
             </div>
 
-            <div class="comment-section">
+            <div class="post-content" th:text="${post.content}">
 
-                <ul class="comment-list">
-                    <li class="comment-item" th:each="comment : ${comments}">
+            </div>
+        </div>
+
+        <div class="comment-section">
+            <h3>댓글</h3>
+            <ul class="comment-list">
+                <li class="comment-item" th:each="comment : ${comments}" th:id="|comment-${comment.commentNo}|">
+
+                    <div class="comment-view-mode">
                         <img th:src="${comment.authorProfileUrl == null} ? @{/images/default_profile.png} : @{/images/{filename}(filename=${comment.authorProfileUrl})}"
-                            alt="프로필" class="comment-profile-img">
+                             alt="프로필" class="comment-profile-img">
 
                         <div class="comment-content-box">
                             <div class="comment-author-info">
                                 <span class="comment-author-name" th:text="${comment.authorId}"></span>
                                 <span class="comment-date"
-                                    th:text="${#temporals.format(comment.createdAt, 'MM-dd HH:mm')}"></span>
+                                      th:text="${#temporals.format(comment.createdAt, 'MM-dd HH:mm')}"></span>
                             </div>
                             <p class="comment-text" th:text="${comment.content}"></p>
                         </div>
 
-                        <div class="comment-actions">
-                            <a th:href="@{/comments/edit/{id}(id=${comment.commentNo})}" class="btn-comment-edit">수정</a>
+                        <div class="comment-actions" th:if="${session.loginUser != null and session.loginUser.userNo == comment.userNo}">
+                            <button type="button" class="btn-comment-edit">수정</button>
                             <a th:href="@{/comments/delete/{id}(id=${comment.commentNo})}" class="btn-comment-delete"
-                                onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
+                               onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
                         </div>
+                    </div>
 
-                    </li>
-                </ul>
+                    <form th:action="@{/comments/update}" method="post" class="comment-edit-form">
+                        <input type="hidden" name="commentNo" th:value="${comment.commentNo}" />
+                        <input type="hidden" name="postId" th:value="${post.postNo}" />
 
-                <form th:action="@{/comments/save}" method="post" class="comment-form">
+                        <textarea class="comment-edit-textarea" name="content" th:text="${comment.content}"></textarea>
 
-                    <input type="hidden" name="postId" th:value="${post.postNo}" />
+                        <div class="comment-edit-actions">
+                            <button type="button" class="btn-comment-cancel">취소</button>
+                            <button type="submit" class="btn-comment-save">저장</button>
+                        </div>
+                    </form>
+                </li>
+            </ul>
 
-                    <textarea class="comment-textarea" name="content" placeholder="댓글 입력..."></textarea>
+            <form th:action="@{/comments/save}" method="post" class="comment-form">
+                <input type="hidden" name="postId" th:value="${post.postNo}" />
+                <textarea class="comment-textarea" name="content" placeholder="댓글 입력..." th:disabled="${session.loginUser == null}"></textarea>
+                <button type="submit" class="btn-comment-submit" th:disabled="${session.loginUser == null}">등록</button>
+            </form>
 
-                    <button type="submit" class="btn-comment-submit">등록</button>
-                </form>
-
-            </div>
         </div>
+    </div>
 
-    </div>
-    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const editButtons = document.querySelectorAll('.btn-comment-edit');
+        const cancelButtons = document.querySelectorAll('.btn-comment-cancel');
+
+        editButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const commentItem = e.target.closest('.comment-item');
+                commentItem.classList.add('editing');
+            });
+        });
+
+        cancelButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const commentItem = button.closest('.comment-item');
+                commentItem.classList.remove('editing');
+                // 취소 시, textarea 내용을 원래 내용으로 되돌림 (선택 사항)
+                const originalContent = commentItem.querySelector('.comment-text').textContent;
+                commentItem.querySelector('.comment-edit-textarea').value = originalContent;
+            });
+        });
+
+        // flashAttribute 메시지 표시 및 자동 사라짐
+        const successMessage = document.querySelector('.alert-success');
+        const errorMessage = document.querySelector('.alert-danger');
+
+        if (successMessage) {
+            setTimeout(() => {
+                successMessage.remove();
+            }, 3000); // 3초 후 사라짐
+        }
+        if (errorMessage) {
+            setTimeout(() => {
+                errorMessage.remove();
+            }, 3000); // 3초 후 사라짐
+        }
+    });
+</script>
 </body>
-
 </html>
