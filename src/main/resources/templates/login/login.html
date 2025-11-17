@@ -14,6 +14,9 @@
       <form id="login-form" th:action="@{/login}" method="post">
         <input type="text" class="input-txt" name="userId" placeholder="아이디" />
         <input type="password" class="input-txt" name="password" placeholder="비밀번호" />
+          <div th:if="${errorMessage}" class="alert alert-danger">
+              <p th:text="${errorMessage}"></p>
+          </div>
         <button id="login-button" type="submit">로그인</button>
         <p id="login-not-user">아직 회원이 아니신가요?</p>
         <a id="login-signup" th:href="@{/users/new}">회원가입</a>

@@ -16,6 +16,9 @@ public interface UserService {
     // user_no로 user + user_profile 가져오기
     UserPro getByNo(Long no);
 
+    // 프로필 업로드
+    boolean updateProfile(Long no, String path);
+
     // 회원 정보 수정
     boolean update(Long no, User user);
 

@@ -48,11 +48,10 @@ body {
 
 /* * * * * * main header style * * * * * */
 #main-header {
-  width: 100%;
-  max-width: 1200px;
+  width: 100vw;
   height: 200px;
   margin: 0;
-  padding: 0 20px;
+  padding: 0 60px 0 20px;
   background-color: #f3f4f6;
   display: flex;
   justify-content: space-between;
@@ -67,15 +66,6 @@ body {
 
 li {
   list-style: none;
-}
-
-.nouser-bar {
-  flex-shrink: 0;
-  height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: right;
-  gap: 20px;
 }
 
 .login,
@@ -365,6 +355,55 @@ footer {
   margin: 5px 0;
 }
 
+.img-round-big {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  border-style: none;
+  overflow: hidden;
+  object-fit: cover;
+}
+
+#signup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 파일 업로드 버튼 */
+#btn-upload-profile {
+    width: 410px;
+    height: 60px;
+    margin: 10px;
+    background-color: #4C6FFF;  /* 로그인 UI에 맞는 파란색 */
+    color: white;
+    padding: 12px 30px;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#btn-upload-profile:hover {
+    background-color: #3A5BCC;  /* 버튼 hover 시 색상 변화 */
+}
+
+#label-signup-profile {
+    display: inline-block;
+    position: relative;
+}
+
+#profileImageInput {
+  display: none;
+}
+
+.hint {
+    margin-top: 12px;
+    font-size: 14px;
+    color: #8a8a8a;  /* 로그인 UI의 텍스트 색상에 맞는 색상 */
+}
+
 .signup-check {
   height: 14px;
   font-size: 14px;
@@ -392,7 +431,7 @@ footer {
 }
 
 #signup-box-pace {
-  display: flex;
+  display: none;
   flex-direction: column;
 }
 
@@ -561,7 +600,9 @@ hamburgerButton.addEventListener('click', () => {
   }
 
   .login,
-  .signup {
+  .signup,
+  .my-page,
+  .logout {
     width: 80px;
     height: 40px;
     font-size: 14px;

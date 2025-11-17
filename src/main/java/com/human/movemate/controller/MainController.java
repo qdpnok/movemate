@@ -1,5 +1,6 @@
 package com.human.movemate.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -14,5 +15,11 @@ public class MainController {
     @GetMapping("/")
     public String mainPage() {
         return "main/main";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
     }
 }
