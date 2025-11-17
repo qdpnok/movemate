@@ -31,7 +31,7 @@ public class PostServiceImpl implements PostService {
         String storedFileName = null; // DB에 저장할 파일명
         if (file != null && !file.isEmpty()) {
             // FileStorageService를 호출하여 파일을 디스크에 저장
-            storedFileName = fileStorageService.storeFile(file);
+            storedFileName = fileStorageService.storeFile(file, "posts", null);
         }
 
         // DTO를 Post 모델(Entity)로 변환

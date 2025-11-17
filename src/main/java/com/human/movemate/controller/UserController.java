@@ -40,7 +40,7 @@ public class UserController {
 
         String newImagePath = null;
         if (profileImage != null && !profileImage.isEmpty()) {
-            newImagePath = fileStorageService.saveImage(profileImage, "users", no);
+            newImagePath = fileStorageService.storeFile(profileImage, "users", no);
         }
 
         userService.updateProfile(no, newImagePath);

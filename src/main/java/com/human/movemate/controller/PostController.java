@@ -2,8 +2,10 @@ package com.human.movemate.controller;
 
 import com.human.movemate.dto.PostFormDto;
 import com.human.movemate.model.Post;
+import com.human.movemate.model.User;
 import com.human.movemate.service.CommentService;
 import com.human.movemate.service.PostService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -43,8 +45,10 @@ public class PostController {
     }
 
     @PostMapping("/write") // 진짜 글 등록하는 메소드
-    public String writePost(PostFormDto postFormDto, RedirectAttributes redirectAttributes) {
-        Long loginUserNo = 1L;
+    public String writePost(PostFormDto postFormDto, RedirectAttributes redirectAttributes, HttpSession session) {
+        User user = (User) session.getAttribute("loginUser");
+        Long loginUserNo = user.getUserNo();
+        log.info("글쓴이 : {}", loginUserNo);
         try {
             postService.save(postFormDto, loginUserNo);
             // 4. [성공 시] 리다이렉트 페이지로 "successMessage"를 보냄
