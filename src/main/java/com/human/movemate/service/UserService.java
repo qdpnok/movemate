@@ -1,6 +1,6 @@
 package com.human.movemate.service;
 
-import com.human.movemate.dto.UserPro;
+import com.human.movemate.dto.UserProDto;
 import com.human.movemate.model.User;
 
 // MemberServiceImpl로 상속을 줄 인터페이스.
@@ -8,13 +8,13 @@ import com.human.movemate.model.User;
 // 접근제한자, 반환타입, 이름, 매개변수가 일치해야한다.
 public interface UserService {
     // 회원 가입
-    Long signup(UserPro userPro);
+    Long signup(UserProDto userProDto);
 
     // 로그인
     User login(User user);
 
     // user_no로 user + user_profile 가져오기
-    UserPro getByNo(Long no);
+    UserProDto getByNo(Long no);
 
     // 프로필 업로드
     boolean updateProfile(Long no, String path);

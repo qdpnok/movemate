@@ -1,7 +1,6 @@
 package com.human.movemate.dao;
 
-import com.human.movemate.dto.UserPro;
-import com.human.movemate.model.User;
+import com.human.movemate.dto.UserProDto;
 import com.human.movemate.model.UserProfile;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +30,7 @@ public class UserProfileDao {
                 profile.getPaceDetail(), profile.getProfileImageUrl());
     }
 
-    public UserPro findByNo(Long no) {
+    public UserProDto findByNo(Long no) {
         @Language("SQL")
         String sql = """
             SELECT USERS.user_no, name, user_id, password, email, phone_no,
@@ -42,7 +41,7 @@ public class UserProfileDao {
             WHERE USERS.user_no = ?
             """;
 
-        List<UserPro> list = jdbc.query(sql, new UserProRowMapper(), no);
+        List<UserProDto> list = jdbc.query(sql, new UserProRowMapper(), no);
         return list.isEmpty() ? null : list.get(0);
     }
 
@@ -63,11 +62,11 @@ public class UserProfileDao {
     }
 
 
-    static class  UserProRowMapper implements RowMapper<UserPro> {
+    static class  UserProRowMapper implements RowMapper<UserProDto> {
 
         @Override
-        public UserPro mapRow(ResultSet rs, int rowNum) throws SQLException {
-            return new UserPro(
+        public UserProDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+            return new UserProDto(
                     rs.getLong("user_no"),
                     rs.getString("name"),
                     rs.getString("user_id"),

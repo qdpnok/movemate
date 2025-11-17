@@ -11,71 +11,197 @@
 <body>
 <div layout:fragment="content">
   <h1>회원 정보 수정</h1>
+  <form
+                th:action="@{/users/edit}"
+                th:object="${userForm}"
+                enctype="multipart/form-data"
+        >
     <div id="user-info-edit-container">
       <div id="profile-img-edit">
-        <div id="profile-img"></div>
+        <div class="profile-left">
+            <div class="avatar-box">
+                <img id="avatarPreview" class="avatar img-round-big"
+                     th:src="${userInfo.profileImageUrl} != null ?
+                        @{'/files/'+${userInfo.profileImageUrl}} :
+                        @{/images/profile.png}"
+                     alt="프로필 미리보기" />
+            </div>
+        </div>
         <div id="profile-img-box">
           <p>프로필 사진</p>
           <div id="profile-img-button">
-            <button>사진 변경</button>
+            <label for="profileImageInput" >
+              <button>사진 변경</button>
+              <input id="profileImageInput" type="file" name="profileImage" accept="image/*">
+            </label>
             <button>사진 삭제</button>
           </div>
+          <div class="hint">JPG/PNG/WebP 권장, 5MB 이하</div>
         </div>
       </div>
-      <div class="edit-box">
-        <p>이름:</p>
-        <input type="text" class="input-txt" placeholder="변경할 이름을 입력해주세요.">
-        <p class="signup-check"></p>
-      </div>
-      <div class="edit-box">
-        <p>아이디:</p>
-        <input type="text" class="input-txt" placeholder="변경할 아이디를 입력해주세요.">
-        <p class="signup-check"></p>
-      </div>
-      <div class="edit-box">
-        <p>이메일:</p>
-        <input type="text" class="input-txt" placeholder="변경할 이메일을 입력해주세요.">
-        <p class="signup-check"></p>
-      </div>
-      <div class="edit-box">
-        <p>비밀번호:</p>
-        <input type="text" class="input-txt" placeholder="변경할 비밀번호를 입력해주세요.">
-        <p class="signup-check"></p>
-      </div>
-      <div class="edit-box">
-        <p>비밀번호 확인:</p>
-        <input type="text" class="input-txt" placeholder="비밀번호를 한번 더 입력해주세요.">
-        <p class="signup-check"></p>
-      </div>
-      <div class="edit-box">
-        <p>휴대폰번호:</p>
-        <input type="text" class="input-txt" placeholder="변경할 휴대폰번호를 입력해주세요.">
-        <p class="signup-check"></p>
-      </div>
-      <div class="edit-box">
-        <p>지역:</p>
-        <input type="text" class="input-txt" placeholder="변경할 지역을 선택해주세요.">
-        <p class="signup-check"></p>
-      </div>
-      <div class="edit-box">
-        <p>성별:</p>
-        <p>여성</p>
-      </div>
-      <div class="edit-box">
-        <p>나이:</p>
-        <input type="text" class="input-txt" placeholder="변경할 나이를 만 나이로 입력해주세요.">
-        <p class="signup-check"></p>
-      </div>
-      <div class="edit-box">
-        <p>운동종목:</p>
-        <input type="text" class="input-txt" placeholder="변경할 나이를 만 나이로 입력해주세요.">
-        <p>변경할 운동종목을 선택해주세요.</p>
-        <p class="signup-check"></p>
-      </div>
-      <div>
-        
-      </div>
     </div>
+      <table id="user-info-edit-table">
+        <tr>
+          <td>이름:</td>
+          <td>
+            <input type="text" class="input-txt" placeholder="변경할 이름을 입력해주세요." th:value="${userInfo.name}">
+            <p class="signup-check"></p>
+          </td>
+        </tr>
+        <tr>
+          <td>아이디:</td>
+          <td>
+            <input type="text" class="input-txt" placeholder="변경할 아이디를 입력해주세요." th:value="${userInfo.userId}">
+            <p class="signup-check"></p>
+          </td>
+        </tr>
+        <tr>
+          <td>이메일:</td>
+          <td>
+            <input type="text" class="input-txt" placeholder="변경할 이메일을 입력해주세요." th:value="${userInfo.email}">
+            <p class="signup-check"></p>
+          </td>
+        </tr>
+        <tr>
+          <td>비밀번호:</td>
+          <td>
+            <input type="password" class="input-txt" placeholder="변경할 비밀번호를 입력해주세요." th:value="${userInfo.password}">
+            <p class="signup-check"></p>
+          </td>
+        </tr>
+        <tr>
+          <td>비밀번호 확인:</td>
+          <td>
+            <input type="password" class="input-txt" placeholder="비밀번호를 한번 더 입력해주세요." th:value="${userInfo.password}">
+            <p class="signup-check"></p>
+          </td>
+        </tr>
+        <tr>
+          <td>휴대폰번호:</td>
+          <td>
+            <input type="text" class="input-txt" placeholder="변경할 휴대폰번호를 입력해주세요." th:value="${userInfo.phoneNo}">
+            <p class="signup-check"></p>
+          </td>
+        </tr>
+        <tr>
+          <td>지역:</td>
+          <td>
+            <select name="region" id="select-region">
+              <option disabled hidden="hidden" value="">변경할 지역을 선택해주세요</option>
+            </select>
+        <p class="signup-check"></p>
+          </td>
+        </tr>
+        <tr>
+          <td>성별:</td>
+          <td th:text="${userInfo.gender}"></td>
+        </tr>
+        <tr>
+          <td>나이:</td>
+          <td>
+            <input type="text" class="input-txt" placeholder="변경할 나이를 만 나이로 입력해주세요." th:value="${userInfo.age}">
+        <p class="signup-check"></p>
+          </td>
+        </tr>
+        <tr>
+          <td>운동종목:</td>
+          <td>
+            <input type="text" class="input-txt" placeholder="변경할 나이를 만 나이로 입력해주세요.">
+        <p>변경할 운동종목을 선택해주세요.</p>
+          </td>
+        </tr>
+        <tr>
+          <td>러닝페이스:</td>
+          <td>
+            <input type="text" class="input-txt" placeholder="MM:ss" th:value="${userInfo.paceDetail}" />
+            <p class="signup-check"></p>
+          </td>
+        </tr>
+      </table>
+    <div class="edit-button-box">
+        <button type="submit">회원정보수정</button>
+        <button>회원탈퇴</button>
+    </div>
+    </form>
+
+    <script th:inline="javascript">
+      // 지역 선택
+      const regions = [
+          "광덕면", "구룡동", "구성동", "다가동", "대흥동", "동면", "목천읍", "문화동",
+          "병천면", "봉명동", "북면", "사직동", "삼룡동", "성남면", "성황동", "수신면",
+          "신방동", "신부동", "안서동", "영성동", "오룡동", "용곡동", "원성1동", "원성2동",
+          "원성동", "유량동", "청당동", "청수동", "풍세면", "두정동", "백석동", "부대동",
+          "부성1동", "부성2동", "불당동", "성거읍", "성성동", "성정1동", "성정2동", "성정동",
+          "성환읍", "신당동", "쌍용1동", "쌍용2동", "쌍용3동", "쌍용동", "업성동", "와촌동",
+          "입장면", "직산읍", "차암동"
+        ];
+
+        // 드롭다운에 요소 생성
+        const dropdown = document.querySelector("select");
+        console.log(dropdown);
+
+        regions.forEach((region) => {
+          const newRegion = document.createElement("option");
+          newRegion.value = region;
+          newRegion.innerText = region;
+          dropdown.appendChild(newRegion);
+        });
+
+        /*<![CDATA[*/
+        (function() {
+          const input = document.getElementById('profileImageInput');
+          const img = document.getElementById('avatarPreview');
+          const label = document.getElementById('label-signup-profile');
+          const button = document.getElementById('btn-upload-profile');
+
+          // 서버에서 내려온 원본 이미지 경로 저장(없으면 빈 문자열)
+          const originalSrc = /*[[${userForm != null}]]*/ false
+                  ? /*[[${userForm.profileImageUrl} != null ? @{/files/{file}(file=${userForm.profileImageUrl})} : @{/images/profile.png}]]*/ ''
+                  : '';
+
+          let objectUrl = null;
+          function revoke() {
+            if (objectUrl) {
+              URL.revokeObjectURL(objectUrl);
+              objectUrl = null;
+            }
+          }
+
+          // 커스텀 버튼을 클릭하면 file 업로드 시작
+          button?.addEventListener('click', () => {
+            input.click()
+            console.log("버튼 클릭")
+          });
+
+          input?.addEventListener('change', function(e) {
+            const file = e.target.files && e.target.files[0];
+            if (!file) return;
+
+            const okTypes = ['image/jpeg','image/png','image/webp','image/gif'];
+            if (!okTypes.includes(file.type)) {
+              alert('이미지 파일(JPG/PNG/WebP/GIF)만 업로드할 수 있습니다.');
+              input.value = '';
+              return;
+            }
+            if (file.size > 5 * 1024 * 1024) {
+              alert('파일 용량은 5MB 이하만 가능합니다.');
+              input.value = '';
+              return;
+            }
+
+            revoke();
+            objectUrl = URL.createObjectURL(file);
+            img.src = objectUrl;
+          });
+
+          window.addEventListener('beforeunload', revoke);
+        })();
+
+        const currentUserRegion = /* [[${userInfo.region}]] */'';
+
+        console.log(currentUserRegion);
+        /*]]>*/
+    </script>
 </div>
 </body>
 </html>

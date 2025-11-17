@@ -2,7 +2,7 @@ package com.human.movemate.service.impl;
 
 import com.human.movemate.dao.UserDao;
 import com.human.movemate.dao.UserProfileDao;
-import com.human.movemate.dto.UserPro;
+import com.human.movemate.dto.UserProDto;
 import com.human.movemate.model.User;
 import com.human.movemate.model.UserProfile;
 import com.human.movemate.service.UserService;
@@ -29,13 +29,13 @@ public class UserServiceImpl implements UserService {
     // 모두 일치하게 정의되어 있어야 함.
     @Override
     @Transactional
-    public Long signup(UserPro userPro) {
-        Long userId = userDao.save(new User(0L, userPro.getName(),
-                userPro.getUserId(), userPro.getPassword(), userPro.getEmail(), userPro.getPhoneNo()));
+    public Long signup(UserProDto userProDto) {
+        Long userId = userDao.save(new User(0L, userProDto.getName(),
+                userProDto.getUserId(), userProDto.getPassword(), userProDto.getEmail(), userProDto.getPhoneNo()));
 
-        userProfileDao.save(new UserProfile(0L, userId, userPro.getGender(),
-                userPro.getAge(), null, userPro.getRegion(),
-                userPro.getSportType(), userPro.getPaceDetail(), userPro.getProfileImageUrl()) );
+        userProfileDao.save(new UserProfile(0L, userId, userProDto.getGender(),
+                userProDto.getAge(), null, userProDto.getRegion(),
+                userProDto.getSportType(), userProDto.getPaceDetail(), userProDto.getProfileImageUrl()) );
 
         return userId;
     }
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserPro getByNo(Long no) {
+    public UserProDto getByNo(Long no) {
         log.info("유저번호: {}", no);
         return userProfileDao.findByNo(no);
     }
