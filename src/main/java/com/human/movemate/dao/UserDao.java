@@ -153,7 +153,9 @@ public class UserDao {
                     rs.getString("email"),
                     rs.getString("phone_no"),
                     rs.getString("is_deleted"),
-                    rs.getTimestamp("deleted_at").toLocalDateTime()
+                    rs.getTimestamp("deleted_at") != null
+                            ? rs.getTimestamp("deleted_at").toLocalDateTime()
+                            : null
                     // 오라클에서 날짜 타입은 timestamp 밖에 없기 때문에 날짜 타입을 가져올 때
                     // .toLocalDateTime() 메서드를 사용해 localDateTime 타입으로 변환을 해줘야함.
             );

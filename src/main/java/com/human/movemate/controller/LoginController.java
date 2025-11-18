@@ -22,7 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Slf4j
 @RequestMapping("/login")   // 해당 클래스의 기본 경로를 localhost:포트번호/login 으로 설정
 public class LoginController {
-    private final UserServiceImpl memberService;
+    private final UserServiceImpl userService;
 
     // get 방식 vs post 방식
     // get은 경로에 정보를 바로 담는 반면, post는 인코딩(암호화)된 정보를 body에 담는다.
@@ -39,10 +39,15 @@ public class LoginController {
 
     @PostMapping
     public String login(@ModelAttribute User user, HttpSession session, RedirectAttributes redirectAttributes) {
-        User userRes = memberService.login(user);
+        User userRes = userService.login(user);
         log.info("로그인 : {}", userRes);
         if(userRes == null) {
             redirectAttributes.addFlashAttribute("errorMessage", "아이디 또는 비밀번호가 잘못되었습니다.");
+            return "redirect:/login";
+        }
+
+        if("Y".equals(userRes.getIsDeleted())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "탈퇴 처리된 계정입니다.");
             return "redirect:/login";
         }
         session.setAttribute("loginUser", userRes);

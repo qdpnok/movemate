@@ -97,7 +97,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean delete(Long no) {
-        return userDao.delete(no);
+    @Transactional
+    public boolean delete(Long userNo) {
+        log.info("회원 탈퇴 (논리적 삭제) 시도: UserNo={}", userNo);
+
+        // 프로필 이미지 경로 조회
+        UserProDto originalInfo = userProfileDao.findByNo(userNo);
+        String imagePath = originalInfo.getProfileImageUrl();
+
+        // 파일 시스템에서 이미지 삭제
+        if (imagePath != null && !imagePath.isEmpty()) {
+            fileStorageService.deleteIfExists(imagePath);
+            log.info("프로필 이미지 파일 삭제 완료: {}", imagePath);
+        }
+
+        // DB에서 논리적 삭제 처리
+        return userDao.softDelete(userNo);
     }
 }
