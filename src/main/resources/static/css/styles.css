@@ -274,7 +274,8 @@ footer {
 }
 
 #login-container>h1,
-#signup-container>h1 {
+#signup-container>h1,
+#mypage>h1 {
   font-size: 20px;
   font-weight: bold;
   margin: 20px;
@@ -1381,4 +1382,136 @@ hamburgerButton.addEventListener('click', () => {
 th {
   display: flex;
   justify-content: center;
+}
+
+/* 마이페이지 */
+#mypage-container {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+}
+
+#mypage {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#my-profile {
+  width: 100vw;
+  display:flex;
+  justify-content: center;
+}
+
+#profile {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin: 0 20px;
+}
+
+#profile p {
+  font-size: 16px;
+  margin: 5px 0;
+  color: #666;
+}
+
+.img-round-small {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border-style: none;
+  overflow: hidden;
+  object-fit: cover;
+  margin: 0 20px;
+}
+
+#my-button-filed {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  padding: 10px;
+}
+
+.mypage-button {
+  width: 130px;
+  height: 38px;  /* 조금 더 얇고 깔끔한 높이 */
+  border: none;  /* 기본 테두리 없애기 */
+  color: white;  /* 글자 색은 흰색 */
+  font-size: 14px;  /* 적당한 글자 크기 */
+  border-radius: 25px;  /* 버튼 모서리를 둥글게 */
+  cursor: pointer;  /* 클릭 가능한 포인터 */
+  transition: all 0.3s ease;  /* 부드러운 효과 */
+  text-align: center;  /* 텍스트 가운데 정렬 */
+}
+
+.mypage-button:hover {
+  background-color: #357ab7;  /* hover 시 색상 변경 */
+}
+
+.mypage-button:focus {
+  outline: none;  /* 버튼에 포커스 시 기본 outline 제거 */
+}
+
+.btn-mypost {
+  background-color: var(--dark);
+}
+
+.btn-edit-myinfo {
+  background-color: var(--primary);
+}
+
+.btn-danger {
+  background-color: var(--accent);
+}
+
+.sub-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  background-color: var(--primary);
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#sport-type-choice-bar,
+#crew-choice-bar {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.choice-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 525px;
+  height: 70px;
+  border-radius: 20px;
+  background-color: #F3F4F6;
+  color: BLACK;
+  font-size: 20px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border-style: none;
+}
+
+.choice-button.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 525px;
+  height: 70px;
+  border-radius: 20px;
+  background-color: #4B5AE4;
+  color: white;
+  font-size: 20px;
+  text-decoration: none;
 }
