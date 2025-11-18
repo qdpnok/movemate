@@ -17,7 +17,7 @@ public class AddMateDao {
     public void save(AddMate mate) {
         // mate_no, created_at은 DB의 트리거/디폴트로 자동 생성됨
         @Language("SQL")
-        String sql = "INSERT INTO ADD_MATE (user_no, mate_type, region, sport_type, mate_name, description, image_url) " +
+        String sql = "INSERT INTO MATE (user_no, mate_type, region, sport_type, mate_name, description, image_url) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
         jdbc.update(sql,
                 mate.getUserNo(),

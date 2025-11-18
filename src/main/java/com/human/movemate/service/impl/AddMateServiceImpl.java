@@ -24,7 +24,7 @@ public class AddMateServiceImpl implements AddMateService {
         if (file != null && !file.isEmpty()) {
             // "mates"라는 하위 폴더에 (userNo) ID 기반으로 파일 저장
             // 예: "mates/1_abc.jpg"
-            storedFileName = fileStorageService.storeFile(file, "mates", userNo);
+            storedFileName = fileStorageService.storeFile(file, "mates", null);
         }
         // DTO -> Model(AddMate) 객체로 변환
         AddMate mate = new AddMate();
