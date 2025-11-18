@@ -1,11 +1,13 @@
 package com.human.movemate.service;
 
-import com.human.movemate.model.Crew;
-import com.human.movemate.model.Mate;
-
+import com.human.movemate.model.AddMate;
 import java.util.List;
 
 public interface MateService {
-    List<Mate> getMateList();
-    List<Crew> getCrewList();
+
+    // 모든 메이트 목록을 가져오는 기능
+    List<AddMate> findAllMates();
+
+    // (추후 상세보기를 위한 기능도 추가할 수 있어요)
+    // AddMate findMateById(Long mateNo);
 }
