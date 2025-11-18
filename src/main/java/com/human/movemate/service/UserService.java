@@ -21,7 +21,7 @@ public interface UserService {
     boolean updateProfile(Long no, String path);
 
     // 회원 정보 수정
-    boolean update(Long no, UserProDto userProDto, MultipartFile profileImage);
+    boolean update(Long no, UserProDto userProDto, MultipartFile profileImage,  boolean isImageDeleted);
 
     // 회원 정보 삭제
     boolean delete(Long no);

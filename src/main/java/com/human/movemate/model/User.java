@@ -2,6 +2,9 @@ package com.human.movemate.model;
 
 import lombok.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 // 모델 : DB 테이블과 같은 구조의 객체(붕어빵)를 생성할 수 있는 클래스(붕어빵 틀)
 
 // @ 붙은 애들을 어노테이션이라고 부름
@@ -24,4 +27,6 @@ public class User {
     private String password;
     private String email;
     private String phoneNo;
+    private String isDeleted;
+    private LocalDateTime deletedAt;
 }

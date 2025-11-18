@@ -123,6 +123,19 @@ public class UserDao {
         return jdbc.update(sql, no) > 0;
     }
 
+    public boolean softDelete(Long userNo) {
+        // is_deleted를 'Y'로, deleted_at을 현재 시각으로 업데이트
+        @Language("SQL")
+        String sql = """
+        UPDATE USERS SET 
+            is_deleted = 'Y', 
+            deleted_at = SYSDATE 
+        WHERE user_no = ?
+        """;
+
+        return jdbc.update(sql, userNo) > 0;
+    }
+
 
     // DB의 member 테이블에서 가져온 값을 User 객체에 담을 때 사용
     static class MemberRowMapper implements RowMapper<User> {
@@ -138,7 +151,11 @@ public class UserDao {
                     rs.getString("user_id"),
                     rs.getString("password"),
                     rs.getString("email"),
-                    rs.getString("phone_no")
+                    rs.getString("phone_no"),
+                    rs.getString("is_deleted"),
+                    rs.getTimestamp("deleted_at") != null
+                            ? rs.getTimestamp("deleted_at").toLocalDateTime()
+                            : null
                     // 오라클에서 날짜 타입은 timestamp 밖에 없기 때문에 날짜 타입을 가져올 때
                     // .toLocalDateTime() 메서드를 사용해 localDateTime 타입으로 변환을 해줘야함.
             );

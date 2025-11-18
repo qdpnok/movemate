@@ -71,12 +71,41 @@ public class UserController {
     @PostMapping("/{no}/edit")
     public String edit(@ModelAttribute UserProDto userProDto,
                          @RequestParam(value = "profileImage", required = false) MultipartFile profileImage,
+                       @RequestParam(name="is_image_delete_flag", defaultValue = "false") boolean isImageDeleted,
                        @PathVariable Long no) {
 
         log.info("멤버 id: {}, 멤버 객체: {}", no, userProDto);
-        userService.update(no, userProDto, profileImage);
+        userService.update(no, userProDto, profileImage, isImageDeleted);
 
         return "redirect:/";
     }
 
+    @PostMapping("/{no}/delete")
+    public String delete(@PathVariable Long no, HttpSession session) {
+        User user = (User) session.getAttribute("loginUser");
+
+        // 로그인 체크 및 경로 변수와 세션 사용자 일치 여부 확인
+        if (user == null || !user.getUserNo().equals(no)) {
+            log.warn("탈퇴 실패: 권한 없는 사용자 또는 비로그인 상태");
+            // 보안을 위해 권한이 없으면 메인으로 리다이렉트
+            return "redirect:/";
+        }
+
+        log.info("회원 탈퇴 요청 처리: UserNo={}", no);
+
+        // 서비스 레이어의 논리적 삭제 메서드 호출
+        boolean success = userService.delete(no); // softDelete 로직을 delete에 구현했음
+
+        if (success) {
+            log.info("회원 탈퇴 (논리적 삭제) 성공. UserNo={}", no);
+            //  성공 시 세션 무효화 (자동 로그아웃)
+            session.invalidate();
+            // 탈퇴 완료 페이지 또는 메인 페이지로 리다이렉트
+            return "redirect:/";
+        } else {
+            log.error("회원 탈퇴 처리 중 오류 발생: UserNo={}", no);
+            // 에러 페이지 또는 마이페이지로 리다이렉트 (오류 메시지 추가 가능)
+            return "redirect:/users/mypage";
+        }
+    }
 }
