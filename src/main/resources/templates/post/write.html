@@ -21,7 +21,7 @@
             <form th:action="${postId == null} ? @{/posts/write} : @{/posts/update/{id}(id=${postId})}" method="post"
                 th:object="${postForm}" enctype="multipart/form-data">
 
-                <div class="form-group">
+                <div class="write-form-group">
                     <label for="boardTypeNo">게시판 선택</label>
                     <select id="boardTypeNo" th:field="*{boardTypeNo}">
                         <option value="">게시판을 선택해주세요</option>
@@ -30,12 +30,12 @@
                     </select>
                 </div>
 
-                <div class="form-group">
+                <div class="write-form-group">
                     <label for="title">제목</label>
                     <input type="text" id="title" th:field="*{title}" placeholder="제목을 입력해주세요">
                 </div>
 
-                <div class="form-group file-group">
+                <div class="write-form-group file-group">
                     <label class="file-label">사진 업로드</label>
                     <div class="file-input-wrapper">
                         <input id="postImageInput" class="file-input-real" type="file" name="postImage"
@@ -46,10 +46,10 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="write-form-group">
                     <label for="content">내용</label>
                 </div>
-                <div class="form-group">
+                <div class="write-form-group">
                     <textarea id="content" th:field="*{content}" rows="15" placeholder="내용 입력.."></textarea>
                 </div>
                 <div class="form-actions">
