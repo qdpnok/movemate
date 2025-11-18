@@ -639,7 +639,7 @@ hamburgerButton.addEventListener('click', () => {
 
 .post-container {
   max-width: 1200px;
-  margin: 30px auto;
+  margin: 0px auto;
   padding: 0 20px;
 }
 
@@ -811,7 +811,7 @@ hamburgerButton.addEventListener('click', () => {
 
 .write-container {
   max-width: 800px;
-  margin: 40px auto;
+  margin: 0px auto;
   padding: 20px;
 }
 
@@ -967,7 +967,7 @@ hamburgerButton.addEventListener('click', () => {
 
 .view-container {
   max-width: 800px;
-  margin: 40px auto;
+  margin: 0px auto;
   padding: 20px;
 }
 

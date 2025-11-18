@@ -13,7 +13,7 @@
 
 <body>
     <div layout:fragment="content">
-        <div class="post-container">
+        <div class="write-container">
             <h1 class="board" th:text="${pageTitle}">1:1 메이트 생성</h1>
             <form th:action="@{/addMate/save}" method="post" th:object="${mateForm}" enctype="multipart/form-data">
                 <input type="hidden" th:field="*{mateType}" />
@@ -40,10 +40,11 @@
                 <div class="mate-form-group">
                     <label for="mateName" class="mate-label">
                         <i class="fa-solid fa-id-badge"></i>
-                        <span>메이트명</span>
+                        <span th:if="${mateForm.mateType == 'CREW'}">크루명</span>
+                        <span th:unless="${mateForm.mateType == 'CREW'}">메이트명</span>
                     </label>
                     <input type="text" id="mateName" th:field="*{mateName}" class="mate-input"
-                        placeholder="메이트명을 입력해주세요" required>
+                        th:placeholder="${mateForm.mateType == 'CREW'} ? '크루명을 입력해주세요' : '메이트명을 입력해주세요'" required>
                 </div>
                 <div class="mate-form-group">
                     <label for="mateImageInput" class="mate-label">
