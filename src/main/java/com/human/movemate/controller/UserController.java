@@ -1,8 +1,10 @@
 package com.human.movemate.controller;
 
+import com.human.movemate.dto.MatchingHistoryDto;
 import com.human.movemate.dto.UserProDto;
 import com.human.movemate.model.User;
 import com.human.movemate.service.FileStorageService;
+import com.human.movemate.service.MatchingService;
 import com.human.movemate.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -12,12 +14,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 @Slf4j
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
+    private final MatchingService matchingService;
     private final FileStorageService fileStorageService;
 
     // Get방식으로 루트경로/members/new 로 요청이 들어오면 members/new 페이지를 렌더링
@@ -54,6 +59,10 @@ public class UserController {
         User user = (User) session.getAttribute("loginUser");
         if(user == null) return "redirect:/";
         model.addAttribute("userInfo", userService.getByNo(user.getUserNo()));
+        List<MatchingHistoryDto> dto = matchingService.findHistoryByNo(user.getUserNo());
+
+        log.info("가져온 정보: {}", dto);
+        model.addAttribute("matchList", dto);
         return "users/mypage";
     }
 
@@ -77,7 +86,7 @@ public class UserController {
         log.info("멤버 id: {}, 멤버 객체: {}", no, userProDto);
         userService.update(no, userProDto, profileImage, isImageDeleted);
 
-        return "redirect:/";
+        return "redirect:/users/mypage";
     }
 
     @PostMapping("/{no}/delete")

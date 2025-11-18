@@ -16,7 +16,7 @@
             <div id="my-info">
                 <div id="my-profile">
                     <img th:src="${userInfo.profileImageUrl} != null ? @{'/files/'+${userInfo.profileImageUrl}} : @{'/images/profile.png'}"
-                         alt="프로필" style="width:120px;height:120px;object-fit:cover;border-radius:60px;">
+                         alt="프로필" class="img-round-small">
                     <div id="profile">
                         <p>이름 : <span th:text="${userInfo.name}"></span></p>
                         <p>아이디 : <span th:text="${userInfo.userId}"></span></p>
@@ -27,24 +27,44 @@
                 </div>
                 <div id="my-button-filed">
                     <div id="my-button">
-                        <button th:onclick="|location.href='@{/users/edit}'|">회원정보수정</button>
-                        <button type="button" id="delete-button" class="btn-danger" >회원탈퇴</button>
+                        <button class="mypage-button btn-mypost" th:onclick="|location.href='@{/posts/my_post}'|">내가 쓴 글 보기</button>
+                        <button class="mypage-button btn-edit-myinfo" th:onclick="|location.href='@{/users/edit}'|">회원정보수정</button>
+                        <button type="button" id="delete-button" class="btn-danger mypage-button" >회원탈퇴</button>
                     </div>
                     <form th:action="@{/users/{no}/delete(no=${userInfo.userNo})}" method="post" id="delete-form" style="display: none;"></form>
                 </div>
 
                 <div id="my-match">
-                    <h2 id="sub-title">나의 매칭 내역</h2>
+                    <h2 class="sub-title">나의 매칭 내역</h2>
+
                     <div id="sport-type-choice-bar">
-                        <button>러닝 메이트</button>
-                        <button>웨이트 메이트</button>
+                        <button class="choice-button active" data-filter-group="sport" data-filter="running">러닝 메이트</button>
+                        <button class="choice-button" data-filter-group="sport" data-filter="weight">웨이트 메이트</button>
                     </div>
-                    <div id="group-choice-bar" >
-                        <button>1:1 메이트</button>
-                        <button>메이트 크루</button>
+                    <div id="crew-choice-bar" >
+                        <button class="choice-button active" data-filter-group="type" data-filter="1v1">1:1 메이트</button>
+                        <button class="choice-button" data-filter-group="type" data-filter="crew">메이트 크루</button>
                     </div>
+
                     <div id="my-match-box">
-                        <div id="my-match-card"></div>
+                        <button class="arrow-btn" id="prev-btn">&#8592;</button>
+
+                        <div id="my-match-slider-window">
+                            <div id="my-match-card-container">
+                                <div class="card" th:each="match : ${matchList}"
+                                th:data-sport-type="${match.sportType}"
+                                th:data-match-type="${match.mateType}">
+                                <img id="cardImg" th:src="${match.opponentProfileImageUrl} != null ? @{'/files/'+${match.opponentProfileImageUrl}} : @{'/images/profile.png'}"/>
+                                <p th:text="${match.opponentName}"></p>
+                                <p th:text="${match.region}"></p>
+                    
+                                <a id="mate-cut" href="#">메이트 해지</a>
+                            </div>
+
+                            </div>
+                        </div>
+
+                        <button class="arrow-btn" id="next-btn">&#8594;</button>
                     </div>
                 </div>
 
@@ -63,6 +83,124 @@
             deleteForm.submit();
         }
     });
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- 요소 선택 ---
+        const sliderContainer = document.getElementById('my-match-card-container');
+        const allCards = sliderContainer.querySelectorAll('.card');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const filterButtons = document.querySelectorAll('.choice-button[data-filter-group]');
+
+        // --- 상태 변수 ---
+        let currentFilters = {
+            sport: 'running', // HTML 버튼의 data-filter 값과 일치
+            type: '1v1'       // HTML 버튼의 data-filter 값과 일치
+        };
+        let sliderIndex = 0;
+
+        // --- 함수 정의 ---
+
+        /**
+         * 1. 필터 버튼 클릭 시 UI 업데이트 및 필터 상태 변경 (handleFilterClick 함수는 수정 불필요)
+         */
+        function handleFilterClick(event) {
+            const button = event.target;
+            const group = button.dataset.filterGroup;
+            const filterValue = button.dataset.filter;
+
+            currentFilters[group] = filterValue;
+
+            document.querySelectorAll(`.choice-button[data-filter-group="${group}"]`).forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            button.classList.add('active');
+            applyFiltersAndResetSlider();
+        }
+
+        /**
+         * 2. 현재 필터(currentFilters)에 맞춰 카드를 보여주거나 숨김 (🚨 이 부분이 가장 중요합니다)
+         */
+        function applyFiltersAndResetSlider() {
+            sliderIndex = 0;
+            let visibleCardCount = 0;
+
+            allCards.forEach(card => {
+                // 1) 종목 필터링: HTML의 data-sport-type 속성 사용
+                const sportData = card.dataset.sportType.toLowerCase();
+                const cardSportType = sportData.includes('러닝') || sportData.includes('running') ? 'running' : 
+                      sportData.includes('웨이트') || sportData.includes('weight') ? 'weight' : 'unknown';
+
+                // 2) 매칭 타입 필터링: HTML의 data-match-type 속성 사용 (MATE 테이블의 '1:1' 또는 'GROUP' 값에 따라)
+                const cardMatchType = card.dataset.matchType.toLowerCase().includes('group') ? 'crew' : '1v1'; 
+
+                // 필터 조건 확인
+                const sportMatch = currentFilters.sport === cardSportType;
+                const typeMatch = currentFilters.type === cardMatchType;
+
+                // 두 필터가 모두 일치하면 보여주고, 아니면 숨김
+                if (sportMatch && typeMatch) {
+                    card.style.display = 'block';
+                    visibleCardCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // 슬라이더 위치 업데이트 (리셋)
+            updateSliderPosition(visibleCardCount);
+        }
+
+        /**
+         * 3. 슬라이더 위치(transform)를 업데이트 (수정 불필요)
+         */
+        function updateSliderPosition(visibleCardCount) {
+            if (visibleCardCount === 0 || allCards.length === 0) {
+                sliderContainer.style.transform = 'translateX(0px)';
+                prevBtn.disabled = true;
+                nextBtn.disabled = true;
+                return;
+            }
+
+            const cardWidth = 180;
+            const cardGap = 30;
+            const cardMoveDistance = cardWidth + cardGap;
+            const moveX = sliderIndex * cardMoveDistance;
+            sliderContainer.style.transform = `translateX(-${moveX}px)`;
+
+            prevBtn.disabled = sliderIndex === 0;
+
+            const visibleInWindow = 3;
+            nextBtn.disabled = sliderIndex >= (visibleCardCount - visibleInWindow);
+        }
+
+        // --- 이벤트 리스너 연결 (수정 불필요) ---
+        filterButtons.forEach(button => {
+            button.addEventListener('click', handleFilterClick);
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (sliderIndex > 0) {
+                sliderIndex--;
+                const visibleCount = sliderContainer.querySelectorAll('.card[style*="display: block"]').length;
+                updateSliderPosition(visibleCount);
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            const visibleCount = sliderContainer.querySelectorAll('.card[style*="display: block"]').length;
+            const visibleInWindow = 3;
+            if (sliderIndex < (visibleCount - visibleInWindow)) {
+                sliderIndex++;
+                updateSliderPosition(visibleCount);
+            }
+        });
+
+        // --- 초기 실행 ---
+        applyFiltersAndResetSlider();
+    });
+
     </script>
 </div>
 </body>

@@ -19,5 +19,7 @@ public class AddMate {
     private String description; // 모집설명(글 내용이 될 부분)
     private String imageUrl; // 사진 등록 (프사)
     private LocalDateTime createdAt;
-
+    private String authorId; // 작성자 ID (USERS.user_id) JOIN할거임
+    private String authorProfileUrl; // 작성자 프로필 (USER_PROFILE.profile_image_url) JOIN할거임
 }
+

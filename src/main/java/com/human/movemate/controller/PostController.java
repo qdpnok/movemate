@@ -70,7 +70,13 @@ public class PostController {
     }
 
     @GetMapping("/write") // 글쓰기 폼
-    public String writePostForm(Model model) {
+    public String writePostForm(Model model, HttpSession session) {
+        // 세션에서 로그인한 사용자 정보 가져오기
+        User loginUser = (User) session.getAttribute("loginUser");
+        // 로그인 안 했으면(null이면) 로그인 페이지로 리다이렉트
+        if (loginUser == null) {
+            return "redirect:/login";
+        }
         // "postForm"이라는 이름으로 빈 DTO 객체를 모델에 담아 전달
         model.addAttribute("postForm", new PostFormDto());
         return "post/write";
