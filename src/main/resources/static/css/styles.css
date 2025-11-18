@@ -41,6 +41,11 @@ body {
   align-items: center;
 }
 
+#login-logo {
+  width: 180px;
+  height: 180px;
+}
+
 /* * * * * * main header style * * * * * */
 #main-header {
   width: 100vw;
@@ -130,7 +135,7 @@ li {
   right: 0;
   width: 180px;
   background: #fff;
-  border-radius: 5px;
+  border-radius: 8px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   opacity: 0;
   transform: translateY(-10px);
@@ -367,28 +372,26 @@ footer {
 
 /* 파일 업로드 버튼 */
 #btn-upload-profile {
-  width: 410px;
-  height: 60px;
-  margin: 10px;
-  background-color: #4c6fff;
-  /* 로그인 UI에 맞는 파란색 */
-  color: white;
-  padding: 12px 30px;
-  font-size: 16px;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+    width: 410px;
+    height: 60px;
+    margin: 10px;
+    background-color: #4C6FFF;  /* 로그인 UI에 맞는 파란색 */
+    color: white;
+    padding: 12px 30px;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 #btn-upload-profile:hover {
-  background-color: #3a5bcc;
-  /* 버튼 hover 시 색상 변화 */
+    background-color: #3A5BCC;  /* 버튼 hover 시 색상 변화 */
 }
 
 #label-signup-profile {
-  display: inline-block;
-  position: relative;
+    display: inline-block;
+    position: relative;
 }
 
 #profileImageInput {
@@ -396,10 +399,9 @@ footer {
 }
 
 .hint {
-  margin-top: 12px;
-  font-size: 14px;
-  color: #8a8a8a;
-  /* 로그인 UI의 텍스트 색상에 맞는 색상 */
+    margin-top: 12px;
+    font-size: 14px;
+    color: #8a8a8a;  /* 로그인 UI의 텍스트 색상에 맞는 색상 */
 }
 
 .signup-check {
@@ -537,6 +539,7 @@ main {
  * - 헤더와 로고 크기를 줄임 */
 
 @media (max-width: 1024px) {
+
   /* 메뉴바가 화면을 차지하지 않도록 숨김
   (이 지점에서 햄버거 메뉴 아이콘(☰)을 표시해야함)  */
   .category-bar {
@@ -689,6 +692,7 @@ hamburgerButton.addEventListener('click', () => {
   text-decoration: none;
 }
 
+
 .add-post {
   display: flex;
   justify-content: flex-end;
@@ -703,7 +707,7 @@ hamburgerButton.addEventListener('click', () => {
   font-size: 15px;
   text-decoration: none;
   width: 150px;
-  height: 400px;
+  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -723,6 +727,7 @@ hamburgerButton.addEventListener('click', () => {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
+
 
 .card-title {
   font-size: 20px;
@@ -801,6 +806,7 @@ hamburgerButton.addEventListener('click', () => {
 /* * 여기까지 post.html 메이트 게시판 스타일 * * */
 /* * * * * * * * * * * * * * * * * * * * * * * */
 
+
 /* * * * * * * * * * * * * * * * * * * * * * * */
 /* * 여기부터 write.html 게시판 작성 폼 스타일 * * */
 /* * * * * * * * * * * * * * * * * * * * * * * */
@@ -865,7 +871,7 @@ hamburgerButton.addEventListener('click', () => {
   width: 100%;
   height: 100%;
   padding: 0 15px;
-  background-color: #f3f4f6;
+  background-color: #F3F4F6;
   border: 1px solid #ddd;
   border-radius: 12px;
   cursor: pointer;
@@ -894,6 +900,7 @@ hamburgerButton.addEventListener('click', () => {
   z-index: 10;
 }
 
+
 /* 내용 입력창 스타일 (큰 박스) */
 .form-group textarea {
   width: 100%;
@@ -901,7 +908,7 @@ hamburgerButton.addEventListener('click', () => {
   border: 1px solid #ddd;
   border-radius: 12px;
   font-size: 1rem;
-  background-color: #f3f4f6;
+  background-color: #F3F4F6;
   resize: vertical;
   /* 세로 크기 조절만 허용 */
 }
@@ -916,7 +923,7 @@ hamburgerButton.addEventListener('click', () => {
   padding: 12px 24px;
   border: none;
   border-radius: 8px;
-  background-color: #4b5ae4;
+  background-color: #4B5AE4;
   color: white;
   font-size: 1rem;
   font-weight: normal;
@@ -954,6 +961,8 @@ hamburgerButton.addEventListener('click', () => {
 /* * 여기까지 write.html 게시판 작성 폼 스타일 * * */
 /* * * * * * * * * * * * * * * * * * * * * * * */
 
+
+
 /* * * * * * * * * * * * * * * * * * * * * * * * */
 /* * 여기부터 view_post.html 글 상세조회 스타일 * * */
 /* * * * * * * * * * * * * * * * * * * * * * * * */
@@ -972,11 +981,12 @@ hamburgerButton.addEventListener('click', () => {
   margin-bottom: 20px;
 }
 
+
 .btn-view-list {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #4b5ae4;
+  background-color: #4B5AE4;
   color: white;
   text-decoration: none;
   padding: 10px 18px;
@@ -1001,13 +1011,11 @@ hamburgerButton.addEventListener('click', () => {
   padding: 20px 25px;
   border-bottom: 1px solid #f0f0f0;
 }
-
 .author-profile {
   display: flex;
   align-items: center;
   gap: 12px;
 }
-
 .author-profile img {
   width: 40px;
   height: 40px;
@@ -1015,12 +1023,10 @@ hamburgerButton.addEventListener('click', () => {
   object-fit: cover;
   border: 1px solid #ddd;
 }
-
 .author-name {
   font-weight: 600;
   font-size: 0.8rem;
 }
-
 .post-date {
   font-size: 0.9rem;
   color: #888;
@@ -1032,26 +1038,22 @@ hamburgerButton.addEventListener('click', () => {
   font-weight: 700;
   padding: 25px 25px 25px 25px;
 }
-
 .post-image-box {
   padding: 10px 25px;
   text-align: center;
 }
-
 .post-image-box img {
   max-width: 100%;
   height: auto;
   border-radius: 8px;
   margin-bottom: 20px;
 }
-
 .post-content {
   font-size: 1rem;
   line-height: 1.8;
   color: #333;
   padding: 20px 25px 40px 25px;
-  white-space: pre-wrap;
-  /* \n 줄바꿈 적용 */
+  white-space: pre-wrap; /* \n 줄바꿈 적용 */
   min-height: 200px;
 }
 
@@ -1079,12 +1081,12 @@ hamburgerButton.addEventListener('click', () => {
 }
 
 .btn-view-edit {
-  background-color: var(--primary, #4b5ae4);
+  background-color: var(--primary, #4B5AE4);
   color: white;
 }
 
 .btn-view-delete {
-  background-color: #fb7163;
+  background-color: #FB7163;
   color: white;
 }
 
@@ -1218,6 +1220,7 @@ hamburgerButton.addEventListener('click', () => {
   background-color: #ffe6e9;
 }
 
+
 /* 댓글 입력 폼 */
 .comment-form {
   display: flex;
@@ -1243,12 +1246,13 @@ hamburgerButton.addEventListener('click', () => {
   height: 40px;
   border: none;
   border-radius: 8px;
-  background-color: #4b59e4;
+  background-color: #4B59E4;
   color: white;
   font-size: 0.8rem;
   font-weight: normal;
   cursor: pointer;
 }
+
 
 .btn-comment-submit:disabled,
 .comment-textarea:disabled {
@@ -1256,6 +1260,7 @@ hamburgerButton.addEventListener('click', () => {
   color: #999;
   cursor: not-allowed;
 }
+
 
 /* =================================================== */
 /* 댓글 인라인(in-place) 수정 스타일 */
@@ -1327,7 +1332,7 @@ hamburgerButton.addEventListener('click', () => {
 }
 
 .btn-comment-save:hover {
-  background-color: #4b59e4;
+  background-color: #4B59E4;
 }
 
 /* alert 메시지 스타일 */
@@ -1352,6 +1357,7 @@ hamburgerButton.addEventListener('click', () => {
   border-color: #f5c6cb;
 }
 
+
 /* * * * * * * * * * * * * * * * * * * * * * * * */
 /* * 여기까지 view_post.html 글 상세조회 스타일 * * */
 /* * * * * * * * * * * * * * * * * * * * * * * * */
@@ -1372,3 +1378,96 @@ th {
   display: flex;
   justify-content: center;
 }
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * */
+/* * 여기부터 add_mate_form.html 게시판 스타일 * * */
+/* * * * * * * * * * * * * * * * * * * * * * * * */
+.mate-form-group {
+  display: flex;
+  align-items: center;
+  /* 세로 중앙 정렬 */
+  margin-bottom: 25px;
+  /* 행 간격 */
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background-color: #fcfcfc;
+  overflow: hidden;
+  /* 둥근 모서리 적용 */
+}
+
+#addmate_select {
+  width: 410px;
+  height: 60px;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #989898;
+  border-radius: 14px;
+  font-size: 14px;
+  color: gray;
+}
+
+/* 폼 라벨 (아이콘 + 텍스트) */
+.mate-form-group .mate-label {
+  display: flex;
+  align-items: center;
+  width: 150px;
+  height: 60px;
+  padding: 0 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.mate-form-group .mate-label i {
+  font-size: 1.2rem;
+  margin-right: 10px;
+  color: #555;
+  width: 20px;
+  /* 아이콘 정렬 */
+  text-align: center;
+}
+
+/* 폼 입력창 (select, input) */
+.mate-form-group .mate-input {
+  flex-grow: 1;
+  height: 60px;
+  padding: 0 20px;
+  border: none;
+  border-radius: 8px;
+  background: F3F4F6;
+  font-size: 1rem;
+  color: gray;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.mate-form-group .mate-input:focus {
+  outline: none;
+}
+
+.mate-form-group .mate-input::placeholder {
+  color: gray;
+}
+
+.mate-form-group select.mate-input {
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23888" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>') no-repeat right 20px center;
+  background-size: 12px 12px;
+}
+
+/* 파일 업로드 영역 (기존 write.html의 스타일 재활용) */
+.mate-form-group .file-input-wrapper {
+  flex-grow: 1;
+  height: 60px;
+}
+
+.mate-form-group .file-input-fake {
+  height: 60px;
+  background: none;
+  border: none;
+  padding-left: 20px;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * */
+/* * 여기까지 add_mate_form.html 게시판 스타일 * * */
+/* * * * * * * * * * * * * * * * * * * * * * * * */

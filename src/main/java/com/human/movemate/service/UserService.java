@@ -1,26 +1,27 @@
 package com.human.movemate.service;
 
-import com.human.movemate.dto.UserPro;
+import com.human.movemate.dto.UserProDto;
 import com.human.movemate.model.User;
+import org.springframework.web.multipart.MultipartFile;
 
 // MemberServiceImpl로 상속을 줄 인터페이스.
 // MemberService에 미리 선언해둔 메서드는 무조건 MemberServiceImpl에 있어야 하며,
 // 접근제한자, 반환타입, 이름, 매개변수가 일치해야한다.
 public interface UserService {
     // 회원 가입
-    Long signup(UserPro userPro);
+    Long signup(UserProDto userProDto);
 
     // 로그인
     User login(User user);
 
     // user_no로 user + user_profile 가져오기
-    UserPro getByNo(Long no);
+    UserProDto getByNo(Long no);
 
     // 프로필 업로드
     boolean updateProfile(Long no, String path);
 
     // 회원 정보 수정
-    boolean update(Long no, User user);
+    boolean update(Long no, UserProDto userProDto, MultipartFile profileImage,  boolean isImageDeleted);
 
     // 회원 정보 삭제
     boolean delete(Long no);
