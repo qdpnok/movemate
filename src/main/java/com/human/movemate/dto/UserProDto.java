@@ -3,7 +3,7 @@ package com.human.movemate.dto;
 import lombok.*;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @ToString
-public class UserPro {
+public class UserProDto {
     private Long userNo;
     private String name;
     private String userId;

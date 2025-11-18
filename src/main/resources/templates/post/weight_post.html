@@ -21,19 +21,19 @@
         <div class="post-container">
             <h1 class="board">메이트 게시판</h1>
 
-                    <div th:if="${successMessage}" class="alert alert-success">
-                        <p th:text="${successMessage}"></p>
-                    </div>
-                    <div th:if="${errorMessage}" class="alert alert-danger">
-                        <p th:text="${errorMessage}"></p>
-                    </div>
+            <div th:if="${successMessage}" class="alert alert-success">
+                <p th:text="${successMessage}"></p>
+            </div>
+            <div th:if="${errorMessage}" class="alert alert-danger">
+                <p th:text="${errorMessage}"></p>
+            </div>
 
             <div class="post-box">
                 <div class="running-post">
-                    <a href="http://localhost:8282/posts">러닝 게시판</a>
+                    <a th:href="@{/posts}">러닝 게시판</a>
                 </div>
-                <div class="tab-weight-post">
-                    <a href="http://localhost:8282/posts/weight">웨이트 게시판</a>
+                <div class="weight-post active">
+                    <a th:href="@{/posts/weight}">웨이트 게시판</a>
                 </div>
             </div>
 
@@ -44,19 +44,16 @@
 
                 <div class="card" th:each="post : ${postList}">
 
-                    <h3 class="card-title" th:text="${post.title}">게시글 제목 영역...</h3>
-                    <p class="card-content" th:text="${post.content}">
-                        게시글 내용 미리보기 영역입니다... 내용은 적당히 잘려서 보여야함...
-                    </p>
+                    <a th:href="@{/posts/{postId}(postId=${post.postNo}, from='weight')}" class="card-title-link">
+                        <h3 class="card-title" th:text="${post.title}">게시글 제목</h3>
+                    </a>
+
+                    <p class="card-content" th:text="${post.content}">게시글 내용 미리보기</p>
                     <div class="card-footer">
-
-                        <span class="author" th:text="|작성자: ${post.authorId}|">작성자:movemate</span>
-
-                        <span class="date" th:text="${#temporals.format(post.createdAt,'yy-MM-dd')}">25-11-12</span>
+                        <span class="author" th:text="|작성자: ${post.authorId}|">작성자</span>
+                        <span class="date" th:text="${#temporals.format(post.createdAt,'yy-MM-dd HH:mm')}">작성일</span>
                     </div>
                 </div>
-
-
                 <div class="empty-message" th:if="${#lists.isEmpty(postList)}">
                     <p>등록된 게시글이 없습니다.</p>
                 </div>

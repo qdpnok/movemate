@@ -1,6 +1,6 @@
 :root {
   --primary: #4b5ae4;
-  --secondary: #fb7163;
+  --accent: #fb7163;
   --light: #f3f4f6;
   --dark: #0c414d;
 }
@@ -41,15 +41,10 @@ body {
   align-items: center;
 }
 
-#login-logo {
-  width: 180px;
-  height: 180px;
-}
-
 /* * * * * * main header style * * * * * */
 #main-header {
   width: 100vw;
-  height: 200px;
+  height: 180px;
   margin: 0;
   padding: 0 60px 0 20px;
   background-color: #f3f4f6;
@@ -59,8 +54,8 @@ body {
 }
 
 .main_logo {
-  width: 200px;
-  height: 200px;
+  width: 180px;
+  height: 180px;
   flex-shrink: 0;
 }
 
@@ -83,9 +78,9 @@ li {
 .logout {
   width: 100px;
   height: 50px;
-  border: solid 1px var(--secondary);
+  border: solid 1px var(--accent);
   border-radius: 5px;
-  background-color: var(--secondary);
+  background-color: var(--accent);
   color: white;
   font-size: 15px;
 }
@@ -135,7 +130,7 @@ li {
   right: 0;
   width: 180px;
   background: #fff;
-  border-radius: 8px;
+  border-radius: 5px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   opacity: 0;
   transform: translateY(-10px);
@@ -279,7 +274,8 @@ footer {
 }
 
 #login-container>h1,
-#signup-container>h1 {
+#signup-container>h1,
+#mypage>h1 {
   font-size: 20px;
   font-weight: bold;
   margin: 20px;
@@ -339,7 +335,7 @@ footer {
   color: white;
   border: none;
   border-radius: 14px;
-  background-color: var(--secondary);
+  background-color: var(--accent);
 }
 
 /* 회원가입 페이지 */
@@ -372,26 +368,28 @@ footer {
 
 /* 파일 업로드 버튼 */
 #btn-upload-profile {
-    width: 410px;
-    height: 60px;
-    margin: 10px;
-    background-color: #4C6FFF;  /* 로그인 UI에 맞는 파란색 */
-    color: white;
-    padding: 12px 30px;
-    font-size: 16px;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  width: 410px;
+  height: 60px;
+  margin: 10px;
+  background-color: #4C6FFF;
+  /* 로그인 UI에 맞는 파란색 */
+  color: white;
+  padding: 12px 30px;
+  font-size: 16px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 #btn-upload-profile:hover {
-    background-color: #3A5BCC;  /* 버튼 hover 시 색상 변화 */
+  background-color: #3A5BCC;
+  /* 버튼 hover 시 색상 변화 */
 }
 
 #label-signup-profile {
-    display: inline-block;
-    position: relative;
+  display: inline-block;
+  position: relative;
 }
 
 #profileImageInput {
@@ -399,9 +397,10 @@ footer {
 }
 
 .hint {
-    margin-top: 12px;
-    font-size: 14px;
-    color: #8a8a8a;  /* 로그인 UI의 텍스트 색상에 맞는 색상 */
+  margin-top: 12px;
+  font-size: 14px;
+  color: #8a8a8a;
+  /* 로그인 UI의 텍스트 색상에 맞는 색상 */
 }
 
 .signup-check {
@@ -410,7 +409,8 @@ footer {
   margin: 0 10px;
 }
 
-#new_select {
+#new_select,
+#select-region {
   width: 410px;
   height: 60px;
   margin: 10px;
@@ -640,7 +640,7 @@ hamburgerButton.addEventListener('click', () => {
 
 .post-container {
   max-width: 1200px;
-  margin: 30px auto;
+  margin: 0px auto;
   padding: 0 20px;
 }
 
@@ -677,8 +677,8 @@ hamburgerButton.addEventListener('click', () => {
 }
 
 /* 게시판 선택되면 스타일 적용 */
-.tab-running-post a,
-.tab-weight-post a {
+.weight-post.active a,
+.running-post.active a {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -700,13 +700,13 @@ hamburgerButton.addEventListener('click', () => {
 
 .btn-write {
   background-color: #4B5AE4;
-  color: #fff;
-  border-radius: 5px;
-  font-weight: bold;
+  color: white;
+  border-radius: 8cqmax;
+  font-weight: normal;
   font-size: 15px;
   text-decoration: none;
-  width: 100px;
-  height: 25px;
+  width: 150px;
+  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -729,12 +729,14 @@ hamburgerButton.addEventListener('click', () => {
 
 
 .card-title {
-  font-size: 18px;
+  font-size: 20px;
+  color: black;
   font-weight: bold;
-  margin: 0 0 10px 0;
+  margin: 0 0 20px 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  text-decoration: none;
 }
 
 .card-content {
@@ -804,13 +806,13 @@ hamburgerButton.addEventListener('click', () => {
 /* * * * * * * * * * * * * * * * * * * * * * * */
 
 
-/* =================================================== */
-/* 게시글 작성 폼 (write.html) 스타일 */
-/* =================================================== */
+/* * * * * * * * * * * * * * * * * * * * * * * */
+/* * 여기부터 write.html 게시판 작성 폼 스타일 * * */
+/* * * * * * * * * * * * * * * * * * * * * * * */
 
 .write-container {
   max-width: 800px;
-  margin: 40px auto;
+  margin: 0px auto;
   padding: 20px;
 }
 
@@ -952,4 +954,660 @@ hamburgerButton.addEventListener('click', () => {
   background-color: #f8d7da;
   color: #721c24;
   border: 1px solid #f5c6cb;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * */
+/* * 여기까지 write.html 게시판 작성 폼 스타일 * * */
+/* * * * * * * * * * * * * * * * * * * * * * * */
+
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * */
+/* * 여기부터 view_post.html 글 상세조회 스타일 * * */
+/* * * * * * * * * * * * * * * * * * * * * * * * */
+
+.view-container {
+  max-width: 800px;
+  margin: 0px auto;
+  padding: 20px;
+}
+
+
+/* 상단 (제목 + 버튼) */
+.view-top-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+
+.btn-view-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #4B5AE4;
+  color: white;
+  text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  font-weight: normal;
+  white-space: nowrap;
+}
+
+/* 게시글 영역 */
+.post-view-box {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+/* 게시글 헤더 (작성자) */
+.post-author-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.author-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.author-profile img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #ddd;
+}
+
+.author-name {
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.post-date {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+/* 게시글 제목, 이미지, 내용 */
+.post-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 25px 25px 25px 25px;
+}
+
+.post-image-box {
+  padding: 10px 25px;
+  text-align: center;
+}
+
+.post-image-box img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.post-content {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #333;
+  padding: 20px 25px 40px 25px;
+  white-space: pre-wrap;
+  /* \n 줄바꿈 적용 */
+  min-height: 200px;
+}
+
+.post-btn-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  margin-top: 40px;
+  width: 100%;
+}
+
+.btn-view-edit,
+.btn-view-delete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+  width: 200px;
+}
+
+.btn-view-edit {
+  background-color: var(--primary, #4B5AE4);
+  color: white;
+}
+
+.btn-view-delete {
+  background-color: #FB7163;
+  color: white;
+}
+
+/* =================================================== */
+/* 댓글 섹션 (Comment Section) */
+/* =================================================== */
+.comment-section {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background-color: #fcfcfc;
+}
+
+.comment-section-name {
+  font-size: 1.2rem;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.comment-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 30px 0;
+}
+
+.comment-item {
+  display: flex;
+  /* 수정 모드 시 textarea가 flex-grow 할 수 있도록 */
+  padding: 15px 20px;
+  margin-bottom: 10px;
+  background-color: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  position: relative;
+  /* 수정 버튼 위치 조정을 위해 */
+}
+
+/* 댓글 조회 모드 */
+.comment-view-mode {
+  display: flex;
+  align-items: flex-start;
+  /* 프로필 사진과 내용 상단 정렬 */
+  gap: 15px;
+  width: 100%;
+}
+
+.comment-profile-img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #ddd;
+  flex-shrink: 0;
+  /* 줄어들지 않도록 */
+}
+
+.comment-content-box {
+  flex-grow: 1;
+  /* 남는 공간 차지 */
+}
+
+.comment-author-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
+.comment-author-name {
+  font-weight: 700;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.comment-date {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.comment-text {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* 댓글 액션 버튼 (수정/삭제) */
+.comment-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  width: 80px;
+  height: 40px;
+}
+
+.comment-actions .btn-comment-edit,
+.comment-actions .btn-comment-delete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 40px;
+  background: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: normal;
+  text-decoration: none;
+  color: #666;
+  transition: all 0.2s ease;
+}
+
+.comment-actions .btn-comment-edit:hover {
+  background-color: #e0e7ff;
+  color: var(--primary);
+}
+
+.comment-actions .btn-comment-delete {
+  color: #dc3545;
+}
+
+.comment-actions .btn-comment-delete:hover {
+  background-color: #ffe6e9;
+}
+
+
+/* 댓글 입력 폼 */
+.comment-form {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.comment-textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  resize: vertical;
+}
+
+.btn-comment-submit {
+  flex-shrink: 0;
+  width: 80px;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  background-color: #4B59E4;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+
+.btn-comment-submit:disabled,
+.comment-textarea:disabled {
+  background-color: #e0e0e0;
+  color: #999;
+  cursor: not-allowed;
+}
+
+
+/* =================================================== */
+/* 댓글 인라인(in-place) 수정 스타일 */
+/* =================================================== */
+
+/* 평소에는 '수정 폼'을 숨김 */
+.comment-edit-form {
+  display: none;
+  width: 100%;
+}
+
+/* li.comment-item에 'editing' 클래스가 붙었을 때 */
+
+/* '조회 모드'를 숨김 */
+.comment-item.editing .comment-view-mode {
+  display: none;
+}
+
+/* '수정 모드'를 보여줌 */
+.comment-item.editing .comment-edit-form {
+  display: flex;
+  /* flex로 변경하여 버튼과 정렬 */
+  align-items: flex-start;
+  /* 상단 정렬 */
+  gap: 10px;
+}
+
+/* 수정 폼 내부 스타일 */
+.comment-edit-textarea {
+  flex-grow: 1;
+  min-height: 80px;
+  border: 2px solid var(--primary);
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 0.95rem;
+  resize: vertical;
+}
+
+.comment-edit-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+  margin-top: 0;
+}
+
+.btn-comment-cancel,
+.btn-comment-save {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.btn-comment-cancel {
+  background-color: #eee;
+  color: #555;
+}
+
+.btn-comment-cancel:hover {
+  background-color: #ddd;
+}
+
+.btn-comment-save {
+  background-color: var(--primary);
+  color: white;
+}
+
+.btn-comment-save:hover {
+  background-color: #4B59E4;
+}
+
+/* alert 메시지 스타일 */
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+  border-color: #c3e6cb;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+  border-color: #f5c6cb;
+}
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * */
+/* * 여기까지 view_post.html 글 상세조회 스타일 * * */
+/* * * * * * * * * * * * * * * * * * * * * * * * */
+
+/* 마이페이지 수정 */
+#user-info-edit-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#user-info-edit-table {
+  display: flex;
+  justify-content: center;
+}
+
+th {
+  display: flex;
+  justify-content: center;
+}
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * */
+/* * 여기부터 add_mate_form.html 게시판 스타일 * * */
+/* * * * * * * * * * * * * * * * * * * * * * * * */
+.mate-form-group {
+  display: flex;
+  align-items: center;
+  /* 세로 중앙 정렬 */
+  margin-bottom: 25px;
+  /* 행 간격 */
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background-color: #fcfcfc;
+  overflow: hidden;
+  /* 둥근 모서리 적용 */
+}
+
+#addmate_select {
+  width: 410px;
+  height: 60px;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #989898;
+  border-radius: 14px;
+  font-size: 14px;
+  color: gray;
+}
+
+/* 폼 라벨 (아이콘 + 텍스트) */
+.mate-form-group .mate-label {
+  display: flex;
+  align-items: center;
+  width: 150px;
+  height: 60px;
+  padding: 0 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.mate-form-group .mate-label i {
+  font-size: 1.2rem;
+  margin-right: 10px;
+  color: #555;
+  width: 20px;
+  /* 아이콘 정렬 */
+  text-align: center;
+}
+
+/* 폼 입력창 (select, input) */
+.mate-form-group .mate-input {
+  flex-grow: 1;
+  height: 60px;
+  padding: 0 20px;
+  border: none;
+  border-radius: 8px;
+  background: F3F4F6;
+  font-size: 1rem;
+  color: gray;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.mate-form-group .mate-input:focus {
+  outline: none;
+}
+
+.mate-form-group .mate-input::placeholder {
+  color: gray;
+}
+
+.mate-form-group select.mate-input {
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23888" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>') no-repeat right 20px center;
+  background-size: 12px 12px;
+}
+
+/* 파일 업로드 영역 (기존 write.html의 스타일 재활용) */
+.mate-form-group .file-input-wrapper {
+  flex-grow: 1;
+  height: 60px;
+}
+
+.mate-form-group .file-input-fake {
+  height: 60px;
+  background: none;
+  border: none;
+  padding-left: 20px;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * */
+/* * 여기까지 add_mate_form.html 게시판 스타일 * * */
+/* * * * * * * * * * * * * * * * * * * * * * * * */
+
+/* 마이페이지 */
+#mypage-container {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+}
+
+#mypage {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#my-profile {
+  width: 100vw;
+  display:flex;
+  justify-content: center;
+}
+
+#profile {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin: 0 20px;
+}
+
+#profile p {
+  font-size: 16px;
+  margin: 5px 0;
+  color: #666;
+}
+
+.img-round-small {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border-style: none;
+  overflow: hidden;
+  object-fit: cover;
+  margin: 0 20px;
+}
+
+#my-button-filed {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  padding: 10px;
+}
+
+.mypage-button {
+  width: 130px;
+  height: 38px;  /* 조금 더 얇고 깔끔한 높이 */
+  border: none;  /* 기본 테두리 없애기 */
+  color: white;  /* 글자 색은 흰색 */
+  font-size: 14px;  /* 적당한 글자 크기 */
+  border-radius: 25px;  /* 버튼 모서리를 둥글게 */
+  cursor: pointer;  /* 클릭 가능한 포인터 */
+  transition: all 0.3s ease;  /* 부드러운 효과 */
+  text-align: center;  /* 텍스트 가운데 정렬 */
+}
+
+.mypage-button:hover {
+  background-color: #357ab7;  /* hover 시 색상 변경 */
+}
+
+.mypage-button:focus {
+  outline: none;  /* 버튼에 포커스 시 기본 outline 제거 */
+}
+
+.btn-mypost {
+  background-color: var(--dark);
+}
+
+.btn-edit-myinfo {
+  background-color: var(--primary);
+}
+
+.btn-danger {
+  background-color: var(--accent);
+}
+
+.sub-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  background-color: var(--primary);
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#sport-type-choice-bar,
+#crew-choice-bar {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.choice-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 525px;
+  height: 70px;
+  border-radius: 20px;
+  background-color: #F3F4F6;
+  color: BLACK;
+  font-size: 20px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border-style: none;
+}
+
+.choice-button.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 525px;
+  height: 70px;
+  border-radius: 20px;
+  background-color: #4B5AE4;
+  color: white;
+  font-size: 20px;
+  text-decoration: none;
 }
