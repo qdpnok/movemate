@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public Long signup(UserProDto userProDto) {
         Long userId = userDao.save(new User(0L, userProDto.getName(),
-                userProDto.getUserId(), userProDto.getPassword(), userProDto.getEmail(), userProDto.getPhoneNo()));
+                userProDto.getUserId(), userProDto.getPassword(), userProDto.getEmail(), userProDto.getPhoneNo(), null, null));
 
         userProfileDao.save(new UserProfile(0L, userId, userProDto.getGender(),
                 userProDto.getAge(), null, userProDto.getRegion(),
@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public boolean update(Long userNo, UserProDto userProDto, MultipartFile profileImage) {
+    public boolean update(Long userNo, UserProDto userProDto, MultipartFile profileImage, boolean isImageDeleted) {
         UserProDto originalInfo = userProfileDao.findByNo(userNo);
 
         String pwd = userProDto.getPassword();
@@ -79,11 +79,14 @@ public class UserServiceImpl implements UserService {
         if(profileImage != null && !profileImage.isEmpty()) {
             fileStorageService.deleteIfExists(imagePath);
             imagePath = fileStorageService.storeFile(profileImage, "users", userNo);
+        } else if (isImageDeleted) {
+            fileStorageService.deleteIfExists(imagePath);
+            imagePath = null;
         }
 
         boolean userUpdateSuccess = userDao.update(userNo, new User(userNo, userProDto.getName(),
                 userProDto.getUserId(), pwd,
-                userProDto.getEmail(), userProDto.getPhoneNo()));
+                userProDto.getEmail(), userProDto.getPhoneNo(), null, null));
 
         boolean profileUpdateSuccess = userProfileDao.update(userNo, new UserProfile(
                 userProDto.getProfileId(), userNo, userProDto.getGender(),

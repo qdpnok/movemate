@@ -408,7 +408,7 @@ footer {
   margin: 0 10px;
 }
 
-#new_select {
+#new_select, #select-region {
   width: 410px;
   height: 60px;
   margin: 10px;

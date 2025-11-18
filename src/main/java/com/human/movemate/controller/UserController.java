@@ -71,10 +71,11 @@ public class UserController {
     @PostMapping("/{no}/edit")
     public String edit(@ModelAttribute UserProDto userProDto,
                          @RequestParam(value = "profileImage", required = false) MultipartFile profileImage,
+                       @RequestParam(name="is_image_delete_flag", defaultValue = "false") boolean isImageDeleted,
                        @PathVariable Long no) {
 
         log.info("멤버 id: {}, 멤버 객체: {}", no, userProDto);
-        userService.update(no, userProDto, profileImage);
+        userService.update(no, userProDto, profileImage, isImageDeleted);
 
         return "redirect:/";
     }

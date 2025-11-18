@@ -35,7 +35,10 @@
               <button id="edit-profile-button" type="button">사진 변경</button>
               <input id="profileImageInput" type="file" name="profileImage" accept="image/*">
             </label>
-            <button>사진 삭제</button>
+            <label for="profileImageDelete">
+              <button id="delete-profile-button" type="button">사진 삭제</button>
+              <input id="profileImageDelete" name="is_image_delete_flag" type="hidden" value="false">
+            </label>
           </div>
           <div class="hint">JPG/PNG/WebP 권장, 5MB 이하</div>
         </div>
@@ -45,49 +48,49 @@
         <tr>
           <td>이름:</td>
           <td>
-            <input type="text" class="input-txt" placeholder="변경할 이름을 입력해주세요." th:field="*{name}" required>
+            <input type="text" class="input-txt" id="userNameInput" placeholder="변경할 이름을 입력해주세요." th:field="*{name}" required>
             <p class="signup-check"></p>
           </td>
         </tr>
         <tr>
           <td>아이디:</td>
           <td>
-            <input type="text" class="input-txt" placeholder="변경할 아이디를 입력해주세요." th:field="*{userId}" required>
-            <p class="signup-check"></p>
+            <input type="text" class="input-txt input-id" placeholder="변경할 아이디를 입력해주세요." th:field="*{userId}" required>
+            <p class="signup-check check-id"></p>
           </td>
         </tr>
         <tr>
           <td>이메일:</td>
           <td>
-            <input type="text" class="input-txt" placeholder="변경할 이메일을 입력해주세요." th:field="*{email}" required>
-            <p class="signup-check"></p>
+            <input type="text" class="input-txt input-email" placeholder="변경할 이메일을 입력해주세요." th:field="*{email}" required>
+            <p class="signup-check check-email"></p>
           </td>
         </tr>
         <tr>
           <td>비밀번호:</td>
           <td>
-            <input type="password" class="input-txt" placeholder="변경할 비밀번호를 입력해주세요. (비워두면 기존 유지)" name="password">
-            <p class="signup-check"></p>
+            <input type="password" class="input-txt input-pwd" placeholder="변경할 비밀번호를 입력해주세요. (비워두면 기존 유지)" name="password">
+            <p class="signup-check check-pwd"></p>
           </td>
         </tr>
         <tr>
           <td>비밀번호 확인:</td>
           <td>
-            <input type="password" class="input-txt" placeholder="비밀번호를 한번 더 입력해주세요.">
-            <p class="signup-check"></p>
+            <input type="password" class="input-txt input-pwd-check" placeholder="비밀번호를 한번 더 입력해주세요.">
+            <p class="signup-check check-pwd-check"></p>
           </td>
         </tr>
         <tr>
           <td>휴대폰번호:</td>
           <td>
-            <input type="text" class="input-txt" placeholder="변경할 휴대폰번호를 입력해주세요." th:value="${userInfo.phoneNo}" th:field="*{phoneNo}" required>
-            <p class="signup-check"></p>
+            <input type="text" class="input-txt input-tel" placeholder="변경할 휴대폰번호를 입력해주세요." th:value="${userInfo.phoneNo}" th:field="*{phoneNo}" required>
+            <p class="signup-check check-tel"></p>
           </td>
         </tr>
         <tr>
           <td>지역:</td>
           <td>
-            <select name="region" id="select-region" th:field="*{region}">
+            <select name="region" id="select-region" class="region" th:field="*{region}">
               <option disabled hidden="hidden" value="">변경할 지역을 선택해주세요</option>
             </select>
         <p class="signup-check"></p>
@@ -100,7 +103,7 @@
         <tr>
           <td>나이:</td>
           <td>
-            <input type="text" class="input-txt" placeholder="변경할 나이를 만 나이로 입력해주세요." th:field="*{age}" required>
+            <input type="text" id="userAgeInput" class="input-txt" placeholder="변경할 나이를 만 나이로 입력해주세요." th:field="*{age}" required>
         <p class="signup-check"></p>
           </td>
         </tr>
@@ -120,7 +123,7 @@
                 <p>변경할 운동종목을 선택해주세요.</p>
           </td>
         </tr>
-        <tr>
+        <tr id="pace-box">
           <td>러닝페이스:</td>
           <td>
             <input type="text" class="input-txt" placeholder="MM:ss" th:field="*{paceDetail}"/>
@@ -129,12 +132,242 @@
         </tr>
       </table>
     <div class="edit-button-box">
-        <button type="submit">회원정보수정</button>
+        <button type="submit" id="profile-update-button">회원정보수정</button>
         <button>회원탈퇴</button>
     </div>
     </form>
 
     <script th:inline="javascript">
+      // 가입 정보 검증
+        const idInput = document.querySelector(".input-id");
+        const idCheck = document.querySelector(".check-id");
+
+        const mailInput = document.querySelector(".input-email");
+        const mailCheck = document.querySelector(".check-email");
+
+        const pwInput = document.querySelector(".input-pwd");
+        const pwCheck = document.querySelector(".check-pwd");
+
+        const pwcInput = document.querySelector(".input-pwd-check");
+        const pwcCheck = document.querySelector(".check-pwd-check");
+
+        const telInput = document.querySelector(".input-tel");
+        const telCheck = document.querySelector(".check-tel");
+
+        const regionInput = document.querySelector(".region");
+
+        const sportRunning = document.getElementById('sportR');
+        const sportWeight = document.getElementById('sportW');
+        const sportAll = document.getElementById('sportA');
+
+const nameInput = document.getElementById('userNameInput');
+const ageInput = document.getElementById('userAgeInput');
+
+        const submitBtn = document.getElementById("profile-update-button");
+
+        const regexId = /^\w{8,20}$/;
+        const regexMail =
+          /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+        const regexPw = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,}$/;
+        const regexTel = /^0\d{1,2}-\d{3,4}-\d{4}$/;
+        
+        // 💡 모든 필드가 유효한 상태인지 저장하는 플래그 객체 (초기값은 true로 설정)
+        const validationFlags = {
+            id: true, // 초기에는 기존 아이디가 유효하다고 가정
+            password: true, // 비밀번호는 수정 시에만 검사하므로 true로 가정
+            passwordConfirm: true, // 비밀번호는 수정 시에만 검사하므로 true로 가정
+            email: true, // 초기에는 기존 이메일이 유효하다고 가정
+            phoneNo: true, // 초기에는 기존 번호가 유효하다고 가정
+            sport: true, // 초기에는 선택되어 있다고 가정
+            region: true, // 초기에는 선택되어 있다고 가정
+            // 참고: 이름과 나이는 required 속성으로 처리하고 validationFlags에는 포함하지 않음
+        };
+
+        // 조건식 검증 - validate 함수는 유효성 여부만 반환하도록 수정
+        const validate = (input, regex, el, okMsg, badMsg) => {
+          const v = input.value.trim();
+
+          if (v === "") {
+            el.textContent = "";
+            el.classList.remove("valid");
+            // required가 아닌 필드(ex: 비밀번호)가 비어있으면 null 반환
+            return input.hasAttribute('required') ? false : null; 
+          }
+          if (regex.test(v)) {
+            // 유효할 경우 메시지 표시
+            el.textContent = okMsg;
+            el.style.color = "green";
+            el.classList.add("valid");
+            return true;
+          } else {
+            // 유효하지 않을 경우 메시지 표시
+            el.textContent = badMsg;
+            el.style.color = "red";
+            el.classList.remove("valid");
+            return false;
+          }
+        };
+        
+        // 💡 필드별 검증 및 플래그 업데이트 함수
+        const validateField = (input, regex, el, okMsg, badMsg, flagName) => {
+            const result = validate(input, regex, el, okMsg, badMsg);
+            
+            if (result === null) {
+                // 비어있는 경우 (비밀번호 같은 optional 필드) -> 유효성 통과로 간주
+                validationFlags[flagName] = true;
+            } else {
+                validationFlags[flagName] = result;
+            }
+            updateSubmitBtn();
+            return result;
+        };
+
+        const pwdCheck = () => {
+          const isPwEmpty = pwInput.value.trim() === "";
+          const isPwcEmpty = pwcInput.value.trim() === "";
+
+          if (isPwEmpty && isPwcEmpty) {
+            pwcCheck.textContent = "";
+            pwcCheck.classList.remove("valid");
+             validationFlags.passwordConfirm = true;
+            return true; // 둘 다 비어있으면 기존 유지로 통과
+          }
+          
+          if (isPwEmpty && !isPwcEmpty) {
+            pwcCheck.textContent = "새 비밀번호를 입력하려면 비밀번호를 먼저 입력해주세요.";
+            pwcCheck.style.color = "red";
+            pwcCheck.classList.remove("valid");
+            validationFlags.passwordConfirm = false;
+            return false;
+          }
+
+          if (pwInput.value === pwcInput.value) {
+            pwcCheck.textContent = "비밀번호가 일치합니다."
+            pwcCheck.style.color = "green";
+            pwcCheck.classList.add("valid");
+             validationFlags.passwordConfirm = true;
+            return true;
+          } else {
+            pwcCheck.textContent = "비밀번호가 일치하지 않습니다.";
+            pwcCheck.style.color = "red";
+            pwcCheck.classList.remove("valid");
+             validationFlags.passwordConfirm = false;
+            return false;
+          }
+        }
+
+        const sportCheck = () => {
+          const checked = sportRunning.checked || sportWeight.checked || sportAll.checked
+          validationFlags.sport = checked;
+          // 라디오 버튼은 체크 유무만 확인하고 메시지는 따로 출력하지 않음
+          return checked
+        }
+        
+        // 💡 region 변경 시 플래그 업데이트
+        const rCheck = () => { 
+            const selected = regionInput.value !== ""
+            validationFlags.region = selected;
+            // 지역 선택은 메시지를 따로 출력하지 않음
+            return selected
+        }
+
+        // submit 활성화/비활성화
+        const updateSubmitBtn = () => {
+            // 이름, 나이 필드 검사 (required 속성만 의존)
+            const nameValid = nameInput.value.trim() !== "";
+            const ageValid = ageInput.value.trim() !== "";
+            
+            // 모든 플래그와 required 필드가 유효해야 버튼 활성화
+          submitBtn.disabled = !(
+                validationFlags.id && 
+                validationFlags.password && 
+                validationFlags.passwordConfirm && 
+                validationFlags.email && 
+                validationFlags.phoneNo && 
+                validationFlags.sport && 
+                validationFlags.region &&
+                nameValid &&
+                ageValid
+            );
+        };
+        
+        // 💡 이벤트 리스너: 각 필드 이벤트에만 validateField를 연결
+        idInput.addEventListener("input", () => {
+            validateField(idInput, regexId, idCheck, "사용 가능합니다.", "아이디는 밑줄을 포함한 영숫자 8~20자", 'id');
+        });
+        
+        mailInput.addEventListener("input", () => {
+            validateField(mailInput, regexMail, mailCheck, "사용 가능합니다.", "올바른 이메일 형식으로 입력해주세요.", 'email');
+        });
+        
+        telInput.addEventListener("input", () => {
+            validateField(telInput, regexTel, telCheck, "사용 가능합니다.", " - 을 포함하여 올바른 휴대폰번호 형식으로 입력해주세요.", 'phoneNo');
+        });
+        
+        // 비밀번호 입력이 변경되면 비밀번호 유효성 검사 및 확인 검사
+        pwInput.addEventListener("input", () => {
+            const result = validateField(pwInput, regexPw, pwCheck, "안전한 비밀번호입니다.", "대/소문자+숫자+특수문자 포함 8자 이상", 'password');
+            // 비밀번호를 입력하지 않았을 경우, 유효성 검사는 true를 반환하지만 확인 필드 검사는 필요함
+            if (result !== false) {
+                pwdCheck();
+            }
+        });
+
+        // 비밀번호 확인 입력이 변경되면 확인 검사
+        pwcInput.addEventListener("input", () => {
+            pwdCheck();
+            updateSubmitBtn();
+        });
+        
+        // 이름, 나이 입력 시 버튼 상태 업데이트
+       
+
+// 이벤트 리스너
+nameInput.addEventListener("input", updateSubmitBtn);
+ageInput.addEventListener("input", updateSubmitBtn);
+        
+
+        // 💡 라디오 버튼/셀렉트 박스는 필드 메시지 없이 버튼 활성화만 담당 (기존의 sportCheck, rCheck 함수 내에서 플래그 업데이트)
+        sportRunning.addEventListener("click", () => { sportCheck(); updateSubmitBtn(); paceOpen(); });
+        sportWeight.addEventListener("click", () => { sportCheck(); updateSubmitBtn(); paceClose(); });
+        sportAll.addEventListener("click", () => { sportCheck(); updateSubmitBtn(); paceOpen(); });
+        regionInput.addEventListener("change", () => { rCheck(); updateSubmitBtn(); });
+        
+        // 페이지 로드 시 초기 유효성 검사 및 버튼 상태 설정
+        document.addEventListener("DOMContentLoaded", () => {
+            // 초기값을 플래그에 반영 (required 필드는 HTML required 속성에 의존)
+            validateField(idInput, regexId, idCheck, "사용 가능합니다.", "아이디는 밑줄을 포함한 영숫자 8~20자", 'id');
+            validateField(mailInput, regexMail, mailCheck, "사용 가능합니다.", "올바른 이메일 형식으로 입력해주세요.", 'email');
+            validateField(telInput, regexTel, telCheck, "사용 가능합니다.", " - 을 포함하여 올바른 휴대폰번호 형식으로 입력해주세요.", 'phoneNo');
+            
+            // 비밀번호 필드는 비어있으므로 true로 유지.
+            pwdCheck();
+            
+            // 라디오 버튼/지역 초기 선택 상태 반영
+            sportCheck();
+            rCheck();
+            
+            // 최종 버튼 상태 업데이트
+            updateSubmitBtn();
+        });
+
+        // 운동 종목 선택에 따라 페이스 입력란 보이기
+        const paceBox = document.getElementById("pace-box");
+
+        const paceOpen = () => paceBox.style.display = 'table-row';
+        const paceClose = () => paceBox.style.display = 'none';
+        
+        const currentSport = /*[[${userInfo.sportType}]]*/ '러닝';
+        if (currentSport === '러닝' || currentSport === '모두') {
+          paceOpen();
+        } else {
+          paceClose();
+        }
+      
+        sportRunning.addEventListener("click", paceOpen);
+        sportWeight.addEventListener("click", paceClose);
+        sportAll.addEventListener("click", paceOpen);
+
       // 지역 선택
       const regions = [
           "광덕면", "구룡동", "구성동", "다가동", "대흥동", "동면", "목천읍", "문화동",
@@ -172,6 +405,9 @@
           const label = document.getElementById('label-signup-profile');
           const button = document.getElementById('edit-profile-button');
 
+          const deleteButton = document.getElementById('delete-profile-button'); 
+          const isImageDeletedInput = document.getElementById('profileImageDelete');
+
           // 서버에서 내려온 원본 이미지 경로 저장(없으면 빈 문자열)
           const originalSrc = /*[[${userInfo != null}]]*/ false
                   ? /*[[${userInfo.profileImageUrl} != null ? @{/files/{file}(file=${userInfo.profileImageUrl})} : @{/images/profile.png}]]*/ ''
@@ -207,10 +443,28 @@
               return;
             }
 
+            if(isImageDeletedInput) {
+              isImageDeletedInput.value = 'false';
+            }
+
             revoke();
             objectUrl = URL.createObjectURL(file);
             img.src = objectUrl;
           });
+
+          deleteButton?.addEventListener('click', function() {
+            if(isImageDeletedInput) {
+              isImageDeletedInput.value = 'true';
+            }
+
+            input.value = '';
+
+            img.src = /*[[@{/images/profile.png}]]*/;
+
+            revoke();
+
+            alert('프로필 사진이 기본 이비지로 변경됩니다.')
+          })
 
           window.addEventListener('beforeunload', revoke);
         })();
