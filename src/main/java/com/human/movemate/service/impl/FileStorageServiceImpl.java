@@ -47,9 +47,9 @@ public class FileStorageServiceImpl implements FileStorageService {
 
             String storedFileName;
             if (id == null) {
-                storedFileName = UUID.randomUUID().toString() + "_";
+                storedFileName = UUID.randomUUID().toString();
             } else {
-                storedFileName = String.valueOf(id);
+                storedFileName = String.valueOf(id) + "_" + UUID.randomUUID().toString();;
             }
             storedFileName += ext;
 
@@ -59,13 +59,14 @@ public class FileStorageServiceImpl implements FileStorageService {
             // 디버깅 로그
             log.info("파일 저장 시도: {}", filePath);
             // 파일 저장 (Files.copy)
-            Files.copy(file.getInputStream(), filePath);
+            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
-            // DB에 저장할 파일명 반환
+            // DB에 저장할 파일명 반환 (예: posts/1_uuid.jpg)
             return domain + "/" + storedFileName;
 
         } catch (IOException e) {
             // Controller가 예외를 잡아서 로그로 보여줄 것
+            log.error("파일 저장 중 오류 발생", e);
             throw new RuntimeException("파일을 저장하지 못했습니다: " + e.getMessage());
         }
     }

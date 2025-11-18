@@ -1,6 +1,7 @@
 package com.human.movemate.controller;
 
 import com.human.movemate.dto.AddMateFormDto;
+import com.human.movemate.model.AddMate;
 import com.human.movemate.service.AddMateService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import com.human.movemate.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -80,6 +82,101 @@ public class AddMateController {
         }
 
         // 추후 메이트 목록 페이지로 바꿔야됨 ★
+        return "redirect:/";
+    }
+
+    // 메이트 모집 글 상세 조회
+    // GET/addMate/{mateNo}
+    @GetMapping("/{mateNo}")
+    public String viewMate(@PathVariable("mateNo") Long mateNo, Model model) {
+        AddMate mate = addMateService.findById(mateNo);
+        if (mate == null) {
+            // (임시) 글이 없으면 메인으로
+            return "redirect:/";
+        }
+        model.addAttribute("mate", mate);
+        // "SOLO" / "CREW" 타입에 따라 다른 제목 전달
+        if ("SOLO".equals(mate.getMateType())) {
+            model.addAttribute("pageTitle", "내가 쓴 1:1 메이트 모집 글");
+        } else {
+            model.addAttribute("pageTitle", "내가 만든 크루 관리");
+        }
+        // 화면에 뿌려줄 HTML
+        return "addmate/add_mate_view";
+    }
+
+    // 글 수정 폼
+    // POST/addMate/update/{mateNo}
+    @GetMapping("/edit/{mateNo}")
+    public String editMateForm(@PathVariable("mateNo") Long mateNo, Model model, HttpSession session) {
+        AddMate mate = addMateService.findById(mateNo);
+        User loginUser = (User) session.getAttribute("loginUser");
+        // 권한 확인 (본인 글이 아니면)
+        if (loginUser == null || !loginUser.getUserNo().equals(mate.getUserNo())) {
+            return "redirect:/"; // (임시) 메인으로
+        }
+        // Model -> DTO 변환 (폼에 채우기 위함)
+        AddMateFormDto mateForm = new AddMateFormDto();
+        mateForm.setMateType(mate.getMateType());
+        mateForm.setRegion(mate.getRegion());
+        mateForm.setSportType(mate.getSportType());
+        mateForm.setMateName(mate.getMateName());
+        mateForm.setDescription(mate.getDescription());
+        model.addAttribute("mateForm", mateForm);
+        model.addAttribute("mateNo", mateNo);
+        if ("SOLO".equals(mate.getMateType())) {
+            model.addAttribute("pageTitle", "1:1 메이트 생성 내용 수정");
+        } else {
+            model.addAttribute("pageTitle", "메이트 크루 생성 내용 수정");
+        }
+        return "addmate/add_mate_form";
+    }
+
+    // 실제로 수정하는 메소드
+    @PostMapping("/update/{mateNo}")
+    public String updateMate(@PathVariable("mateNo") Long mateNo,
+                             AddMateFormDto mateFormDto,
+                             HttpSession session,
+                             RedirectAttributes redirectAttributes) {
+        // 로그인 확인
+        User loginUser = (User) session.getAttribute("loginUser");
+        if (loginUser == null) {
+            return "redirect:/login";
+        }
+        try {
+            // 2Service 호출 (업데이트 로직 실행 / 권한 확인은 Service 내부에서 수행)
+            addMateService.updateMate(mateNo, mateFormDto, loginUser.getUserNo());
+            // 성공 메시지
+            redirectAttributes.addFlashAttribute("successMessage", "게시글이 성공적으로 수정되었습니다.");
+        } catch (Exception e) {
+            // 실패 메시지
+            log.error("메이트 수정 실패: {}", e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", "수정에 실패했습니다: " + e.getMessage());
+        }
+        // 수정 완료 후, 해당 글 상세 페이지로 리다이렉트
+        return "redirect:/addMate/" + mateNo;
+    }
+
+    // 글 삭제
+    // GET/addMate/delete/{mateNo}
+    @GetMapping("/delete/{mateNo}")
+    public String deleteMate(@PathVariable("mateNo") Long mateNo,
+                             HttpSession session,
+                             RedirectAttributes redirectAttributes) {
+
+        User loginUser = (User) session.getAttribute("loginUser");
+        if (loginUser == null) {
+            return "redirect:/login";
+        }
+        try {
+            // Service에서 권한 확인 및 삭제
+            addMateService.deleteMate(mateNo, loginUser.getUserNo());
+            redirectAttributes.addFlashAttribute("successMessage", "게시글이 삭제되었습니다.");
+        } catch (Exception e) {
+            log.error("메이트 삭제 실패: {}", e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", "삭제에 실패했습니다: " + e.getMessage());
+        }
+        // (임시) 삭제 후 메인으로 (목록 페이지 완성 시 그곳으로)
         return "redirect:/";
     }
 }
