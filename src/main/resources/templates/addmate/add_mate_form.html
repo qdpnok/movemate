@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+    layout:decorate="~{/layout/main}">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <title>메이트 생성하기</title>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <div class="post-container">
+            <h1 class="board" th:text="${pageTitle}">1:1 메이트 생성</h1>
+            <form th:action="@{/addMate/save}" method="post" th:object="${mateForm}" enctype="multipart/form-data">
+                <input type="hidden" th:field="*{mateType}" />
+                <div class="mate-form-group">
+                    <label for="region-select" class="mate-label">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>지역선택</span>
+                    </label>
+                    <select id="region-select" class="mate-input" th:field="*{region}" required>
+                        <option value="" selected>지역을 선택해주세요</option>
+                    </select>
+                </div>
+                <div class="mate-form-group">
+                    <label for="sport-select" class="mate-label">
+                        <i class="fa-solid fa-person-running"></i>
+                        <span>종목선택</span>
+                    </label>
+                    <select id="sport-select" th:field="*{sportType}" class="mate-input" required>
+                        <option value="" selected>운동 종목을 선택해주세요</option>
+                        <option value="러닝">러닝</option>
+                        <option value="웨이트">웨이트</option>
+                    </select>
+                </div>
+                <div class="mate-form-group">
+                    <label for="mateName" class="mate-label">
+                        <i class="fa-solid fa-id-badge"></i>
+                        <span>메이트명</span>
+                    </label>
+                    <input type="text" id="mateName" th:field="*{mateName}" class="mate-input"
+                        placeholder="메이트명을 입력해주세요" required>
+                </div>
+                <div class="mate-form-group">
+                    <label for="mateImageInput" class="mate-label">
+                        <i class="fa-solid fa-camera"></i>
+                        <span>사진등록</span>
+                    </label>
+                    <div class="file-input-wrapper">
+                        <input id="mateImageInput" class="file-input-real" type="file" th:field="*{mateImage}"
+                            accept="image/*" />
+                        <label for="mateImageInput" class="file-input-fake">
+                            <span class="file-placeholder">(선택) 프로필 사진을 등록해주세요</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description">내용</label>
+                </div>
+                <div class="form-group">
+                    <textarea id="description" th:field="*{description}" rows="15" placeholder="내용 입력.."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-submit" th:text="${postId == null} ? '등록' : '수정'">등록</button>
+                </div>
+            </form>
+
+        </div>
+        <script>
+            const regions = [
+                "광덕면", "구룡동", "구성동", "다가동", "대흥동", "동면", "목천읍", "문화동",
+                "병천면", "봉명동", "북면", "사직동", "삼룡동", "성남면", "성황동", "수신면",
+                "신방동", "신부동", "안서동", "영성동", "오룡동", "용곡동", "원성1동", "원성2동",
+                "원성동", "유량동", "청당동", "청수동", "풍세면", "두정동", "백석동", "부대동",
+                "부성1동", "부성2동", "불당동", "성거읍", "성성동", "성정1동", "성정2동", "성정동",
+                "성환읍", "신당동", "쌍용1동", "쌍용2동", "쌍용3동", "쌍용동", "업성동", "와촌동",
+                "입장면", "직산읍", "차암동"
+            ];
+            document.addEventListener('DOMContentLoaded', function () {
+                try {
+                    const dropdown = document.getElementById("region-select");
+                    regions.forEach((region) => {
+                        const newRegion = document.createElement("option");
+                        newRegion.value = region;
+                        newRegion.innerText = region;
+                        dropdown.appendChild(newRegion);
+                    });
+                } catch (e) {
+                    console.error("지역 목록 스크립트 오류:", e);
+                }
+
+                // (기존 파일 업로드 스크립트는 그대로 둠)
+                try {
+                    const fileInput = document.getElementById('mateImageInput');
+                    const filePlaceholder = document.querySelector('.file-placeholder');
+                    fileInput.addEventListener('change', () => {
+                        if (fileInput.files.length > 0) {
+                            filePlaceholder.textContent = fileInput.files[0].name;
+                        } else {
+                            filePlaceholder.textContent = '프로필 사진을 등록해주세요 (선택)';
+                        }
+                    });
+                } catch (e) {
+                    console.error("파일 업로드 스크립트 오류:", e);
+                }
+            });
+        </script>
+    </div>
+
+</body>
+
+</html>
