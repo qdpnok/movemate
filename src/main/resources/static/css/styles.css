@@ -408,7 +408,8 @@ footer {
   margin: 0 10px;
 }
 
-#new_select, #select-region {
+#new_select,
+#select-region {
   width: 410px;
   height: 60px;
   margin: 10px;
@@ -699,12 +700,12 @@ hamburgerButton.addEventListener('click', () => {
 .btn-write {
   background-color: #4B5AE4;
   color: white;
-  border-radius: 5px;
+  border-radius: 8cqmax;
   font-weight: normal;
   font-size: 15px;
   text-decoration: none;
   width: 150px;
-  height: 400px;
+  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1384,3 +1385,96 @@ th {
   display: flex;
   justify-content: center;
 }
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * */
+/* * 여기부터 add_mate_form.html 게시판 스타일 * * */
+/* * * * * * * * * * * * * * * * * * * * * * * * */
+.mate-form-group {
+  display: flex;
+  align-items: center;
+  /* 세로 중앙 정렬 */
+  margin-bottom: 25px;
+  /* 행 간격 */
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background-color: #fcfcfc;
+  overflow: hidden;
+  /* 둥근 모서리 적용 */
+}
+
+#addmate_select {
+  width: 410px;
+  height: 60px;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #989898;
+  border-radius: 14px;
+  font-size: 14px;
+  color: gray;
+}
+
+/* 폼 라벨 (아이콘 + 텍스트) */
+.mate-form-group .mate-label {
+  display: flex;
+  align-items: center;
+  width: 150px;
+  height: 60px;
+  padding: 0 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.mate-form-group .mate-label i {
+  font-size: 1.2rem;
+  margin-right: 10px;
+  color: #555;
+  width: 20px;
+  /* 아이콘 정렬 */
+  text-align: center;
+}
+
+/* 폼 입력창 (select, input) */
+.mate-form-group .mate-input {
+  flex-grow: 1;
+  height: 60px;
+  padding: 0 20px;
+  border: none;
+  border-radius: 8px;
+  background: F3F4F6;
+  font-size: 1rem;
+  color: gray;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.mate-form-group .mate-input:focus {
+  outline: none;
+}
+
+.mate-form-group .mate-input::placeholder {
+  color: gray;
+}
+
+.mate-form-group select.mate-input {
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23888" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>') no-repeat right 20px center;
+  background-size: 12px 12px;
+}
+
+/* 파일 업로드 영역 (기존 write.html의 스타일 재활용) */
+.mate-form-group .file-input-wrapper {
+  flex-grow: 1;
+  height: 60px;
+}
+
+.mate-form-group .file-input-fake {
+  height: 60px;
+  background: none;
+  border: none;
+  padding-left: 20px;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * */
+/* * 여기까지 add_mate_form.html 게시판 스타일 * * */
+/* * * * * * * * * * * * * * * * * * * * * * * * */
