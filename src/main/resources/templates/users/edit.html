@@ -10,6 +10,7 @@
 </head>
 <body>
 <div layout:fragment="content">
+  <div id="my-edit-container">
   <h1>회원 정보 수정</h1>
   <form
                 th:action="@{/users/{userNo}/edit(userNo=${userInfo.userNo})}"
@@ -21,17 +22,19 @@
       <div id="profile-img-edit">
         <div class="profile-left">
             <div class="avatar-box">
-                <img id="avatarPreview" class="avatar img-round-big"
+                <img id="avatarPreview" class="avatar img-round-small"
                      th:src="${userInfo.profileImageUrl} != null ?
                         @{'/files/'+${userInfo.profileImageUrl}} :
                         @{/images/profile.png}"
                      alt="프로필 미리보기" />
             </div>
         </div>
-        <div id="profile-img-box">
+      </div>
+      <div id="profile-img-box">
           <p>프로필 사진</p>
-          <div id="profile-img-button">
-            <label for="profileImageInput" >
+          <div id="profile-img-button-box">
+            <div id="profile-img-button">
+              <label for="profileImageInput" >
               <button id="edit-profile-button" type="button">사진 변경</button>
               <input id="profileImageInput" type="file" name="profileImage" accept="image/*">
             </label>
@@ -39,10 +42,10 @@
               <button id="delete-profile-button" type="button">사진 삭제</button>
               <input id="profileImageDelete" name="is_image_delete_flag" type="hidden" value="false">
             </label>
+            </div>
+            <div class="hint">JPG/PNG/WebP 권장, 5MB 이하</div>
           </div>
-          <div class="hint">JPG/PNG/WebP 권장, 5MB 이하</div>
         </div>
-      </div>
     </div>
       <table id="user-info-edit-table">
         <tr>
@@ -98,7 +101,7 @@
         </tr>
         <tr>
           <td>성별:</td>
-          <td th:text="${userInfo.gender}"></td>
+          <td><p id="edit-gender" th:text="${userInfo.gender}"></p></td>
         </tr>
         <tr>
           <td>나이:</td>
@@ -110,7 +113,7 @@
         <tr>
           <td>운동종목:</td>
           <td>
-            <label class="type-label" for="sportR">운동 종목</label>
+            <div id="edit-sport-box">
                 <div class="choice">
                     <input type="radio" name="sport" id="sportR" th:field="*{sportType}" value="러닝" />러닝
                 </div>
@@ -120,7 +123,8 @@
                 <div class="choice">
                     <input type="radio" name="sport" id="sportA" th:field="*{sportType}" value="모두" />모두 선택
                 </div>
-                <p>변경할 운동종목을 선택해주세요.</p>
+            </div>
+            <div class="hint hint-edit-sport">변경할 운동종목을 선택해주세요.</div>
           </td>
         </tr>
         <tr id="pace-box">
@@ -133,11 +137,11 @@
       </table>
     <div class="edit-button-box">
         <button type="submit" id="profile-update-button">회원정보수정</button>
-        <button type="button" id="delete-button" class="btn-danger" >회원탈퇴</button>
+        <button type="button" id="withdraw-button" class="btn-danger" >회원탈퇴</button>
     </div>
     </form>
     <form th:action="@{/users/{no}/delete(no=${userInfo.userNo})}" method="post" id="delete-form" style="display: none;"></form>
-
+  </div>
     <script th:inline="javascript">
       // 가입 정보 검증
       const idInput = document.querySelector(".input-id");
@@ -165,7 +169,7 @@
 
       const submitBtn = document.getElementById("profile-update-button");
 
-      const deleteButton = document.getElementById('delete-button');
+      const deleteButton = document.getElementById('withdraw-button');
       const deleteForm = document.getElementById('delete-form');
 
       deleteButton.addEventListener('click', () => {

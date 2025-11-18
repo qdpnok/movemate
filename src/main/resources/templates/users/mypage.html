@@ -7,39 +7,6 @@
 <head>
     <meta charset="UTF-8" />
     <title>my page</title>
-    <style>
-        /* 슬라이더 창 (이 영역 밖의 카드들은 숨겨짐) */
-        #my-match-slider-window {
-            overflow: hidden;
-            width: 100%; /* 부모 컨테이너에 맞춰 설정 */
-        }
-
-        /* 카드 컨테이너 (실제로 움직이는 영역) */
-        #my-match-card-container {
-            display: flex;
-            transition: transform 0.4s ease-in-out; /* 부드러운 슬라이드 효과 */
-            gap: 16px; /* 카드 사이의 간격 */
-        }
-
-        /* 슬라이더 내부의 카드 */
-        #my-match-card-container .card {
-            flex-shrink: 0; /* 카드가 찌그러지지 않도록 설정 */
-            width: 180px; /* 카드 너비 고정 (예시) */
-            /* display: none; -> JS에서 제어하므로 주석 처리 */
-        }
-
-        /* 필터 버튼 스타일 */
-        #sport-type-choice-bar, #crew-choice-bar {
-            margin-bottom: 10px;
-        }
-
-        /* 활성화된 필터 버튼 스타일 (예시) */
-        .choice-button.active {
-            background-color: #6a1b9a; /* 활성화 시 색상 (예시) */
-            color: white;
-            font-weight: bold;
-        }
-    </style>
 </head>
 <body>
 <div layout:fragment="content">
@@ -84,16 +51,15 @@
 
                         <div id="my-match-slider-window">
                             <div id="my-match-card-container">
-
                                 <div class="card" th:each="match : ${matchList}"
-                                     th:data-board-name="${match.boardName}"
-                                     th:data-match-type="'1v1'"> <a th:href="@{/posts/{matchId}(matchId=${match.matchNo})}" class="card-title-link">
-                                    <img th:src="${match.profileImageUrl} != null ? @{'/files/'+${match.profileImageUrl}} : @{'/images/profile.png'}"/>
-                                </a>
-                                    <p th:text="${match.postAuthorName}"></p>
-                                    <p th:text="${match.region}"></p>
-                                    <a href="#">메이트 해지</a>
-                                </div>
+                                th:data-sport-type="${match.sportType}"
+                                th:data-match-type="${match.mateType}">
+                                <img id="cardImg" th:src="${match.opponentProfileImageUrl} != null ? @{'/files/'+${match.opponentProfileImageUrl}} : @{'/images/profile.png'}"/>
+                                <p th:text="${match.opponentName}"></p>
+                                <p th:text="${match.region}"></p>
+                    
+                                <a id="mate-cut" href="#">메이트 해지</a>
+                            </div>
 
                             </div>
                         </div>
@@ -120,132 +86,120 @@
         document.addEventListener('DOMContentLoaded', () => {
 
             // --- 요소 선택 ---
-            const sliderContainer = document.getElementById('my-match-card-container');
-            const allCards = sliderContainer.querySelectorAll('.card');
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-            const filterButtons = document.querySelectorAll('.choice-button[data-filter-group]');
+        const sliderContainer = document.getElementById('my-match-card-container');
+        const allCards = sliderContainer.querySelectorAll('.card');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const filterButtons = document.querySelectorAll('.choice-button[data-filter-group]');
 
-            // --- 상태 변수 ---
-            let currentFilters = {
-                sport: 'running', // 기본 활성 필터
-                type: '1v1'       // 기본 활성 필터
-            };
-            let sliderIndex = 0; // 현재 슬라이더 인덱스 (몇 번째 카드가 맨 앞인지)
+        // --- 상태 변수 ---
+        let currentFilters = {
+            sport: 'running', // HTML 버튼의 data-filter 값과 일치
+            type: '1v1'       // HTML 버튼의 data-filter 값과 일치
+        };
+        let sliderIndex = 0;
 
-            // --- 함수 정의 ---
+        // --- 함수 정의 ---
 
-            /**
-             * 1. 필터 버튼 클릭 시 UI 업데이트 및 필터 상태 변경
-             */
-            function handleFilterClick(event) {
-                const button = event.target;
-                const group = button.dataset.filterGroup; // 'sport' or 'type'
-                const filterValue = button.dataset.filter; // 'running', 'weight', '1v1', 'crew'
+        /**
+         * 1. 필터 버튼 클릭 시 UI 업데이트 및 필터 상태 변경 (handleFilterClick 함수는 수정 불필요)
+         */
+        function handleFilterClick(event) {
+            const button = event.target;
+            const group = button.dataset.filterGroup;
+            const filterValue = button.dataset.filter;
 
-                // 1-1. 현재 필터 상태 업데이트
-                currentFilters[group] = filterValue;
+            currentFilters[group] = filterValue;
 
-                // 1-2. 같은 그룹의 다른 버튼 'active' 클래스 제거
-                document.querySelectorAll(`.choice-button[data-filter-group="${group}"]`).forEach(btn => {
-                    btn.classList.remove('active');
-                });
-
-                // 1-3. 클릭한 버튼에 'active' 클래스 추가
-                button.classList.add('active');
-
-                // 1-4. 필터 적용 및 슬라이더 리셋
-                applyFiltersAndResetSlider();
-            }
-
-            /**
-             * 2. 현재 필터(currentFilters)에 맞춰 카드를 보여주거나 숨김
-             */
-            function applyFiltersAndResetSlider() {
-                sliderIndex = 0; // 필터 변경 시 슬라이더 1페이지로 리셋
-                let visibleCardCount = 0;
-
-                allCards.forEach(card => {
-                    // '러닝', '웨이트' 필터링 (boardName에 해당 단어가 포함되는지)
-                    const sportType = card.dataset.boardName.includes('러닝') ? 'running' : 'weight';
-
-                    // '1v1', '크루' 필터링 (참고: 현재 '1v1'로 하드코딩된 부분)
-                    const matchType = card.dataset.matchType;
-
-                    const sportMatch = currentFilters.sport === sportType;
-                    const typeMatch = currentFilters.type === matchType;
-
-                    // 두 필터가 모두 일치하면 보여주고, 아니면 숨김
-                    if (sportMatch && typeMatch) {
-                        card.style.display = 'block'; // 또는 'flex' (카드 CSS에 맞게)
-                        visibleCardCount++;
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-
-                // 슬라이더 위치 업데이트 (리셋)
-                updateSliderPosition(visibleCardCount);
-            }
-
-            /**
-             * 3. 슬라이더 위치(transform)를 업데이트
-             */
-            function updateSliderPosition(visibleCardCount) {
-                if (visibleCardCount === 0 || allCards.length === 0) {
-                    sliderContainer.style.transform = 'translateX(0px)';
-                    return;
-                }
-
-                // 첫 번째 보이는 카드의 너비 + margin (gap)
-                // (카드의 너비와 gap을 정확히 계산해야 합니다)
-                const cardWidth = 180; // .card width
-                const cardGap = 16;   // #my-match-card-container gap
-                const cardMoveDistance = cardWidth + cardGap;
-
-                // 슬라이더가 이동할 총 거리 계산
-                const moveX = sliderIndex * cardMoveDistance;
-                sliderContainer.style.transform = `translateX(-${moveX}px)`;
-
-                // 버튼 활성/비활성 처리
-                prevBtn.disabled = sliderIndex === 0;
-
-                // (보이는 카드 수 - 한 화면에 보이는 카드 수) 만큼만 이동 가능
-                // 예: 한 화면에 3개 보인다고 가정
-                const visibleInWindow = 3; // (이 값은 실제 화면 너비에 따라 조절해야 함)
-                nextBtn.disabled = sliderIndex >= (visibleCardCount - visibleInWindow);
-            }
-
-            // --- 이벤트 리스너 연결 ---
-
-            // 필터 버튼 클릭 이벤트
-            filterButtons.forEach(button => {
-                button.addEventListener('click', handleFilterClick);
+            document.querySelectorAll(`.choice-button[data-filter-group="${group}"]`).forEach(btn => {
+                btn.classList.remove('active');
             });
 
-            // 슬라이더 이전 버튼
-            prevBtn.addEventListener('click', () => {
-                if (sliderIndex > 0) {
-                    sliderIndex--;
-                    const visibleCount = sliderContainer.querySelectorAll('.card[style*="display: block"]').length;
-                    updateSliderPosition(visibleCount);
-                }
-            });
-
-            // 슬라이더 다음 버튼
-            nextBtn.addEventListener('click', () => {
-                const visibleCount = sliderContainer.querySelectorAll('.card[style*="display: block"]').length;
-                // TODO: (visibleCount - 3) 부분은 한 화면에 보이는 카드 수에 맞게 조절해야 합니다.
-                if (sliderIndex < (visibleCount - 3)) { // 예: 3개씩 보인다고 가정
-                    sliderIndex++;
-                    updateSliderPosition(visibleCount);
-                }
-            });
-
-            // --- 초기 실행 ---
-            // 페이지 로드 시 기본 필터 적용
+            button.classList.add('active');
             applyFiltersAndResetSlider();
+        }
+
+        /**
+         * 2. 현재 필터(currentFilters)에 맞춰 카드를 보여주거나 숨김 (🚨 이 부분이 가장 중요합니다)
+         */
+        function applyFiltersAndResetSlider() {
+            sliderIndex = 0;
+            let visibleCardCount = 0;
+
+            allCards.forEach(card => {
+                // 1) 종목 필터링: HTML의 data-sport-type 속성 사용
+                const sportData = card.dataset.sportType.toLowerCase();
+                const cardSportType = sportData.includes('러닝') || sportData.includes('running') ? 'running' : 
+                      sportData.includes('웨이트') || sportData.includes('weight') ? 'weight' : 'unknown';
+
+                // 2) 매칭 타입 필터링: HTML의 data-match-type 속성 사용 (MATE 테이블의 '1:1' 또는 'GROUP' 값에 따라)
+                const cardMatchType = card.dataset.matchType.toLowerCase().includes('group') ? 'crew' : '1v1'; 
+
+                // 필터 조건 확인
+                const sportMatch = currentFilters.sport === cardSportType;
+                const typeMatch = currentFilters.type === cardMatchType;
+
+                // 두 필터가 모두 일치하면 보여주고, 아니면 숨김
+                if (sportMatch && typeMatch) {
+                    card.style.display = 'block';
+                    visibleCardCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // 슬라이더 위치 업데이트 (리셋)
+            updateSliderPosition(visibleCardCount);
+        }
+
+        /**
+         * 3. 슬라이더 위치(transform)를 업데이트 (수정 불필요)
+         */
+        function updateSliderPosition(visibleCardCount) {
+            if (visibleCardCount === 0 || allCards.length === 0) {
+                sliderContainer.style.transform = 'translateX(0px)';
+                prevBtn.disabled = true;
+                nextBtn.disabled = true;
+                return;
+            }
+
+            const cardWidth = 180;
+            const cardGap = 30;
+            const cardMoveDistance = cardWidth + cardGap;
+            const moveX = sliderIndex * cardMoveDistance;
+            sliderContainer.style.transform = `translateX(-${moveX}px)`;
+
+            prevBtn.disabled = sliderIndex === 0;
+
+            const visibleInWindow = 3;
+            nextBtn.disabled = sliderIndex >= (visibleCardCount - visibleInWindow);
+        }
+
+        // --- 이벤트 리스너 연결 (수정 불필요) ---
+        filterButtons.forEach(button => {
+            button.addEventListener('click', handleFilterClick);
         });
+
+        prevBtn.addEventListener('click', () => {
+            if (sliderIndex > 0) {
+                sliderIndex--;
+                const visibleCount = sliderContainer.querySelectorAll('.card[style*="display: block"]').length;
+                updateSliderPosition(visibleCount);
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            const visibleCount = sliderContainer.querySelectorAll('.card[style*="display: block"]').length;
+            const visibleInWindow = 3;
+            if (sliderIndex < (visibleCount - visibleInWindow)) {
+                sliderIndex++;
+                updateSliderPosition(visibleCount);
+            }
+        });
+
+        // --- 초기 실행 ---
+        applyFiltersAndResetSlider();
+    });
 
     </script>
 </div>

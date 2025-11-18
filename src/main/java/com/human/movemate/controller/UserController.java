@@ -86,7 +86,7 @@ public class UserController {
         log.info("멤버 id: {}, 멤버 객체: {}", no, userProDto);
         userService.update(no, userProDto, profileImage, isImageDeleted);
 
-        return "redirect:/";
+        return "redirect:/users/mypage";
     }
 
     @PostMapping("/{no}/delete")
