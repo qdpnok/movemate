@@ -24,7 +24,12 @@ public class AddMateController {
     // 1:1 메이트 생성 폼 페이지
     // GET/addMate/solo
     @GetMapping("/solo")
-    public String createSoloMateForm(Model model) {
+    public String createSoloMateForm(Model model, HttpSession session) {
+        // 로그인 했는지 체크
+        User loginUser = (User) session.getAttribute("loginUser");
+        if (loginUser == null) {
+            return "redirect:/login"; // 로그인 안했으면 리다이렉트
+        }
         // DTO 객체 생성
         AddMateFormDto mateForm = new AddMateFormDto();
         mateForm.setMateType("SOLO");
@@ -38,7 +43,12 @@ public class AddMateController {
     // 그룹 메이트(크루) 생성 폼 페이지 (addMateCrew)
     // GET/addMate/crew
     @GetMapping("/crew")
-    public String createGroupMateForm(Model model) {
+    public String createGroupMateForm(Model model, HttpSession session) {
+        // 로그인 했는지 체크
+        User loginUser = (User) session.getAttribute("loginUser");
+        if (loginUser == null) {
+            return "redirect:/login"; // 로그인 안했으면 리다이렉트
+        }
         AddMateFormDto mateForm = new AddMateFormDto();
         mateForm.setMateType("CREW");
         model.addAttribute("pageTitle", "크루 생성");
