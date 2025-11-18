@@ -13,18 +13,13 @@
 
 <body>
     <div layout:fragment="content">
-
         <div class="view-container">
             <h1 class="board">게시판 글 조회</h1>
-
             <div class="view-top-header">
                 <a th:href="@{/posts/my_post}" class="btn-view-list">내가 쓴 글 조회</a>
             </div>
-
             <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
             <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
-
-
             <div class="post-view-box">
                 <div class="post-author-box">
                     <div class="author-profile">
@@ -35,7 +30,6 @@
                     <span class="post-date"
                         th:text="${#temporals.format(post.createdAt,'yyyy-MM-dd HH:mm')}">2025-11-10</span>
                 </div>
-
                 <h2 class="post-title" th:text="${post.title}"></h2>
 
                 <div class="post-image-box" th:if="${post.imageUrl != null}">
@@ -47,10 +41,8 @@
                 </div>
             </div>
             <div class="post-btn-box" th:if="${session.loginUser != null and session.loginUser.userNo == post.userNo}">
-
                 <a th:href="@{/posts/edit/{id}(id=${post.postNo})}" class="btn-view-edit">수정</a>
-
-                <a th:href="@{/posts/delete/{id}(id=${post.postNo})}" class="btn-view-delete"
+                <a th:href="@{/posts/delete/{id}(id=${post.postNo}, from=${fromPage})}" class="btn-view-delete"
                     onclick="return confirm('게시글을 삭제하면 복구할 수 없습니다. 정말 삭제하시겠습니까?');">삭제</a>
             </div>
 
@@ -67,7 +59,7 @@
                                 <div class="comment-author-info">
                                     <span class="comment-author-name" th:text="${comment.authorId}"></span>
                                     <span class="comment-date"
-                                        th:text="${#temporals.format(comment.createdAt, 'MM-dd HH:mm')}"></span>
+                                        th:text="${#temporals.format(comment.createdAt, 'yy-MM-dd HH:mm')}"></span>
                                 </div>
                                 <p class="comment-text" th:text="${comment.content}"></p>
                             </div>

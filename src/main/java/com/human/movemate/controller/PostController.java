@@ -10,10 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
@@ -99,15 +96,19 @@ public class PostController {
         return "redirect:/posts"; // 추후 이(가) 완료되었습니다 공통 페이지로 변경 필요
     }
 
+    // "어디서 왔는지"를 @RequestParam(value = "from")으로 받음
     @GetMapping("/{postId}") // 게시글 상세 조회
-    public String postView(@PathVariable("postId") Long postId, Model model) {
+    public String postView(@PathVariable("postId") Long postId,
+                           @RequestParam(value = "from", required = false) String from,
+                           Model model) {
         // 게시글 정보 조회 (작성자 프로필 사진 포함) / Service를 호출해 1개의 게시글 정보를 가져옴
         Post post = postService.findById(postId);
         log.info("회원 이미지 링크 : {}", post.getAuthorProfileUrl());
         // 댓글 목록 조회
         model.addAttribute("post", post);
         model.addAttribute("comments", commentService.findByPostId(postId));
-        // templates/post/view_post.html 페이지로 이동
+        // 뷰(HTML)로 'from' 값을 그대로 전달 / 이 값은 나중에 삭제 버튼이 사용
+        model.addAttribute("fromPage", from);
         return "post/view_post";
     }
 
@@ -156,6 +157,7 @@ public class PostController {
 
     @GetMapping("/delete/{postId}") // 게시글 삭제
     public String deletePost(@PathVariable("postId") Long postId,
+                             @RequestParam(value = "from", required = false) String from,
                              RedirectAttributes redirectAttributes,
                              HttpSession session) {
         try {
@@ -165,7 +167,24 @@ public class PostController {
             log.error("게시글 삭제 실패: {}", e.getMessage());
             redirectAttributes.addFlashAttribute("errorMessage", "게시글 삭제에 실패했습니다.");
         }
-        // 삭제 후 목록 페이지로 리다이렉트
-        return "redirect:/posts";
+
+        //  'from' 값에 따라 올바른 경로로 리다이렉트
+        return getRedirectUrl(from);
+    }
+    private String getRedirectUrl(String from) { // 'from' 값에 따라 리다이렉트 URL을 반환하는 헬퍼(도우미) 메소드
+        if (from == null) {
+            return "redirect:/posts"; // 'from' 값이 없으면 기본 경로
+        }
+        switch (from) {
+            case "weight": // 웨이트 게시판
+                return "redirect:/posts/weight";
+            case "my_running": // 내가 쓴 글 - 러닝 게시판
+                return "redirect:/posts/my_post";
+            case "my_weight": // 내가 쓴 글 - 웨이트 게시판
+                return "redirect:/posts/my_post/weight";
+            case "posts": // 러닝 게시판
+            default:
+                return "redirect:/posts";
+        }
     }
 }

@@ -698,13 +698,13 @@ hamburgerButton.addEventListener('click', () => {
 
 .btn-write {
   background-color: #4B5AE4;
-  color: #fff;
+  color: white;
   border-radius: 5px;
-  font-weight: bold;
+  font-weight: normal;
   font-size: 15px;
   text-decoration: none;
-  width: 100px;
-  height: 25px;
+  width: 150px;
+  height: 400px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1067,8 +1067,9 @@ hamburgerButton.addEventListener('click', () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
-  margin-top: 20px;
+  gap: 50px;
+  margin-top: 40px;
+  width: 100%;
 }
 
 .btn-view-edit,
@@ -1082,6 +1083,7 @@ hamburgerButton.addEventListener('click', () => {
   font-size: 0.9rem;
   font-weight: 600;
   white-space: nowrap;
+  width: 200px;
 }
 
 .btn-view-edit {
