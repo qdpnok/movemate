@@ -1,0 +1,222 @@
+/* mate-list.css (알약 버튼 + 여백 + 왕 아이콘 적용 완료) */
+
+.mate-container {
+  width: 90%;
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+.mate-page-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+/* --- 탭 메뉴 바 (러닝/웨이트 - 상단 탭) --- */
+.mate-tab-bar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.mate-tab-bar.large-tab {
+  border: 1px solid #4b5ae4;
+  background-color: #fff;
+}
+
+.mate-tab-bar.large-tab .mate-tab-button {
+  flex: 1;
+  padding: 12px 20px;
+  border: none;
+  background-color: transparent;
+  font-size: 16px;
+  font-weight: 500;
+  color: #4b5ae4;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mate-tab-bar.large-tab .mate-tab-button.active {
+  background-color: #4b5ae4;
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.mate-tab-bar.small-tab {
+  border: 1px solid #4b5ae4;
+  background-color: #fff;
+  overflow: hidden; /* 둥근 모서리 밖으로 배경이 나가지 않게 자름 */
+}
+
+.mate-tab-bar.small-tab .mate-tab-button {
+  flex: 1;
+  padding: 12px 20px;
+  border: none;
+  background-color: transparent;
+  font-size: 16px;
+  font-weight: 600;
+  color: #4b5ae4;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mate-tab-bar.small-tab .mate-tab-button.active {
+  background-color: #4b5ae4;
+  color: #fff;
+}
+
+/* --- 메이트 섹션 (공통) --- */
+.mate-section {
+  display: none;
+  padding: 20px 0;
+}
+.mate-section.active {
+  display: block;
+}
+.mate-section-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #444;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 10px;
+}
+
+/* --- 메이트 카드 그리드 --- */
+.mate-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+  /* 카드 목록과 아래 파란 버튼 사이의 간격 */
+  margin-bottom: 60px;
+}
+
+/* --- 메이트 카드 디자인 --- */
+.mate-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  /* 호버 효과 설정 (0.3초 동안 부드럽게) */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: none;
+}
+
+/* 마우스를 올렸을 때 살짝 떠오르는 효과 */
+.mate-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* 카드 이미지 (1:1) */
+.mate-card.solo .mate-card-image {
+  width: 100%;
+  height: 200px;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mate-card.solo .mate-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 카드 이미지 (크루) */
+.mate-card.crew .mate-card-image {
+  width: 100%;
+  height: 200px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.mate-card.crew .mate-card-image img {
+  width: 60%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* 카드 정보 텍스트 */
+.mate-card-info {
+  padding: 18px;
+}
+.mate-card-info p {
+  margin: 0 0 8px 0;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  color: #555;
+}
+.mate-card-info p i {
+  margin-right: 8px;
+  color: #888;
+  width: 16px;
+  text-align: center;
+}
+.mate-card-info .mate-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12px;
+}
+
+/* --- 만들기 버튼 (알약 모양) --- */
+.mate-create-button {
+  display: block;
+  width: 90%;
+  max-width: 400px;
+  margin: 30px auto 10px;
+  padding: 14px 30px;
+  background-color: #4b5ae4;
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 50px; /* 둥근 알약 모양 적용 */
+  text-align: center;
+  transition: background-color 0.3s;
+}
+.mate-create-button:hover {
+  background-color: #3648c7;
+}
+
+/* 메이트가 없을 때 메시지 */
+.no-mates {
+  text-align: center;
+  padding: 40px;
+  color: #888;
+  font-size: 16px;
+}
+
+/* --- [수정됨] 기본 프로필 아이콘 스타일 (크기 확대) --- */
+.default-profile {
+  width: 100%;
+  height: 100%;
+  background-color: #e0e0e0; /* 진한 회색 배경 */
+  display: flex;
+  align-items: flex-end; /* 아이콘을 아래쪽으로 */
+  justify-content: center; /* 좌우 가운데 정렬 */
+  overflow: hidden;
+}
+
+.default-profile i {
+  /* ⭐️ 아이콘 크기를 160px로 대폭 키움 */
+  font-size: 160px;
+  color: #ffffff; /* 흰색 아이콘 */
+  /* ⭐️ 위치를 살짝 조정해서 꽉 차 보이게 만듦 */
+  transform: translateY(15px);
+}
