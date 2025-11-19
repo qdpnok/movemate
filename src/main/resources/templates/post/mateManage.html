@@ -98,7 +98,8 @@
         /* ------------------------------------------------ */
 
 
-        .empty-message {
+        /* 조회 중인 매칭 신청 목록이 비어 있을때의 조건 */
+        .no-data-message {
             font-size: 16px;
             color: #999;
             text-align: center;
@@ -137,7 +138,7 @@
     </nav>
 
     <div class="postcontainer">
-        <div th:if="${#maps.isEmpty(groupedList)}" class="empty-message">
+        <div th:if="${#maps.isEmpty(groupedList)}" class="no-data-message">
             아직 신청 목록이 없습니다.
         </div>
         <div th:each="entry : ${groupedList}">
@@ -145,10 +146,17 @@
             <h2 class="group-title" th:text="${entry.key} + ' 신청 현황'">게시글 타입 신청 현황</h2>
 
             <div class="cards-wrapper">
-                <div th:each="userProfile : ${entry.value}" class="profile-card">
-                    <img th:src="${userProfile.profileImageUrl}" alt="프로필 사진" />
-                    <p class="name" th:text="${userProfile.name}">이름</p>
-                    <p class="region" th:text="${userProfile.region}">지역</p>
+                <div th:each="matching : ${entry.value}">
+                    <a th:href="@{/mate/detail(matchNo=${matching.matchNo})}" style="text-decoration: none; color: inherit;">
+
+                        <div class="profile-card">
+                            <img th:src="${matching.profileImageUrl}" alt="프로필 사진" />
+                            <p class="name" th:text="${matching.name}">상대방 이름</p>
+                            <p class="region" th:text="${matching.region}">상대방 지역</p>
+
+                            <p class="status" th:text="${matching.status}"></p>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>

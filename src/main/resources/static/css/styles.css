@@ -1611,3 +1611,120 @@ th {
   font-size: 20px;
   text-decoration: none;
 }
+
+/* * * * * * * * * * * * * * * * * * * * * * * * */
+/* * 여기부터 mate manage 게시판 스타일 * * */
+/* * * * * * * * * * * * * * * * * * * * * * * * */
+.postcontainer {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .profile-card {
+            width: 250px;
+            height: 350px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            background-color: #fff;
+            text-align: center;
+            transition: transform 0.2s ease;
+            margin: 10px;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .profile-card img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+        .profile-card .name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .profile-card .region {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* ------------------------------------------------ */
+        /* 🚨 버튼 스타일을 위한 CSS 추가 및 수정 🚨 */
+        .manage-menu {
+            display: flex;
+            justify-content: center; /* 버튼을 중앙에 배치 */
+            margin-bottom: 30px;
+            gap: 15px; /* 버튼 사이 간격 */
+        }
+
+        /* 기본 버튼 스타일 */
+        .manage-menu a {
+            display: inline-block;
+            padding: 10px 25px;
+            border: 1px solid #ddd;
+            border-radius: 8px; /* 모서리 둥글게 */
+            text-decoration: none;
+            color: #444;
+            background-color: #f0f0f0;
+            font-size: 16px;
+            font-weight: normal; /* 기존 active a의 bold를 일반화 */
+            transition: all 0.2s ease;
+        }
+
+        /* 마우스 오버 시 스타일 */
+        .manage-menu a:hover {
+            background-color: #e0e0e0;
+            border-color: #ccc;
+        }
+
+        /* 현재 활성화된 탭의 버튼 스타일 */
+        .manage-menu .active { /* <a> 태그에 active 클래스가 직접 붙습니다 */
+            font-weight: bold;
+            color: #fff;
+            background-color: #5c6bc0;
+            border-color: #5c6bc0;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+        }
+        /* ------------------------------------------------ */
+
+
+        /* 조회 중인 매칭 신청 목록이 비어 있을때의 조건 */
+        .no-data-message {
+            font-size: 16px;
+            color: #999;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        /* 메이트 신청 목록 여러 줄로 나오게함 */
+        .postcontainer .cards-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .group-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
+            border-bottom: 2px solid #5c6bc0;
+            padding-bottom: 5px;
+            margin-top: 40px; /* 위쪽 여백으로 그룹 간 간격 확보 */
+            margin-bottom: 25px;
+        }
+/* * * * * * * * * * * * * * * * * * * * * * * * */
+/* * 여기까지 mate manage 게시판 스타일 * * */
+/* * * * * * * * * * * * * * * * * * * * * * * * */
