@@ -18,6 +18,9 @@
 
             <h1 class="board" th:text="${pageTitle}">내가 만든 크루 관리</h1>
 
+            <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+            <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+
             <div class="post-box">
                 <a th:href="@{/addMate/my/crew(sport='러닝')}" th:classappend="${activeTab == '러닝'} ? 'active'"
                     class="my-crew-btn">러닝 크루</a>

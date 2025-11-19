@@ -120,8 +120,8 @@ public class AddMateServiceImpl implements AddMateService {
 }
 
     @Override
-    public List<AddMate> findMyCrews(Long userNo, String sportType) {
-        return addMateDao.findByUserNoAndType(userNo, "CREW", sportType);
+    public List<AddMate> findMyMates(Long userNo, String mateType,String sportType) {
+        return addMateDao.findByUserNoAndType(userNo, mateType, sportType);
     }
 
 
