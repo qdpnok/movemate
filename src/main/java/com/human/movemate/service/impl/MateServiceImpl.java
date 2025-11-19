@@ -39,4 +39,9 @@ public class MateServiceImpl implements MateService {
         return mateDao.findTop3Crew();
     }
 
+    @Override
+    public List<AddMate> findTop3Solo() {
+        return mateDao.findTop3Solo();
+    }
+
 }

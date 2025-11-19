@@ -542,62 +542,158 @@ main {
   color: #f3f4f6;
 }
 
+/* --- 섹션 스타일 --- */
+.main_sec {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.sec_runningcrew,
+.sec_search,
+.sec_add {
+    margin-bottom: 40px;
+}
+
 .sec_name {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
 }
 
-.mate-card {
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
-  overflow: hidden;
-  background-color: #fff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  /* 호버 효과 설정 (0.3초 동안 부드럽게) */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: none;
+.sec_name p {
+    font-size: 1.25rem; /* 20px */
+    font-weight: 700;
+    color: #333;
 }
 
-/* .mate-card.crew .mate-card-image {
+/* --- TOP 3 CREW 섹션 (핵심 수정) --- */
+.main-card-box {
+    display: grid;
+    /* [수정] 3개의 동일한 너비의 컬럼으로 고정 */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-bottom: 60px;
+}
+
+/* --- 메이트 카드 기본 스타일 --- */
+.main-mate-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    /* 호버 효과 설정 (0.3초 동안 부드럽게) */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: block; /* a 태그이므로 block 설정 */
+    text-decoration: none;
+    color: inherit;
+}
+
+/* 호버 효과 */
+.main-mate-card:hover {
+    transform: translateY(-5px); /* 살짝 위로 이동 */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* 그림자 진하게 */
+}
+
+/* --- 이미지 및 정보 스타일 (기존 유지) --- */
+.main-mate-card.crew .main-mate-card-image {
+    width: 100%;
+    height: 200px;
+    background-color: #f7f7f7; /* 배경색 밝게 변경 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.main-mate-card.crew .main-mate-card-image img {
+    width: 60%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* 카드 이미지 (1:1) */
+.main-mate-card.solo .main-mate-card-image {
   width: 100%;
   height: 200px;
-  background-color: #fff;
+  background-color: #f0f0f0;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+}
+.main-mate-card.solo .main-mate-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 팁 카드 */
+.main-mate-card.tip .main-mate-card-image {
+  width: 100%;
+  height: 200px;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-sizing: border-box;
 }
-.mate-card.crew .mate-card-image img {
-  width: 60%;
-  height: auto;
-  object-fit: contain;
-} */
+.main-mate-card.tip .main-mate-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
 /* 카드 정보 텍스트 */
 .mate-card-info {
-  padding: 18px;
+    padding: 18px;
+    text-align: center; /* 정보 텍스트 중앙 정렬 */
 }
+
 .mate-card-info p {
-  margin: 0 0 8px 0;
-  display: flex;
-  align-items: center;
-  font-size: 15px;
-  color: #555;
-  justify-content: center;
+    margin: 0 0 8px 0;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    color: #555;
+    justify-content: center;
 }
 
 .mate-card-info p i {
-  margin-right: 8px;
-  color: #888;
-  width: 16px;
-  text-align: center;
+    margin-right: 8px;
+    color: #888;
+    width: 16px;
+    text-align: center;
 }
+
 .mate-card-info .mate-name {
-  font-size: 18px;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 12px;
+}
+
+/* --- 반응형 디자인 추가 --- */
+
+/* 태블릿 (768px 이하): 2열 배치 */
+@media (max-width: 768px) {
+    .top-3-crew {
+        /* [반응형] 3열 대신 2열로 변경 */
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .sec_name p {
+        font-size: 1.15rem;
+    }
+}
+
+/* 모바일 (500px 이하): 1열 배치 */
+@media (max-width: 500px) {
+    .top-3-crew {
+        /* [반응형] 1열로 변경 */
+        grid-template-columns: 1fr;
+    }
 }
 
 /* =================================================== */
@@ -892,7 +988,7 @@ hamburgerButton.addEventListener('click', () => {
 }
 
 /* 폼 라벨 공통 */
-.write-form-group > label {
+.write-form-group>label {
   width: 100px;
   font-size: 1.1rem;
   font-weight: normal;
@@ -988,7 +1084,7 @@ hamburgerButton.addEventListener('click', () => {
   padding: 12px 24px;
   border: none;
   border-radius: 8px;
-  background-color: #4b5ae4;
+  background-color: #4B5AE4;
   color: white;
   font-size: 1rem;
   font-weight: normal;
@@ -1736,6 +1832,7 @@ th {
   white-space: pre-wrap;
 }
 
+
 /* 3. 수정/삭제 버튼 */
 .view-mate-actions {
   display: flex;
@@ -1760,7 +1857,7 @@ th {
 
 /* 수정 버튼 (파랑) */
 .btn-mate-edit {
-  background-color: var(--primary, #4b5ae4);
+  background-color: var(--primary, #4B5AE4);
   color: white;
 }
 
@@ -1774,9 +1871,12 @@ th {
 /* * 여기까지 add_mate_view.html 게시판 스타일 * * */
 /* * * * * * * * * * * * * * * * * * * * * * * * */
 
+
 /* * * * * * * * * * * * * * * * * * * * * * * * */
 /* * 여기부터 view_mate_crew.html 게시판 스타일 * * */
 /* * * * * * * * * * * * * * * * * * * * * * * * */
+
+
 
 .my-crew-btn {
   display: flex;
@@ -1785,7 +1885,7 @@ th {
   width: 525px;
   height: 50px;
   border-radius: 20px;
-  background-color: #f3f4f6;
+  background-color: #F3F4F6;
   color: BLACK;
   font-size: 20px;
   text-decoration: none;
@@ -1799,14 +1899,14 @@ th {
   width: 525px;
   height: 50px;
   border-radius: 20px;
-  background-color: #4b5ae4;
+  background-color: #4B5AE4;
   color: white;
   font-size: 20px;
 }
 
 /* "나의 크루 조회" 헤더 바 */
 .crew-list-header {
-  background-color: #4b5ae4;
+  background-color: #4B5AE4;
   color: white;
   text-align: center;
   padding: 12px 0;
@@ -1850,7 +1950,9 @@ th {
 .text-dark {
   color: #000;
   font-weight: 500;
+
 }
+
 
 /* 하단 버튼 3개 그룹 */
 .crew-card-actions {
@@ -1878,11 +1980,11 @@ th {
 
 /* 버튼 색상 */
 .btn-crew-edit {
-  background-color: #4b5ae4;
+  background-color: #4B5AE4;
 }
 
 .btn-crew-manage {
-  background-color: #0b314d;
+  background-color: #0B314D;
 }
 
 .btn-crew-delete {
@@ -1893,294 +1995,289 @@ th {
 /* * 여기까지 view_mate_crew.html 게시판 스타일 * * */
 /* * * * * * * * * * * * * * * * * * * * * * * * */
 
+
 /* 마이페이지 */
 /* 마이페이지 */
-#mypage-container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0;
-}
+        #mypage-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+        }
 
-#mypage {
-  width: 100%;
-  max-width: 1200px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 20px;
-}
+        #mypage {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-wrap: wrap; 
+            gap: 20px; 
+        }
+        
+        h1 {
+            font-size: 28px;
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
 
-h1 {
-  font-size: 28px;
-  color: var(--dark);
-  margin-bottom: 20px;
-}
+        #my-info {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        #my-profile {
+            width: 100%;
+            max-width: 600px; /* 프로필 정보 영역 최대 폭 설정 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
 
-#my-info {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+        #profile {
+            width: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            margin: 0 20px;
+        }
 
-#my-profile {
-  width: 100%;
-  max-width: 600px; /* 프로필 정보 영역 최대 폭 설정 */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
+        #profile p {
+            font-size: 16px;
+            margin: 5px 0;
+            color: #666;
+            white-space: nowrap;
+        }
 
-#profile {
-  width: 250px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  margin: 0 20px;
-}
+        .img-round-small {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border-style: none;
+            overflow: hidden;
+            object-fit: cover;
+            margin: 0 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
 
-#profile p {
-  font-size: 16px;
-  margin: 5px 0;
-  color: #666;
-  white-space: nowrap;
-}
+        #my-button-filed {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: flex-end; /* 오른쪽 정렬 */
+            padding: 0 20px; /* 좌우 여백 */
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
 
-.img-round-small {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  border-style: none;
-  overflow: hidden;
-  object-fit: cover;
-  margin: 0 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
+        #my-button {
+            display: flex;
+            gap: 10px; /* 버튼 사이 간격 */
+        }
 
-#my-button-filed {
-  width: 100%;
-  max-width: 1200px;
-  display: flex;
-  justify-content: flex-end; /* 오른쪽 정렬 */
-  padding: 0 20px; /* 좌우 여백 */
-  margin-bottom: 20px;
-  box-sizing: border-box;
-}
+        .mypage-button {
+            width: 130px;
+            height: 38px;
+            border: none;
+            color: white;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
 
-#my-button {
-  display: flex;
-  gap: 10px; /* 버튼 사이 간격 */
-}
+        .mypage-button:hover {
+            opacity: 0.9;
+        }
 
-.mypage-button {
-  width: 130px;
-  height: 38px;
-  border: none;
-  color: white;
-  font-size: 14px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-align: center;
-}
+        .mypage-button:focus {
+            outline: none;
+        }
 
-.mypage-button:hover {
-  opacity: 0.9;
-}
+        .btn-mypost { background-color: var(--dark); }
+        .btn-edit-myinfo { background-color: var(--primary); }
+        .btn-danger { background-color: var(--accent); }
 
-.mypage-button:focus {
-  outline: none;
-}
+        .sub-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            background-color: var(--primary);
+            width: 100%;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0 10px 0;
+        }
 
-.btn-mypost {
-  background-color: var(--dark);
-}
-.btn-edit-myinfo {
-  background-color: var(--primary);
-}
-.btn-danger {
-  background-color: var(--accent);
-}
+        #my-match {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 60px;
+        }
 
-.sub-title {
-  font-size: 20px;
-  font-weight: bold;
-  color: white;
-  background-color: var(--primary);
-  width: 100%;
-  height: 60px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 30px 0 10px 0;
-}
+        #sport-type-choice-bar,
+        #crew-choice-bar {
+            width: 90%;
+            max-width: 800px;
+            display: flex;
+            justify-content: center;
+            margin: 16px 0;
+            gap: 10px;
+        }
 
-#my-match {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 60px;
-}
+        #my-match-box {
+            width: 100%;
+            display: flex;
+            max-width: 900px; /* 슬라이더 전체 영역 최대 폭 */
+            justify-content: center;
+            position: relative; 
+            padding: 0 50px; /* 화살표 공간 확보 */
+        }
 
-#sport-type-choice-bar,
-#crew-choice-bar {
-  width: 90%;
-  max-width: 800px;
-  display: flex;
-  justify-content: center;
-  margin: 16px 0;
-  gap: 10px;
-}
+        .choice-button {
+            font-size: 14px;
+            flex-grow: 1;
+            height: 42px;
+            font-weight: normal;
+            border-style: solid;
+            border-width: 1px;
+            border-color: var(--primary);
+            color: var(--primary);
+            background-color: white;
+            border-radius: 5px;
+            margin: 0;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
 
-#my-match-box {
-  width: 100%;
-  display: flex;
-  max-width: 900px; /* 슬라이더 전체 영역 최대 폭 */
-  justify-content: center;
-  position: relative;
-  padding: 0 50px; /* 화살표 공간 확보 */
-}
+        .choice-button.active {
+            background-color: var(--primary);
+            color: white;
+        }
 
-.choice-button {
-  font-size: 14px;
-  flex-grow: 1;
-  height: 42px;
-  font-weight: normal;
-  border-style: solid;
-  border-width: 1px;
-  border-color: var(--primary);
-  color: var(--primary);
-  background-color: white;
-  border-radius: 5px;
-  margin: 0;
-  cursor: pointer;
-  transition: all 0.2s;
-}
+        /* Swiper 화살표 색상 변경 (요구사항 1) */
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: var(--primary) !important; /* #4b5ae4 색상 적용 */
+            transition: color 0.3s;
+        }
+        
+        .swiper-button-next:hover,
+        .swiper-button-prev:hover {
+            opacity: 0.8;
+        }
 
-.choice-button.active {
-  background-color: var(--primary);
-  color: white;
-}
+        /* 1. Swiper 컨테이너 크기 잡기 */
+        .mySwiper {
+            width: 100%;
+            max-width: 800px;
+            padding: 20px 0 40px 0; /* 상하 여백 및 페이지네이션 공간 */
+        }
 
-/* Swiper 화살표 색상 변경 (요구사항 1) */
-.swiper-button-next,
-.swiper-button-prev {
-  color: var(--primary) !important; /* #4b5ae4 색상 적용 */
-  transition: color 0.3s;
-}
+        /* 2. 슬라이드 높이 자동 조절 (내용물만큼만 잡히게 함) */
+        .swiper-slide {
+            height: auto !important;
+            display: flex;
+            justify-content: center;
+            align-items: stretch; /* 카드 높이를 일치시킵니다. */
+        }
 
-.swiper-button-next:hover,
-.swiper-button-prev:hover {
-  opacity: 0.8;
-}
+        /* 3. 카드 아이템 스타일링 (필수: 크기 및 디자인 고정) */
+        .card-item {
+            width: 100%; 
+            max-width: 300px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            box-sizing: border-box;
+            
+            /* 내부 요소 정렬 및 버튼을 아래로 밀기 위해 flex column 사용 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .card-title-link {
+            display: block;
+            flex-shrink: 0;
+        }
 
-/* 1. Swiper 컨테이너 크기 잡기 */
-.mySwiper {
-  width: 100%;
-  max-width: 800px;
-  padding: 20px 0 40px 0; /* 상하 여백 및 페이지네이션 공간 */
-}
+        /* 4. 카드 내부 이미지 크기 강제 고정 (요구사항 2: 정사각형 80x80) */
+        .card-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border: 1px solid #eee;
+        }
 
-/* 2. 슬라이드 높이 자동 조절 (내용물만큼만 잡히게 함) */
-.swiper-slide {
-  height: auto !important;
-  display: flex;
-  justify-content: center;
-  align-items: stretch; /* 카드 높이를 일치시킵니다. */
-}
+        /* 5. 텍스트 줄바꿈 방지 */
+        .card-item p {
+            margin: 0;
+            text-align: center;
+            font-size: 14px;
+            word-break: keep-all;
+        }
 
-/* 3. 카드 아이템 스타일링 (필수: 크기 및 디자인 고정) */
-.card-item {
-  width: 100%;
-  max-width: 300px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 20px;
-  box-sizing: border-box;
+        /* 6. 메이트 해지 버튼 스타일 및 위치 조정 */
+        #mate-cut {
+            font-size: 12px;
+            color: white;
+            background-color: var(--accent);
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: auto; /* 남은 공간을 밀어내어 맨 아래에 위치 */
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+            transition: background-color 0.2s;
+        }
+        
+        #mate-cut:hover {
+            background-color: #e06056;
+        }
+        
+        #no-match-data {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-size: 16px;
+        }
+        
+        @media (max-width: 900px) {
+             #my-match-box {
+                max-width: 100%; /* 화면이 좁아지면 최대 폭 제한 해제 */
+            }
+            .mySwiper {
+                max-width: 100%;
+                padding: 20px 0 40px 0; 
+            }
+        }
 
-  /* 내부 요소 정렬 및 버튼을 아래로 밀기 위해 flex column 사용 */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.card-title-link {
-  display: block;
-  flex-shrink: 0;
-}
-
-/* 4. 카드 내부 이미지 크기 강제 고정 (요구사항 2: 정사각형 80x80) */
-.card-item img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border: 1px solid #eee;
-}
-
-/* 5. 텍스트 줄바꿈 방지 */
-.card-item p {
-  margin: 0;
-  text-align: center;
-  font-size: 14px;
-  word-break: keep-all;
-}
-
-/* 6. 메이트 해지 버튼 스타일 및 위치 조정 */
-#mate-cut {
-  font-size: 12px;
-  color: white;
-  background-color: var(--accent);
-  padding: 8px 15px;
-  border-radius: 5px;
-  text-decoration: none;
-  margin-top: auto; /* 남은 공간을 밀어내어 맨 아래에 위치 */
-  cursor: pointer;
-  width: 100%;
-  text-align: center;
-  transition: background-color 0.2s;
-}
-
-#mate-cut:hover {
-  background-color: #e06056;
-}
-
-#no-match-data {
-  text-align: center;
-  padding: 40px;
-  color: #666;
-  font-size: 16px;
-}
-
-@media (max-width: 900px) {
-  #my-match-box {
-    max-width: 100%; /* 화면이 좁아지면 최대 폭 제한 해제 */
-  }
-  .mySwiper {
-    max-width: 100%;
-    padding: 20px 0 40px 0;
-  }
-}
-
-/* 반응형 디자인 */
-@media (max-width: 768px) {
-  #my-profile {
-    flex-direction: column;
-  }
-  .img-round-small {
-    margin-bottom: 20px;
-  }
-  #my-button-filed {
-    justify-content: center;
-  }
-  #my-match-box {
-    padding: 0 20px;
-  }
-}
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            #my-profile {
+                flex-direction: column;
+            }
+            .img-round-small {
+                margin-bottom: 20px;
+            }
+            #my-button-filed {
+                justify-content: center;
+            }
+            #my-match-box {
+                padding: 0 20px;
+            }
+        }

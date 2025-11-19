@@ -45,14 +45,14 @@
             <div class="sec_name">
               <p>🏃‍♂️🏃‍♀️ 요즘 인기있는 러닝크루 TOP 3</p>
             </div>
-              <div  class="top-3-crew">
+              <div  class="main-card-box">
                   <a
                           th:each="crew : ${top3Crew}"
-                          class="mate-card crew"
+                          class="main-mate-card crew"
                           th:href="@{/addMate/view/{no}(no=${crew.mateNo})}"
                           style="text-decoration: none; color: inherit; display: block"
                   >
-                      <div class="mate-card-image">
+                      <div class="main-mate-card-image">
                           <img th:src="@{/images/members.png}" alt="크루 프로필" />
                       </div>
 
@@ -77,17 +77,79 @@
             <div class="sec_name">
               <p>🔎 1:1 메이트 탐색</p>
             </div>
+              <div  class="main-card-box">
+                  <a
+                    th:each="solo : ${top3Solo}"
+                    class="main-mate-card solo"
+                    th:href="@{/addMate/view/{no}(no=${solo.mateNo})}"
+                    style="text-decoration: none; color: inherit; display: block"
+                  >
+                      <div class="main-mate-card-image">
+                          <img
+                                  th:if="${solo.imageUrl != null}"
+                                  th:src="@{/files/{url}(url=${solo.imageUrl})}"
+                                  alt="메이트 프로필"
+                          />
+                          <img
+                                  th:if="${solo.imageUrl == null}"
+                                  th:src="@{/images/기본_프로필.png}"
+                                  alt="기본 프로필"
+                          />
+                      </div>
+
+                      <div class="mate-card-info">
+                          <p class="mate-name" th:text="${solo.mateName}">메이트명</p>
+                          <p class="mate-region">
+                              <i class="fa-solid fa-location-dot"></i>
+                              <span th:text="${solo.region}">지역</span>
+                          </p>
+                          <p class="mate-region"><span th:text="${solo.sportType}">지역</span></p>
+                      </div>
+                  </a>
+              </div>
           </div>
           <div class="sec_add">
             <div class="sec_name">
               <p>👍 추천 정보</p>
-              <button>add</button>
+<!--              <button>add</button>-->
+                </div>
+                <div  class="main-card-box">
+                    <div class="main-mate-card tip" style="text-decoration: none; color: inherit; display: block">
+                        <div class="main-mate-card-image">
+                            <img th:src="@{/images/running_woman.jpg}" alt="뛰는 여자" />
+                        </div>
+
+                        <div class="mate-card-info">
+                            <p class="mate-name">메이트명</p>
+                            <p class="mate-region"><span>지역</span></p>
+                        </div>
+                    </div>
+
+                    <div class="main-mate-card tip" style="text-decoration: none; color: inherit; display: block">
+                        <div class="main-mate-card-image">
+                            <img th:src="@{/images/weight_man.jpg}" alt="근력 운동" />
+                        </div>
+
+                        <div class="mate-card-info">
+                            <p class="mate-name">메이트명</p>
+                            <p class="mate-region"><span>지역</span></p>
+                        </div>
+                    </div>
+
+                    <div class="main-mate-card tip" style="text-decoration: none; color: inherit; display: block">
+                        <div class="main-mate-card-image">
+                            <img th:src="@{/images/hopping_man.jpg}" alt="줄넘기" />
+                        </div>
+
+                        <div class="mate-card-info">
+                            <p class="mate-name">메이트명</p>
+                            <p class="mate-region"><span>지역</span></p>
+                        </div>
+                    </div>
+                </div>
             </div>
           </div>
-        </div>
       </main>
-
-      <footer></footer>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>

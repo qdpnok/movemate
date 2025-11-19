@@ -85,8 +85,22 @@ public class MateDao {
         SELECT *
         FROM (SELECT *
               FROM MATE
-              WHERE mate_type = 'CREW'
+              WHERE mate_type = 'CREW' AND sport_type = '러닝'
               ORDER BY current_members DESC, created_at ASC)
+        WHERE rownum <= 3
+        """;
+
+        return jdbc.query(sql, mateRowMapper);
+    }
+
+    public List<AddMate> findTop3Solo() {
+        @Language("SQL")
+        String sql = """
+        SELECT *
+        FROM (SELECT *
+              FROM MATE
+              WHERE mate_type = 'SOLO'
+              ORDER BY created_at DESC)
         WHERE rownum <= 3
         """;
 
