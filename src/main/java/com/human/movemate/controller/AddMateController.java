@@ -1,19 +1,19 @@
 package com.human.movemate.controller;
 
 import com.human.movemate.dto.AddMateFormDto;
+import com.human.movemate.dto.MateMemberDto;
 import com.human.movemate.model.AddMate;
+import com.human.movemate.model.User;
 import com.human.movemate.service.AddMateService;
+import com.human.movemate.service.MateMemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import com.human.movemate.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import java.util.List;
 
 // '메이트 모집' (1:1, 그룹) 관련 컨트롤러
 @Controller
@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/addMate")
 public class AddMateController {
     private final AddMateService addMateService;
+    private final MateMemberService mateMemberService;
 
     // 1:1 메이트 생성 폼 페이지
     // GET/addMate/solo
@@ -88,7 +89,7 @@ public class AddMateController {
     // 메이트 모집 글 상세 조회
     // GET/addMate/{mateNo}
     @GetMapping("/{mateNo}")
-    public String viewMate(@PathVariable("mateNo") Long mateNo, Model model) {
+    public String viewMate(@PathVariable("mateNo") Long mateNo, Model model, HttpSession session) {
         AddMate mate = addMateService.findById(mateNo);
         if (mate == null) {
             // (임시) 글이 없으면 메인으로
@@ -98,12 +99,67 @@ public class AddMateController {
         // "SOLO" / "CREW" 타입에 따라 다른 제목 전달
         if ("SOLO".equals(mate.getMateType())) {
             model.addAttribute("pageTitle", "내가 쓴 1:1 메이트 모집 글");
+            // 화면에 뿌려줄 HTML
+            return "addmate/view_mate_solo";
         } else {
-            model.addAttribute("pageTitle", "내가 만든 크루 관리");
+            return "redirect:/addMate/my/crew";
         }
-        // 화면에 뿌려줄 HTML
-        return "addmate/add_mate_view";
     }
+
+    // 내가 만든 크루 상세 조회
+    // GET/addMate/my/crew
+    @GetMapping("/my/crew") // 링크 이거 아닌듯
+    public String myCrewList(Model model, HttpSession session,
+                             @RequestParam(value="sport", defaultValue="러닝") String sportType) {
+        User loginUser = (User) session.getAttribute("loginUser");
+        if (loginUser == null) return "redirect:/login";
+
+        List<AddMate> myCrews = addMateService.findMyCrews(loginUser.getUserNo(), sportType);
+
+        model.addAttribute("mateList", myCrews);
+        model.addAttribute("activeTab", sportType); // "러닝" or "웨이트"
+        model.addAttribute("pageTitle", "내가 만든 크루 관리");
+
+        return "addmate/view_mate_crew"; //
+    }
+
+    // 크루원 관리
+    // GET/addMate/admin/{mateNo}
+    @GetMapping("/admin/{mateNo}")
+    public String adminCrew(@PathVariable Long mateNo, Model model, HttpSession session) {
+        User loginUser = (User) session.getAttribute("loginUser");
+        if (loginUser == null) return "redirect:/login";
+
+        AddMate mate = addMateService.findById(mateNo);
+
+        // 내가 만든 크루인지 확인
+        if (!mate.getUserNo().equals(loginUser.getUserNo())) {
+            return "redirect:/addMate/my/crew"; // 권한 없으면 목록으로
+        }
+
+        List<MateMemberDto> members = mateMemberService.getCrewMembers(mateNo);
+
+        model.addAttribute("mate", mate);
+        model.addAttribute("members", members);
+        model.addAttribute("pageTitle", "크루원 관리");
+
+        return "addmate/admin_crew";
+    }
+
+    // 크루원 강퇴
+    // GET/addMate/kick/{mateNo}/{memberNo}
+    @GetMapping("/kick/{mateNo}/{memberNo}")
+    public String kickMember(@PathVariable Long mateNo, @PathVariable Long memberNo, RedirectAttributes rttr) {
+        try {
+            mateMemberService.kickMember(memberNo);
+            rttr.addFlashAttribute("successMessage", "크루원을 강퇴했습니다.");
+        } catch (Exception e) {
+            rttr.addFlashAttribute("errorMessage", "강퇴 실패");
+        }
+        return "redirect:/addMate/admin/" + mateNo;
+    }
+
+
 
     // 글 수정 폼
     // POST/addMate/update/{mateNo}

@@ -1548,10 +1548,9 @@ th {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-/* 1. 이미지 */
+/* 이미지 */
 .view-mate-image {
   width: 300px;
-  /* 고정 너비 */
   flex-shrink: 0;
 }
 
@@ -1559,12 +1558,11 @@ th {
   width: 100%;
   height: auto;
   aspect-ratio: 1 / 1;
-  /* 1:1 비율 */
   object-fit: cover;
   border-radius: 12px;
 }
 
-/* 2. 설명 (dl, dt, dd 태그 사용) */
+/* 설명 (dl, dt, dd 태그 사용) */
 .view-mate-details {
   flex-grow: 1;
   display: flex;
@@ -1574,29 +1572,29 @@ th {
 .view-mate-details dl {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  /* 항목 간 간격 */
+  gap: 20px;
 }
 
 .view-mate-details dt {
   /* 제목 (메이트명, 지역...) */
-  font-size: 1rem;
+  font-size: 1.3rem;
   font-weight: 600;
-  color: #888;
+  color: #333;
 }
 
 .view-mate-details dd {
   /* 내용 (원터, 서북구...) */
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #333;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: gray;
   line-height: 1.5;
 }
 
 /* 설명(description) 부분만 줄바꿈(\n) 적용 */
 .view-mate-details dd.description {
-  font-size: 1rem;
-  font-weight: 400;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: gray;
   white-space: pre-wrap;
 }
 
@@ -1608,9 +1606,6 @@ th {
   gap: 20px;
   margin-top: 30px;
   padding: 30px;
-  border: 2px dashed #eee;
-  /* 점선 테두리 */
-  border-radius: 12px;
 }
 
 .btn-mate-edit,
@@ -1641,6 +1636,131 @@ th {
 /* * * * * * * * * * * * * * * * * * * * * * * * */
 /* * 여기까지 add_mate_view.html 게시판 스타일 * * */
 /* * * * * * * * * * * * * * * * * * * * * * * * */
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * */
+/* * 여기부터 view_mate_crew.html 게시판 스타일 * * */
+/* * * * * * * * * * * * * * * * * * * * * * * * */
+
+
+
+.my-crew-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 525px;
+  height: 50px;
+  border-radius: 20px;
+  background-color: #F3F4F6;
+  color: BLACK;
+  font-size: 20px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.my-crew-btn.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 525px;
+  height: 50px;
+  border-radius: 20px;
+  background-color: #4B5AE4;
+  color: white;
+  font-size: 20px;
+}
+
+/* "나의 크루 조회" 헤더 바 */
+.crew-list-header {
+  background-color: #4B5AE4;
+  color: white;
+  text-align: center;
+  padding: 12px 0;
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  border-radius: 8px;
+}
+
+/* 크루 카드 */
+.crew-card {
+  flex-wrap: wrap;
+  padding-bottom: 20px;
+  border: 1px solid gray;
+  margin-bottom: 30px;
+}
+
+.view-matecrew-details {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.view-matecrew-details dl {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.view-matecrew-details dt {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.crew-card .view-matecrew-details dt {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+}
+
+.text-dark {
+  color: #000;
+  font-weight: 500;
+
+}
+
+
+/* 하단 버튼 3개 그룹 */
+.crew-card-actions {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 2px dotted #ccc;
+}
+
+.btn-crew-edit,
+.btn-crew-manage,
+.btn-crew-delete {
+  flex-grow: 1;
+  margin: 0 5px;
+  padding: 10px 0;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 25px;
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+/* 버튼 색상 */
+.btn-crew-edit {
+  background-color: #4B5AE4;
+}
+
+.btn-crew-manage {
+  background-color: #0B314D;
+}
+
+.btn-crew-delete {
+  background-color: #fb7163;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * */
+/* * 여기까지 view_mate_crew.html 게시판 스타일 * * */
+/* * * * * * * * * * * * * * * * * * * * * * * * */
+
 
 /* 마이페이지 */
 #mypage-container {

@@ -8,13 +8,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
-    <title>내가 작성한 모집 글 조회</title>
+    <title>내가 쓴 1:1 메이트 모집 글</title>
 </head>
 
 <body>
     <div layout:fragment="content">
         <div class="view-container" th:object="${mate}">
-            <h1 class="view-mate-title" th:text="${pageTitle}">내가 쓴 모집 글</h1>
+            <h1 class="board" th:text="${pageTitle}">내가 쓴 모집 글</h1>
 
             <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
             <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
@@ -44,9 +44,8 @@
             </div>
             <div class="view-mate-actions"
                 th:if="${session.loginUser != null and session.loginUser.userNo == mate.userNo}">
-                <a th:href="@{/addMate/edit/{id}(id=*{mateNo})}" class="btn-mate-edit">수정</a>
-                <a th:href="@{/addMate/delete/{id}(id=*{mateNo})}" class="btn-mate-delete"
-                    onclick="return confirm('이 모집 글을 삭제하시겠습니까?');">삭제</a>
+                <a th:href="@{/addMate/edit/{id}...}" class="btn-mate-edit">수정</a>
+                <a th:href="@{/addMate/delete/{id}...}" class="btn-mate-delete">삭제</a>
             </div>
             <div class="crew-management" th:if="*{mateType == 'CREW'}">
                 <h3>크루원 관리</h3>

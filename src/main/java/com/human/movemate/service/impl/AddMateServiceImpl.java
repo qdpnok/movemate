@@ -1,5 +1,6 @@
 package com.human.movemate.service.impl;
 import com.human.movemate.dao.AddMateDao;
+import com.human.movemate.dao.MateMemberDao;
 import com.human.movemate.dto.AddMateFormDto;
 import com.human.movemate.model.AddMate;
 import com.human.movemate.service.AddMateService;
@@ -10,17 +11,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional
 public class AddMateServiceImpl implements AddMateService {
     private final AddMateDao addMateDao; // 메이트 DB 담당
     private final FileStorageService fileStorageService; // 파일 저장 담당 (기존 것)
+    private final MateMemberDao mateMemberDao;
 
 
     @Override
     public void saveMate(AddMateFormDto addMateFormDto, Long userNo) {
         // 파일 저장 로직 (FileStorageService 재활용)
+        // ★ 글 저장 시 자동으로 매니저 등급이 되는 ? 기능이 되어야 하는데 어찌 해야될지 모르게씀
+        // 나중에 해결하자 ㅋ
         MultipartFile file = addMateFormDto.getMateImage();
         String storedFileName = null; // DB에 저장될 파일 경로
         if (file != null && !file.isEmpty()) {
@@ -104,6 +111,13 @@ public class AddMateServiceImpl implements AddMateService {
             fileStorageService.deleteIfExists(existingMate.getImageUrl());
         }
 }
+
+    @Override
+    public List<AddMate> findMyCrews(Long userNo, String sportType) {
+        return addMateDao.findByUserNoAndType(userNo, "CREW", sportType);
+    }
+
+
 }
 
 

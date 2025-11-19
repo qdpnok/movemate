@@ -7,6 +7,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import java.util.List;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -50,6 +51,24 @@ public class AddMateDao {
             return jdbc.queryForObject(sql, new AddMateRowMapper(), mateNo);
         } catch (EmptyResultDataAccessException e) {
             return null; // 글이 없으면 null
+        }
+    }
+
+    // 내가 만든 크루 목록 조회
+    public List<AddMate> findByUserNoAndType(Long userNo, String mateType, String sportType) {
+        @Language("SQL")
+        String sql = "SELECT m.*, u.user_id, up.profile_image_url " +
+                "FROM MATE m " +
+                "JOIN USERS u ON m.user_no = u.user_no " +
+                "LEFT JOIN USER_PROFILE up ON u.user_no = up.user_no " +
+                "WHERE m.user_no = ? AND m.mate_type = ? ";
+
+        if (sportType != null && !sportType.equals("전체")) {
+            sql += "AND m.sport_type = ? ORDER BY m.created_at DESC";
+            return jdbc.query(sql, new AddMateRowMapper(), userNo, mateType, sportType);
+        } else {
+            sql += "ORDER BY m.created_at DESC";
+            return jdbc.query(sql, new AddMateRowMapper(), userNo, mateType);
         }
     }
 
@@ -107,4 +126,5 @@ public class AddMateDao {
             return mate;
         }
     }
+
 }
