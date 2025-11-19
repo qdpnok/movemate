@@ -18,7 +18,12 @@
   <body>
     <div layout:fragment="content">
       <div class="apply-container">
-        <h2 class="apply-title">1:1 메이트 신청하기</h2>
+        <h2
+          class="apply-title"
+          th:text="${mate.mateType == 'CREW' ? '크루 신청하기' : '1:1 메이트 신청하기'}"
+        >
+          1:1 메이트 신청하기
+        </h2>
 
         <div class="mate-info-card">
           <div class="mate-info-img">

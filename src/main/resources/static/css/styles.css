@@ -289,9 +289,9 @@ footer {
   font-size: 14px;
 }
 
-#login-container>h1,
-#signup-container>h1,
-#mypage>h1,
+#login-container > h1,
+#signup-container > h1,
+#mypage > h1,
 #my-edit-container > h1 {
   font-size: 20px;
   font-weight: bold;
@@ -388,7 +388,7 @@ footer {
   width: 410px;
   height: 60px;
   margin: 10px;
-  background-color: #4C6FFF;
+  background-color: #4c6fff;
   /* 로그인 UI에 맞는 파란색 */
   color: white;
   padding: 12px 30px;
@@ -400,7 +400,7 @@ footer {
 }
 
 #btn-upload-profile:hover {
-  background-color: #3A5BCC;
+  background-color: #3a5bcc;
   /* 버튼 hover 시 색상 변화 */
 }
 
@@ -558,7 +558,7 @@ main {
   display: none;
 }
 
-.mate-card.crew .mate-card-image {
+/* .mate-card.crew .mate-card-image {
   width: 100%;
   height: 200px;
   background-color: #fff;
@@ -572,7 +572,7 @@ main {
   width: 60%;
   height: auto;
   object-fit: contain;
-}
+} */
 
 /* 카드 정보 텍스트 */
 .mate-card-info {
@@ -609,7 +609,6 @@ main {
  * - 헤더와 로고 크기를 줄임 */
 
 @media (max-width: 1024px) {
-
   /* 메뉴바가 화면을 차지하지 않도록 숨김
   (이 지점에서 햄버거 메뉴 아이콘(☰)을 표시해야함)  */
   .category-bar {
@@ -740,7 +739,7 @@ hamburgerButton.addEventListener('click', () => {
   width: 525px;
   height: 70px;
   border-radius: 20px;
-  background-color: #F3F4F6;
+  background-color: #f3f4f6;
   color: BLACK;
   font-size: 20px;
   text-decoration: none;
@@ -756,12 +755,11 @@ hamburgerButton.addEventListener('click', () => {
   width: 525px;
   height: 70px;
   border-radius: 20px;
-  background-color: #4B5AE4;
+  background-color: #4b5ae4;
   color: white;
   font-size: 20px;
   text-decoration: none;
 }
-
 
 .add-post {
   display: flex;
@@ -770,7 +768,7 @@ hamburgerButton.addEventListener('click', () => {
 }
 
 .btn-write {
-  background-color: #4B5AE4;
+  background-color: #4b5ae4;
   color: white;
   border-radius: 5px;
   font-weight: normal;
@@ -797,7 +795,6 @@ hamburgerButton.addEventListener('click', () => {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
-
 
 .card-title {
   font-size: 20px;
@@ -876,7 +873,6 @@ hamburgerButton.addEventListener('click', () => {
 /* * 여기까지 post.html 메이트 게시판 스타일 * * */
 /* * * * * * * * * * * * * * * * * * * * * * * */
 
-
 /* * * * * * * * * * * * * * * * * * * * * * * */
 /* * 여기부터 write.html 게시판 작성 폼 스타일 * * */
 /* * * * * * * * * * * * * * * * * * * * * * * */
@@ -896,7 +892,7 @@ hamburgerButton.addEventListener('click', () => {
 }
 
 /* 폼 라벨 공통 */
-.write-form-group>label {
+.write-form-group > label {
   width: 100px;
   font-size: 1.1rem;
   font-weight: normal;
@@ -921,7 +917,7 @@ hamburgerButton.addEventListener('click', () => {
   border: 1px solid #ddd;
   border-radius: 12px;
   font-size: 1rem;
-  background-color: #F3F4F6;
+  background-color: #f3f4f6;
 }
 
 #boardTypeNo {
@@ -941,7 +937,7 @@ hamburgerButton.addEventListener('click', () => {
   width: 100%;
   height: 100%;
   padding: 0 15px;
-  background-color: #F3F4F6;
+  background-color: #f3f4f6;
   border: 1px solid #ddd;
   border-radius: 12px;
   cursor: pointer;
@@ -970,7 +966,6 @@ hamburgerButton.addEventListener('click', () => {
   z-index: 10;
 }
 
-
 /* 내용 입력창 스타일 (큰 박스) */
 .write-form-group textarea {
   width: 100%;
@@ -978,7 +973,7 @@ hamburgerButton.addEventListener('click', () => {
   border: 1px solid #ddd;
   border-radius: 12px;
   font-size: 1rem;
-  background-color: #F3F4F6;
+  background-color: #f3f4f6;
   resize: vertical;
   /* 세로 크기 조절만 허용 */
 }
@@ -993,7 +988,7 @@ hamburgerButton.addEventListener('click', () => {
   padding: 12px 24px;
   border: none;
   border-radius: 8px;
-  background-color: #4B5AE4;
+  background-color: #4b5ae4;
   color: white;
   font-size: 1rem;
   font-weight: normal;
@@ -1031,8 +1026,6 @@ hamburgerButton.addEventListener('click', () => {
 /* * 여기까지 write.html 게시판 작성 폼 스타일 * * */
 /* * * * * * * * * * * * * * * * * * * * * * * */
 
-
-
 /* * * * * * * * * * * * * * * * * * * * * * * * */
 /* * 여기부터 view_post.html 글 상세조회 스타일 * * */
 /* * * * * * * * * * * * * * * * * * * * * * * * */
@@ -1051,12 +1044,11 @@ hamburgerButton.addEventListener('click', () => {
   margin-bottom: 20px;
 }
 
-
 .btn-view-list {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #4B5AE4;
+  background-color: #4b5ae4;
   color: white;
   text-decoration: none;
   padding: 10px 18px;
@@ -1159,12 +1151,12 @@ hamburgerButton.addEventListener('click', () => {
 }
 
 .btn-view-edit {
-  background-color: var(--primary, #4B5AE4);
+  background-color: var(--primary, #4b5ae4);
   color: white;
 }
 
 .btn-view-delete {
-  background-color: #FB7163;
+  background-color: #fb7163;
   color: white;
 }
 
@@ -1298,7 +1290,6 @@ hamburgerButton.addEventListener('click', () => {
   background-color: #ffe6e9;
 }
 
-
 /* 댓글 입력 폼 */
 .comment-form {
   display: flex;
@@ -1324,13 +1315,12 @@ hamburgerButton.addEventListener('click', () => {
   height: 40px;
   border: none;
   border-radius: 8px;
-  background-color: #4B59E4;
+  background-color: #4b59e4;
   color: white;
   font-size: 0.8rem;
   font-weight: normal;
   cursor: pointer;
 }
-
 
 .btn-comment-submit:disabled,
 .comment-textarea:disabled {
@@ -1338,7 +1328,6 @@ hamburgerButton.addEventListener('click', () => {
   color: #999;
   cursor: not-allowed;
 }
-
 
 /* =================================================== */
 /* 댓글 인라인(in-place) 수정 스타일 */
@@ -1410,7 +1399,7 @@ hamburgerButton.addEventListener('click', () => {
 }
 
 .btn-comment-save:hover {
-  background-color: #4B59E4;
+  background-color: #4b59e4;
 }
 
 /* alert 메시지 스타일 */
@@ -1434,7 +1423,6 @@ hamburgerButton.addEventListener('click', () => {
   color: #721c24;
   border-color: #f5c6cb;
 }
-
 
 /* * * * * * * * * * * * * * * * * * * * * * * * */
 /* * 여기까지 view_post.html 글 상세조회 스타일 * * */
@@ -1537,7 +1525,6 @@ th {
   justify-content: center;
 }
 
-
 /* * * * * * * * * * * * * * * * * * * * * * * * */
 /* * 여기부터 add_mate_form.html 게시판 스타일 * * */
 /* * * * * * * * * * * * * * * * * * * * * * * * */
@@ -1609,7 +1596,8 @@ th {
 }
 
 .mate-form-group select.mate-input {
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23888" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>') no-repeat right 20px center;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23888" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>')
+    no-repeat right 20px center;
   background-size: 12px 12px;
 }
 
@@ -1649,7 +1637,7 @@ th {
 }
 
 .btn-mate-submit {
-  background-color: #4B5AE4;
+  background-color: #4b5ae4;
   color: white;
 }
 
@@ -1748,7 +1736,6 @@ th {
   white-space: pre-wrap;
 }
 
-
 /* 3. 수정/삭제 버튼 */
 .view-mate-actions {
   display: flex;
@@ -1773,7 +1760,7 @@ th {
 
 /* 수정 버튼 (파랑) */
 .btn-mate-edit {
-  background-color: var(--primary, #4B5AE4);
+  background-color: var(--primary, #4b5ae4);
   color: white;
 }
 
@@ -1787,12 +1774,9 @@ th {
 /* * 여기까지 add_mate_view.html 게시판 스타일 * * */
 /* * * * * * * * * * * * * * * * * * * * * * * * */
 
-
 /* * * * * * * * * * * * * * * * * * * * * * * * */
 /* * 여기부터 view_mate_crew.html 게시판 스타일 * * */
 /* * * * * * * * * * * * * * * * * * * * * * * * */
-
-
 
 .my-crew-btn {
   display: flex;
@@ -1801,7 +1785,7 @@ th {
   width: 525px;
   height: 50px;
   border-radius: 20px;
-  background-color: #F3F4F6;
+  background-color: #f3f4f6;
   color: BLACK;
   font-size: 20px;
   text-decoration: none;
@@ -1815,14 +1799,14 @@ th {
   width: 525px;
   height: 50px;
   border-radius: 20px;
-  background-color: #4B5AE4;
+  background-color: #4b5ae4;
   color: white;
   font-size: 20px;
 }
 
 /* "나의 크루 조회" 헤더 바 */
 .crew-list-header {
-  background-color: #4B5AE4;
+  background-color: #4b5ae4;
   color: white;
   text-align: center;
   padding: 12px 0;
@@ -1866,9 +1850,7 @@ th {
 .text-dark {
   color: #000;
   font-weight: 500;
-
 }
-
 
 /* 하단 버튼 3개 그룹 */
 .crew-card-actions {
@@ -1896,11 +1878,11 @@ th {
 
 /* 버튼 색상 */
 .btn-crew-edit {
-  background-color: #4B5AE4;
+  background-color: #4b5ae4;
 }
 
 .btn-crew-manage {
-  background-color: #0B314D;
+  background-color: #0b314d;
 }
 
 .btn-crew-delete {
@@ -1911,289 +1893,294 @@ th {
 /* * 여기까지 view_mate_crew.html 게시판 스타일 * * */
 /* * * * * * * * * * * * * * * * * * * * * * * * */
 
-
 /* 마이페이지 */
 /* 마이페이지 */
-        #mypage-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 0;
-        }
+#mypage-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+}
 
-        #mypage {
-            width: 100%;
-            max-width: 1200px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex-wrap: wrap; 
-            gap: 20px; 
-        }
-        
-        h1 {
-            font-size: 28px;
-            color: var(--dark);
-            margin-bottom: 20px;
-        }
+#mypage {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
 
-        #my-info {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        #my-profile {
-            width: 100%;
-            max-width: 600px; /* 프로필 정보 영역 최대 폭 설정 */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+h1 {
+  font-size: 28px;
+  color: var(--dark);
+  margin-bottom: 20px;
+}
 
-        #profile {
-            width: 250px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-evenly;
-            margin: 0 20px;
-        }
+#my-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-        #profile p {
-            font-size: 16px;
-            margin: 5px 0;
-            color: #666;
-            white-space: nowrap;
-        }
+#my-profile {
+  width: 100%;
+  max-width: 600px; /* 프로필 정보 영역 최대 폭 설정 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
 
-        .img-round-small {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            border-style: none;
-            overflow: hidden;
-            object-fit: cover;
-            margin: 0 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
+#profile {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin: 0 20px;
+}
 
-        #my-button-filed {
-            width: 100%;
-            max-width: 1200px;
-            display: flex;
-            justify-content: flex-end; /* 오른쪽 정렬 */
-            padding: 0 20px; /* 좌우 여백 */
-            margin-bottom: 20px;
-            box-sizing: border-box;
-        }
+#profile p {
+  font-size: 16px;
+  margin: 5px 0;
+  color: #666;
+  white-space: nowrap;
+}
 
-        #my-button {
-            display: flex;
-            gap: 10px; /* 버튼 사이 간격 */
-        }
+.img-round-small {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border-style: none;
+  overflow: hidden;
+  object-fit: cover;
+  margin: 0 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
 
-        .mypage-button {
-            width: 130px;
-            height: 38px;
-            border: none;
-            color: white;
-            font-size: 14px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
+#my-button-filed {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: flex-end; /* 오른쪽 정렬 */
+  padding: 0 20px; /* 좌우 여백 */
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
 
-        .mypage-button:hover {
-            opacity: 0.9;
-        }
+#my-button {
+  display: flex;
+  gap: 10px; /* 버튼 사이 간격 */
+}
 
-        .mypage-button:focus {
-            outline: none;
-        }
+.mypage-button {
+  width: 130px;
+  height: 38px;
+  border: none;
+  color: white;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
 
-        .btn-mypost { background-color: var(--dark); }
-        .btn-edit-myinfo { background-color: var(--primary); }
-        .btn-danger { background-color: var(--accent); }
+.mypage-button:hover {
+  opacity: 0.9;
+}
 
-        .sub-title {
-            font-size: 20px;
-            font-weight: bold;
-            color: white;
-            background-color: var(--primary);
-            width: 100%;
-            height: 60px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 30px 0 10px 0;
-        }
+.mypage-button:focus {
+  outline: none;
+}
 
-        #my-match {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 60px;
-        }
+.btn-mypost {
+  background-color: var(--dark);
+}
+.btn-edit-myinfo {
+  background-color: var(--primary);
+}
+.btn-danger {
+  background-color: var(--accent);
+}
 
-        #sport-type-choice-bar,
-        #crew-choice-bar {
-            width: 90%;
-            max-width: 800px;
-            display: flex;
-            justify-content: center;
-            margin: 16px 0;
-            gap: 10px;
-        }
+.sub-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  background-color: var(--primary);
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0 10px 0;
+}
 
-        #my-match-box {
-            width: 100%;
-            display: flex;
-            max-width: 900px; /* 슬라이더 전체 영역 최대 폭 */
-            justify-content: center;
-            position: relative; 
-            padding: 0 50px; /* 화살표 공간 확보 */
-        }
+#my-match {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 60px;
+}
 
-        .choice-button {
-            font-size: 14px;
-            flex-grow: 1;
-            height: 42px;
-            font-weight: normal;
-            border-style: solid;
-            border-width: 1px;
-            border-color: var(--primary);
-            color: var(--primary);
-            background-color: white;
-            border-radius: 5px;
-            margin: 0;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
+#sport-type-choice-bar,
+#crew-choice-bar {
+  width: 90%;
+  max-width: 800px;
+  display: flex;
+  justify-content: center;
+  margin: 16px 0;
+  gap: 10px;
+}
 
-        .choice-button.active {
-            background-color: var(--primary);
-            color: white;
-        }
+#my-match-box {
+  width: 100%;
+  display: flex;
+  max-width: 900px; /* 슬라이더 전체 영역 최대 폭 */
+  justify-content: center;
+  position: relative;
+  padding: 0 50px; /* 화살표 공간 확보 */
+}
 
-        /* Swiper 화살표 색상 변경 (요구사항 1) */
-        .swiper-button-next,
-        .swiper-button-prev {
-            color: var(--primary) !important; /* #4b5ae4 색상 적용 */
-            transition: color 0.3s;
-        }
-        
-        .swiper-button-next:hover,
-        .swiper-button-prev:hover {
-            opacity: 0.8;
-        }
+.choice-button {
+  font-size: 14px;
+  flex-grow: 1;
+  height: 42px;
+  font-weight: normal;
+  border-style: solid;
+  border-width: 1px;
+  border-color: var(--primary);
+  color: var(--primary);
+  background-color: white;
+  border-radius: 5px;
+  margin: 0;
+  cursor: pointer;
+  transition: all 0.2s;
+}
 
-        /* 1. Swiper 컨테이너 크기 잡기 */
-        .mySwiper {
-            width: 100%;
-            max-width: 800px;
-            padding: 20px 0 40px 0; /* 상하 여백 및 페이지네이션 공간 */
-        }
+.choice-button.active {
+  background-color: var(--primary);
+  color: white;
+}
 
-        /* 2. 슬라이드 높이 자동 조절 (내용물만큼만 잡히게 함) */
-        .swiper-slide {
-            height: auto !important;
-            display: flex;
-            justify-content: center;
-            align-items: stretch; /* 카드 높이를 일치시킵니다. */
-        }
+/* Swiper 화살표 색상 변경 (요구사항 1) */
+.swiper-button-next,
+.swiper-button-prev {
+  color: var(--primary) !important; /* #4b5ae4 색상 적용 */
+  transition: color 0.3s;
+}
 
-        /* 3. 카드 아이템 스타일링 (필수: 크기 및 디자인 고정) */
-        .card-item {
-            width: 100%; 
-            max-width: 300px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            padding: 20px;
-            box-sizing: border-box;
-            
-            /* 내부 요소 정렬 및 버튼을 아래로 밀기 위해 flex column 사용 */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        .card-title-link {
-            display: block;
-            flex-shrink: 0;
-        }
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  opacity: 0.8;
+}
 
-        /* 4. 카드 내부 이미지 크기 강제 고정 (요구사항 2: 정사각형 80x80) */
-        .card-item img {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            border: 1px solid #eee;
-        }
+/* 1. Swiper 컨테이너 크기 잡기 */
+.mySwiper {
+  width: 100%;
+  max-width: 800px;
+  padding: 20px 0 40px 0; /* 상하 여백 및 페이지네이션 공간 */
+}
 
-        /* 5. 텍스트 줄바꿈 방지 */
-        .card-item p {
-            margin: 0;
-            text-align: center;
-            font-size: 14px;
-            word-break: keep-all;
-        }
+/* 2. 슬라이드 높이 자동 조절 (내용물만큼만 잡히게 함) */
+.swiper-slide {
+  height: auto !important;
+  display: flex;
+  justify-content: center;
+  align-items: stretch; /* 카드 높이를 일치시킵니다. */
+}
 
-        /* 6. 메이트 해지 버튼 스타일 및 위치 조정 */
-        #mate-cut {
-            font-size: 12px;
-            color: white;
-            background-color: var(--accent);
-            padding: 8px 15px;
-            border-radius: 5px;
-            text-decoration: none;
-            margin-top: auto; /* 남은 공간을 밀어내어 맨 아래에 위치 */
-            cursor: pointer;
-            width: 100%;
-            text-align: center;
-            transition: background-color 0.2s;
-        }
-        
-        #mate-cut:hover {
-            background-color: #e06056;
-        }
-        
-        #no-match-data {
-            text-align: center;
-            padding: 40px;
-            color: #666;
-            font-size: 16px;
-        }
-        
-        @media (max-width: 900px) {
-             #my-match-box {
-                max-width: 100%; /* 화면이 좁아지면 최대 폭 제한 해제 */
-            }
-            .mySwiper {
-                max-width: 100%;
-                padding: 20px 0 40px 0; 
-            }
-        }
+/* 3. 카드 아이템 스타일링 (필수: 크기 및 디자인 고정) */
+.card-item {
+  width: 100%;
+  max-width: 300px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  box-sizing: border-box;
 
-        /* 반응형 디자인 */
-        @media (max-width: 768px) {
-            #my-profile {
-                flex-direction: column;
-            }
-            .img-round-small {
-                margin-bottom: 20px;
-            }
-            #my-button-filed {
-                justify-content: center;
-            }
-            #my-match-box {
-                padding: 0 20px;
-            }
-        }
+  /* 내부 요소 정렬 및 버튼을 아래로 밀기 위해 flex column 사용 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.card-title-link {
+  display: block;
+  flex-shrink: 0;
+}
+
+/* 4. 카드 내부 이미지 크기 강제 고정 (요구사항 2: 정사각형 80x80) */
+.card-item img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border: 1px solid #eee;
+}
+
+/* 5. 텍스트 줄바꿈 방지 */
+.card-item p {
+  margin: 0;
+  text-align: center;
+  font-size: 14px;
+  word-break: keep-all;
+}
+
+/* 6. 메이트 해지 버튼 스타일 및 위치 조정 */
+#mate-cut {
+  font-size: 12px;
+  color: white;
+  background-color: var(--accent);
+  padding: 8px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-top: auto; /* 남은 공간을 밀어내어 맨 아래에 위치 */
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  transition: background-color 0.2s;
+}
+
+#mate-cut:hover {
+  background-color: #e06056;
+}
+
+#no-match-data {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-size: 16px;
+}
+
+@media (max-width: 900px) {
+  #my-match-box {
+    max-width: 100%; /* 화면이 좁아지면 최대 폭 제한 해제 */
+  }
+  .mySwiper {
+    max-width: 100%;
+    padding: 20px 0 40px 0;
+  }
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  #my-profile {
+    flex-direction: column;
+  }
+  .img-round-small {
+    margin-bottom: 20px;
+  }
+  #my-button-filed {
+    justify-content: center;
+  }
+  #my-match-box {
+    padding: 0 20px;
+  }
+}

@@ -95,7 +95,16 @@
               style="text-decoration: none; color: inherit; display: block"
             >
               <div class="mate-card-image">
-                <img th:src="@{/images/members.png}" alt="크루 프로필" />
+                <img
+                  th:if="${mate.imageUrl != null and mate.imageUrl != ''}"
+                  th:src="@{/files/{url}(url=${mate.imageUrl})}"
+                  alt="크루 이미지"
+                />
+                <img
+                  th:if="${mate.imageUrl == null or mate.imageUrl == ''}"
+                  th:src="@{/images/members.png}"
+                  alt="기본 크루 이미지"
+                />
               </div>
 
               <div class="mate-card-info">

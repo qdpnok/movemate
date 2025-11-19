@@ -19,6 +19,8 @@ import java.util.List;
 import com.human.movemate.service.MateService;
 import java.util.List;
 import java.util.stream.Collectors;
+import com.human.movemate.dto.MateApplyFormDto;
+import java.io.IOException;
 
 // '메이트 모집' (1:1, 그룹) 관련 컨트롤러
 @Controller
@@ -306,5 +308,41 @@ public class AddMateController {
 
         // 신청 폼 HTML 보여주기
         return "addmate/add_mate_apply";
+    }
+    // 3. 신청 처리 (폼에서 '등록' 클릭 시 실행)
+    @PostMapping("/apply/{mateNo}")
+    public String processApply(
+            @PathVariable Long mateNo,
+            @ModelAttribute MateApplyFormDto mateApplyForm,
+            HttpSession session,
+            RedirectAttributes rttr) {
+
+        // 1. 로그인 체크
+        User loginUser = (User) session.getAttribute("loginUser");
+        if (loginUser == null) {
+            rttr.addFlashAttribute("errorMessage", "로그인이 필요합니다.");
+            return "redirect:/login";
+        }
+
+        // 2. 글 번호 세팅
+        mateApplyForm.setMateNo(mateNo);
+
+        try {
+            // 3. 서비스 호출 (신청 정보 DB 저장)
+            mateMemberService.applyForMate(mateApplyForm, loginUser.getUserNo());
+            rttr.addFlashAttribute("successMessage", "메이트 신청이 완료되었습니다!");
+
+            // 신청 완료 후 '메이트 목록'(/addMate)으로 이동
+            return "redirect:/addMate";
+
+        } catch (IOException e) {
+            log.error("파일 업로드 실패: {}", e.getMessage());
+            rttr.addFlashAttribute("errorMessage", "파일 업로드 실패");
+            return "redirect:/addMate/apply/" + mateNo; // 실패 시 다시 신청폼으로
+        } catch (Exception e) {
+            log.error("신청 실패: {}", e.getMessage());
+            rttr.addFlashAttribute("errorMessage", "신청 실패: " + e.getMessage());
+            return "redirect:/addMate/apply/" + mateNo; // 실패 시 다시 신청폼으로
+        }
     }
 }
