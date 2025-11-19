@@ -4,6 +4,7 @@ import com.human.movemate.model.AddMate;
 
 import java.util.List;
 
+
 // '메이트 모집' 관련 비즈니스 로직 인터페이스
 // 메이트 모집 글 저장 (파일 업로드 포함)
 public interface AddMateService {
@@ -14,4 +15,6 @@ public interface AddMateService {
     List<AddMate> findMyMates(Long userNo, String mateType, String sportType); // 내가 만든 크루 목록 조회
 
 
+    // 인터페이스에 메서드 정의 추가(1;1 메이트 신청 민아)
+    AddMate getMateDetail(Long mateNo);
 }

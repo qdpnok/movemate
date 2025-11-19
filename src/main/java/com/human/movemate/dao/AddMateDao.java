@@ -7,10 +7,10 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import java.util.List;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 // 'MATE' 테이블에 접근하는 DAO
 @Repository
@@ -129,4 +129,26 @@ public class AddMateDao {
         }
     }
 
+//    1:1 메이트 신청 민아
+// AddMateDao 클래스 안에 아래 메서드를 추가하세요
+public AddMate findById(Long mateNo) {
+    String sql = "SELECT * FROM MATE WHERE mate_no = ?";
+    try {
+        return jdbc.queryForObject(sql, (rs, rowNum) -> {
+            AddMate mate = new AddMate();
+            mate.setMateNo(rs.getLong("mate_no"));
+            mate.setUserNo(rs.getLong("user_no"));
+            mate.setMateType(rs.getString("mate_type"));
+            mate.setRegion(rs.getString("region"));
+            mate.setSportType(rs.getString("sport_type"));
+            mate.setMateName(rs.getString("mate_name"));
+            mate.setDescription(rs.getString("description"));
+            mate.setImageUrl(rs.getString("image_url"));
+            // 필요한 경우 날짜 등 추가 매핑
+            return mate;
+        }, mateNo);
+    } catch (Exception e) {
+        return null; // 없으면 null 반환
+    }
+}
 }

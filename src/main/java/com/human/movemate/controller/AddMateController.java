@@ -279,4 +279,21 @@ public class AddMateController {
         // (임시) 삭제 후 메인으로 (목록 페이지 완성 시 그곳으로)
         return "redirect:/";
     }
+
+//    1:1 메이트 신청 민아
+    // AddMateController 안에 아래 메서드를 추가하세요
+
+    // 메이트 신청하기 화면 이동
+    // 주소 예시: /addMate/apply/1 (1번 글에 신청하기)
+    @GetMapping("/apply/{mateNo}")
+    public String applyPage(@PathVariable Long mateNo, Model model) {
+        // 1. DB에서 해당 메이트 글 정보를 가져옴
+        AddMate mate = addMateService.getMateDetail(mateNo);
+
+        // 2. 화면에 전달
+        model.addAttribute("mate", mate);
+
+        // 3. addmate 폴더 안의 html로 이동
+        return "addmate/add_mate_apply";
+    }
 }
