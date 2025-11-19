@@ -1,5 +1,6 @@
 package com.human.movemate.controller;
-
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import com.human.movemate.dto.AddMateFormDto;
 import com.human.movemate.dto.MateMemberDto;
 import com.human.movemate.model.AddMate;
@@ -94,7 +95,7 @@ public class AddMateController {
     public String saveMate(
             AddMateFormDto mateFormDto, // 폼 데이터가 DTO로 자동 매핑됨
             HttpSession session,
-            RedirectAttributes redirectAttributes) {
+            RedirectAttributes rttr) {
         // 세션에서 로그인한 사용자 정보 가져오기
         User loginUser = (User) session.getAttribute("loginUser");
         if (loginUser == null) {
@@ -104,34 +105,50 @@ public class AddMateController {
             // Service 호출 (DTO와 로그인한 userNo 전달)
             addMateService.saveMate(mateFormDto, loginUser.getUserNo());
             // 성공 시 메시지 전달
-            redirectAttributes.addFlashAttribute("successMessage", "메이트 모집 글이 등록되었습니다.");
+            rttr.addFlashAttribute("successMessage", "등록되었습니다.");
+            String encodedSport = URLEncoder.encode(mateFormDto.getSportType(), StandardCharsets.UTF_8);
+            if ("SOLO".equals(mateFormDto.getMateType())) {
+                return "redirect:/addMate/my/solo?sport=" + encodedSport;
+            } else {
+                return "redirect:/addMate/my/crew?sport=" + encodedSport;
+            }
         } catch (Exception e) {
             log.error("메이트 저장 실패: {}", e.getMessage());
-            redirectAttributes.addFlashAttribute("errorMessage", "등록에 실패했습니다: " + e.getMessage());
-        }
-
-        // 추후 메이트 목록 페이지로 바꿔야됨 ★
-        return "redirect:/";
+            rttr.addFlashAttribute("errorMessage", "등록에 실패했습니다: " + e.getMessage());
+        } // 실패하면 목록 페이지로 리다이렉트
+        return "redirect:/addMate";
     }
 
-    // 메이트 모집 글 상세 조회
+    // 메이트 모집 글 1개 상세 조회
     // GET/addMate/{mateNo}
     @GetMapping("/{mateNo}")
-    public String viewMate(@PathVariable("mateNo") Long mateNo, Model model, HttpSession session) {
+    public String viewMate(@PathVariable("mateNo") Long mateNo, Model model) {
         AddMate mate = addMateService.findById(mateNo);
-        if (mate == null) {
-            // (임시) 글이 없으면 메인으로
-            return "redirect:/";
-        }
+        if (mate == null) return "redirect:/addMate";
+
         model.addAttribute("mate", mate);
-        // "SOLO" / "CREW" 타입에 따라 다른 제목 전달
+
         if ("SOLO".equals(mate.getMateType())) {
-            model.addAttribute("pageTitle", "내가 쓴 1:1 메이트 모집 글");
-            // 화면에 뿌려줄 HTML
-            return "addmate/view_mate_solo";
+            model.addAttribute("pageTitle", "1:1 메이트 상세");
         } else {
-            return "redirect:/addMate/my/crew";
+            model.addAttribute("pageTitle", "크루 상세");
         }
+        return "addmate/view_write_detail";
+    }
+
+    // 내가 만든 1:1 메이트 목록 조회
+    // GET/addMate/my/solo
+    @GetMapping("/my/solo")
+    public String mySoloList(Model model, HttpSession session,
+                             @RequestParam(value="sport", defaultValue="러닝") String sportType) {
+        User loginUser = (User) session.getAttribute("loginUser");
+        if (loginUser == null) return "redirect:/login";
+        List<AddMate> myMates = addMateService.findMyMates(loginUser.getUserNo(), "SOLO", sportType);
+        model.addAttribute("mateList", myMates);
+        model.addAttribute("activeTab", sportType);
+        model.addAttribute("pageTitle", "내가 쓴 1:1 메이트 모집 글");
+        // 1:1 전용 목록 HTML 반환 (3단계에서 생성)
+        return "addmate/view_mate_solo";
     }
 
     // 내가 만든 크루 상세 조회
@@ -142,13 +159,12 @@ public class AddMateController {
         User loginUser = (User) session.getAttribute("loginUser");
         if (loginUser == null) return "redirect:/login";
 
-        List<AddMate> myCrews = addMateService.findMyCrews(loginUser.getUserNo(), sportType);
+        List<AddMate> myCrews = addMateService.findMyMates(loginUser.getUserNo(), "CREW", sportType);
 
         model.addAttribute("mateList", myCrews);
         model.addAttribute("activeTab", sportType); // "러닝" or "웨이트"
         model.addAttribute("pageTitle", "내가 만든 크루 관리");
-
-        return "addmate/view_mate_crew"; //
+        return "addmate/view_mate_crew";
     }
 
     // 크루원 관리
@@ -260,7 +276,33 @@ public class AddMateController {
             log.error("메이트 삭제 실패: {}", e.getMessage());
             redirectAttributes.addFlashAttribute("errorMessage", "삭제에 실패했습니다: " + e.getMessage());
         }
-        // (임시) 삭제 후 메인으로 (목록 페이지 완성 시 그곳으로)
-        return "redirect:/";
+        return "redirect:/addMate/" + mateNo;
+    }
+
+//    1:1 메이트 신청 민아
+
+    // 메이트 신청하기 화면 이동
+    // 1. 상세보기 페이지 (사진 1 - 카드 클릭 시 이동)
+    // 주소: /addMate/view/글번호
+    @GetMapping("/view/{mateNo}")
+    public String viewPage(@PathVariable Long mateNo, Model model) {
+        // DB에서 글 정보 가져오기
+        AddMate mate = addMateService.getMateDetail(mateNo);
+        model.addAttribute("mate", mate);
+
+        // 상세보기 HTML 보여주기 (여기서 '메이트신청' 버튼 누르면 아래 applyPage로 이동)
+        return "addmate/add_mate_view";
+    }
+
+    // 2. 신청 폼 페이지 (사진 2 - 상세보기에서 신청 버튼 클릭 시 이동)
+    // 주소: /addMate/apply/글번호
+    @GetMapping("/apply/{mateNo}")
+    public String applyPage(@PathVariable Long mateNo, Model model) {
+        // DB에서 글 정보 가져오기 (신청 폼 상단에 정보 띄우기 위함)
+        AddMate mate = addMateService.getMateDetail(mateNo);
+        model.addAttribute("mate", mate);
+
+        // 신청 폼 HTML 보여주기
+        return "addmate/add_mate_apply";
     }
 }

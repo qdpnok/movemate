@@ -85,6 +85,7 @@ public class MateDao {
             mate.setRegion(rs.getString("region"));
             mate.setSportType(rs.getString("sport_type"));
             mate.setMateName(rs.getString("mate_name"));
+            mate.setCurrentMembers(rs.getInt("current_members"));
             mate.setDescription(rs.getString("description"));
             mate.setImageUrl(rs.getString("image_url"));
             mate.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());

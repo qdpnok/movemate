@@ -160,7 +160,9 @@
   align-items: center;
   font-size: 15px;
   color: #555;
+  justify-content: center;
 }
+
 .mate-card-info p i {
   margin-right: 8px;
   color: #888;
@@ -214,9 +216,9 @@
 }
 
 .default-profile i {
-  /* ⭐️ 아이콘 크기를 160px로 대폭 키움 */
+  /* 아이콘 크기를 160px로 대폭 키움 */
   font-size: 160px;
   color: #ffffff; /* 흰색 아이콘 */
-  /* ⭐️ 위치를 살짝 조정해서 꽉 차 보이게 만듦 */
+  /* 위치를 살짝 조정해서 꽉 차 보이게 만듦 */
   transform: translateY(15px);
 }

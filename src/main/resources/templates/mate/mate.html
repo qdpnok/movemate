@@ -44,10 +44,12 @@
           <h2 class="mate-section-title">1:1 러닝 메이트</h2>
 
           <div class="mate-grid">
-            <div
+            <a
               th:each="mate : ${soloMates}"
               class="mate-card solo"
+              th:href="@{/addMate/view/{mateNo}(mateNo=${mate.mateNo})}"
               th:data-sport="${mate.sportType == '러닝' ? 'running' : 'weight'}"
+              style="text-decoration: none; color: inherit; display: block"
             >
               <div class="mate-card-image">
                 <img
@@ -69,7 +71,7 @@
                   <span th:text="${mate.region}">지역</span>
                 </p>
               </div>
-            </div>
+            </a>
           </div>
 
           <div th:if="${#lists.isEmpty(soloMates)}" class="no-mates">
@@ -85,10 +87,12 @@
           <h2 class="mate-section-title">러닝 크루</h2>
 
           <div class="mate-grid">
-            <div
+            <a
               th:each="mate : ${crewMates}"
               class="mate-card crew"
+              th:href="@{/addMate/view/{no}(no=${mate.mateNo})}"
               th:data-sport="${mate.sportType == '러닝' ? 'running' : 'weight'}"
+              style="text-decoration: none; color: inherit; display: block"
             >
               <div class="mate-card-image">
                 <img th:src="@{/images/members.png}" alt="크루 프로필" />
@@ -102,16 +106,17 @@
                 </p>
                 <p class="mate-count">
                   <i class="fa-solid fa-users"></i>
-                  <span>1/10</span>
+                  <span
+                    ><span th:text="${mate.currentMembers}">1</span>/10</span
+                  >
                 </p>
               </div>
-            </div>
+            </a>
           </div>
 
           <div th:if="${#lists.isEmpty(crewMates)}" class="no-mates">
             <p>아직 크루가 없습니다.</p>
           </div>
-
 
           <a th:href="@{/addMate/crew}" class="mate-create-button"
             >크루 만들기</a

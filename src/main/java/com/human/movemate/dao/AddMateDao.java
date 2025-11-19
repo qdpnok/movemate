@@ -7,10 +7,10 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import java.util.List;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 // 'MATE' 테이블에 접근하는 DAO
 @Repository
@@ -72,6 +72,8 @@ public class AddMateDao {
         }
     }
 
+
+
     // 수정
     public void update(AddMate mate) {
         String sql;
@@ -118,13 +120,37 @@ public class AddMateDao {
             mate.setDescription(rs.getString("description"));
             mate.setImageUrl(rs.getString("image_url"));
             mate.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+            // 메이트 우측하단 크루아이콘 인원수 표기
+            try {
+                mate.setCurrentMembers(rs.getInt("current_members"));
+            } catch (SQLException e) {
+                mate.setCurrentMembers(1); // 컬럼 없으면 기본 1명
+            }
 
             // JOIN된 필드
             mate.setAuthorId(rs.getString("user_id"));
             mate.setAuthorProfileUrl(rs.getString("profile_image_url"));
+            // 상세보기 우측하단 크루 아이콘에 인원수 반영
+            mate.setCurrentMembers(rs.getInt("current_members"));
 
             return mate;
         }
     }
 
+    //    1:1 메이트 신청 민아
+    public AddMate findById(Long mateNo) {
+        // 1. MATE 테이블(m.*)을 조회해서 인원수(current_members)를 확보
+        // 2. USERS, USER_PROFILE 테이블을 JOIN해서 작성자 이름/사진 확보
+        String sql = "SELECT m.*, u.user_id, up.profile_image_url " +
+                "FROM MATE m " +
+                "JOIN USERS u ON m.user_no = u.user_no " +
+                "LEFT JOIN USER_PROFILE up ON u.user_no = up.user_no " +
+                "WHERE m.mate_no = ?";
+        try {
+            // 아래에 있는 RowMapper를 재사용해서 데이터를 담습니다.
+            return jdbc.queryForObject(sql, new AddMateRowMapper(), mateNo);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }
