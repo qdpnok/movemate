@@ -1,6 +1,7 @@
 package com.human.movemate.dao;
 
 import com.human.movemate.dto.MateMemberDto;
+import com.human.movemate.model.MateMember;
 import lombok.RequiredArgsConstructor;
 import org.intellij.lang.annotations.Language;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -34,4 +35,6 @@ public class MateMemberDao {
         jdbc.update("DELETE FROM MATE_MEMBER WHERE member_no = ?", memberNo);
     }
 
+    public void save(MateMember mateMember) {
+    }
 }

@@ -56,7 +56,12 @@
           </div>
         </div>
 
-        <form action="#" method="post">
+        <form
+          th:action="@{/addMate/apply/{mateNo}(mateNo=${mate.mateNo})}"
+          th:object="${mateApplyForm}"
+          method="post"
+          enctype="multipart/form-data"
+        >
           <div class="apply-form-group">
             <div class="apply-label-box">
               <i class="fa-regular fa-id-card"></i>
