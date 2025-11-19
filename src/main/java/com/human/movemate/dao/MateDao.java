@@ -2,15 +2,16 @@ package com.human.movemate.dao;
 
 import com.human.movemate.dto.MatchingDetailDto;
 import com.human.movemate.dto.MatchingDto;
+import com.human.movemate.model.AddMate;
 import com.human.movemate.model.Post;
 import com.human.movemate.model.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.intellij.lang.annotations.Language;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -116,6 +117,31 @@ public class MateDao {
         return jdbc.query(sql, mateRowMapper);
     }
 
+    // DB 데이터를 AddMate 객체로 변환해주는 '번역기'
+    private final RowMapper<AddMate> mateRowMapper = new RowMapper<AddMate>() {
+        @Override
+        public AddMate mapRow(ResultSet rs, int rowNum) throws SQLException {
+            AddMate mate = new AddMate();
+            mate.setMateNo(rs.getLong("mate_no"));
+            mate.setUserNo(rs.getLong("user_no"));
+            mate.setMateType(rs.getString("mate_type"));
+            mate.setRegion(rs.getString("region"));
+            mate.setSportType(rs.getString("sport_type"));
+            mate.setMateName(rs.getString("mate_name"));
+            mate.setCurrentMembers(rs.getInt("current_members"));
+            mate.setDescription(rs.getString("description"));
+            mate.setImageUrl(rs.getString("image_url"));
+            mate.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+            return mate;
+        }
+    };
+    // MATE 테이블의 모든 데이터를 조회하는 메서드
+    public List<AddMate> findAll () {
+        String sql = "SELECT * FROM MATE ORDER BY created_at DESC"; // 최신순 정렬
+        return jdbc.query(sql, mateRowMapper);
+    }
+
+
     public MatchingDetailDto findMatchingDetail(Long matchNo) {
         String sql = "SELECT "
                 + "    T1.MATCH_NO, T1.APPLICANT_USER_NO, T1.STATUS AS MATCH_STATUS, "
@@ -169,4 +195,3 @@ public class MateDao {
         // (추후 상세보기를 위한 메서드도 추가할 수 있어요)
         // public AddMate findById(Long mateNo) { ... }
 
-}
