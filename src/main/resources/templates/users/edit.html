@@ -383,35 +383,184 @@ ageInput.addEventListener("input", updateSubmitBtn);
         sportWeight.addEventListener("click", paceClose);
         sportAll.addEventListener("click", paceOpen);
 
-      // 지역 선택
-      const regions = [
-          "광덕면", "구룡동", "구성동", "다가동", "대흥동", "동면", "목천읍", "문화동",
-          "병천면", "봉명동", "북면", "사직동", "삼룡동", "성남면", "성황동", "수신면",
-          "신방동", "신부동", "안서동", "영성동", "오룡동", "용곡동", "원성1동", "원성2동",
-          "원성동", "유량동", "청당동", "청수동", "풍세면", "두정동", "백석동", "부대동",
-          "부성1동", "부성2동", "불당동", "성거읍", "성성동", "성정1동", "성정2동", "성정동",
-          "성환읍", "신당동", "쌍용1동", "쌍용2동", "쌍용3동", "쌍용동", "업성동", "와촌동",
-          "입장면", "직산읍", "차암동"
-        ];
-
-        // 드롭다운에 요소 생성
-        const dropdown = document.querySelector("select");
-        console.log(dropdown);
-
-        regions.forEach((region) => {
-          const newRegion = document.createElement("option");
-          newRegion.value = region;
-          newRegion.innerText = region;
-          dropdown.appendChild(newRegion);
-        });
-
         const regionValue = /*[[${userInfo.region}]]*/;
-        const currentUserRegion = regionValue ? regionValue : '';
 
-        if (currentUserRegion) {
-          dropdown.value = currentUserRegion;
-          console.log("현재 지역 설정됨: " + currentUserRegion);
-        }
+      document.addEventListener('DOMContentLoaded', () => {
+            // -------------------- API 설정 --------------------
+            // **주의: REST API 키는 서버 측에서 안전하게 관리하는 것이 좋습니다.**
+            const KAKAO_REST_API_KEY = "d3a833eb2f6b0ab6fbf1d77ef93348aa";
+            const SEARCH_KEYWORD = "천안시";
+            const API_URL = "https://dapi.kakao.com/v2/local/search/keyword.json";
+            const MAX_PAGES = 45; // 카카오 API 검색 페이지 수 제한 (최대 45)
+
+            // DOM 요소 접근 (DOMContentLoaded 안에서 접근해야 null 오류가 발생하지 않습니다)
+            const dropdown = document.getElementById("select-region");
+
+            if (!dropdown) {
+                console.error("오류: Select 박스 (ID: select_select)를 찾을 수 없습니다.");
+                return; // 드롭다운이 없으면 나머지 로직 실행 중지
+            }
+            
+            // 드롭다운 초기 상태 설정
+            dropdown.disabled = true;
+
+            // -------------------- 데이터 수집 로직 --------------------
+            /**
+             * 카카오 API를 재귀적으로 호출하여 모든 페이지의 지역 데이터를 수집합니다.
+             * @param {string} keyword - 검색할 키워드 (예: "천안시")
+             * @param {number} page - 현재 페이지 번호
+             * @param {Set<string>} districts - 수집된 고유한 읍면동 이름을 저장하는 Set
+             * @returns {Promise<Set<string>>} - 수집된 지역 Set
+             */
+            async function fetchAllDistricts(keyword, page, districts) {
+                if (page > MAX_PAGES) {
+                    console.warn(`최대 페이지 수(${MAX_PAGES}페이지)에 도달하여 검색을 중단합니다.`);
+                    return districts;
+                }
+
+                const query = new URLSearchParams({
+                    query: keyword,
+                    page: page,
+                    size: 15
+                }).toString();
+
+                try {
+                    const response = await fetch(`${API_URL}?${query}`, {
+                        method: 'GET',
+                        headers: {
+                            Authorization: `KakaoAK ${KAKAO_REST_API_KEY}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (!response.ok) {
+                        const errorBody = await response.text();
+                        if (response.status === 403) {
+                            throw new Error(`403 Forbidden: 카카오 개발자 센터에서 이 페이지의 도메인 등록을 확인하세요. (API 키 오류 또는 도메인 미등록)`);
+                        } else if (response.status === 401) {
+                            throw new Error(`401 Unauthorized: REST API 키가 올바른지 확인하세요.`);
+                        }
+                        throw new Error(`API 호출 실패: ${response.status} - ${errorBody}`);
+                    }
+
+                    const data = await response.json();
+                    const documents = data.documents;
+                    const meta = data.meta;
+                    
+                    documents.forEach(doc => {
+                        const addressParts = doc.address_name.split(' ');
+                        let district = '';
+                        
+                        // 읍/면/동/가 여부를 확인하는 필터
+                        const isDistrict = (name) => name && (name.endsWith('읍') || name.endsWith('면') || name.endsWith('동') || name.endsWith('가'));
+
+                        // 주소 파트에서 읍면동 추출 로직 (천안시 = 시(0) 구(1) 읍면동(2) 또는 시(0) 구(1) 구(2) 읍면동(3) 구조)
+                        // 천안시는 '충청남도 천안시 서북구 두정동' 형태를 가집니다.
+                        // 일반적으로 3번째 파트(index 2) 또는 4번째 파트(index 3)를 확인합니다.
+                        
+                        // 1. 4번째 파트 확인 (index 3: '두정동' 등) - 가장 일반적
+                        if (addressParts.length > 3 && isDistrict(addressParts[3])) {
+                            district = addressParts[3];
+                        }
+                        // 2. 3번째 파트 확인 (index 2: 구가 없을 경우 '읍'/'면' 등)
+                        else if (addressParts.length > 2 && isDistrict(addressParts[2])) {
+                            district = addressParts[2];
+                        }
+
+                        if (district) {
+                            districts.add(district.trim());
+                        }
+                    });
+
+                    if (meta.is_end === false) {
+                        // API 연속 호출 간 부하 방지를 위해 짧은 지연 추가
+                        await new Promise(resolve => setTimeout(resolve, 50)); 
+                        return fetchAllDistricts(keyword, page + 1, districts);
+                    } else {
+                        return districts;
+                    }
+
+                } catch (error) {
+                    console.error(`[지역 로드 에러]`, error.message);
+                    // 에러 발생 시 현재까지 수집된 데이터 반환
+                    return districts; 
+                }
+            }
+
+            // -------------------- 렌더링 로직 --------------------
+            /**
+             * Select Box에 읍면동 목록을 렌더링합니다.
+             * @param {Set<string>} districts - 수집된 지역 Set
+             */
+            function renderDistricts(districts) {
+                // 로딩 옵션 제거 및 새로운 기본 옵션 추가
+                dropdown.innerHTML = '';
+                
+                const finalDistrictList = Array.from(districts).sort();
+
+                const defaultOption = document.createElement('option');
+                defaultOption.value = "";
+                defaultOption.textContent = `지역 선택 (${finalDistrictList.length}개)`;
+                defaultOption.selected = true;
+                defaultOption.disabled = true;
+                dropdown.appendChild(defaultOption);
+
+                // 추출된 목록 추가
+                finalDistrictList.forEach(district => {
+                    const option = document.createElement("option");
+                    option.value = district;
+                    option.innerText = district;
+                    dropdown.appendChild(option);
+                });
+
+                // 지역 선택 로직 (옵션 생성 후 실행)
+                if (regionValue) {
+                    dropdown.value = regionValue;
+                    
+                    // 선택이 제대로 되었는지 확인
+                    if (dropdown.value === regionValue) {
+                        console.log(`지역 설정 성공: ${regionValue}`);
+                        // 이전에 '지역 선택'으로 설정된 기본 옵션을 해제 (사용자가 선택한 것처럼 보이게)
+                        defaultOption.selected = false;
+                    } else {
+                        console.warn(`서버에서 받은 지역 값 '${regionValue}'이(가) 로드된 목록에 존재하지 않습니다.`);
+                    }
+                }
+                dropdown.disabled = false; // 드롭다운 활성화
+            }
+
+            // -------------------- 초기화 로직 --------------------
+            /**
+             * 지역 드롭다운 초기화 및 로드 시작
+             */
+            async function initRegionDropdown() {
+                // API 키 유효성 검사
+                if (KAKAO_REST_API_KEY === "YOUR_KAKAO_REST_API_KEY_HERE" || !KAKAO_REST_API_KEY || KAKAO_REST_API_KEY.length < 10) {
+                    dropdown.innerHTML = '<option selected disabled value="">[오류] API 키를 유효한 값으로 설정해주세요.</option>';
+                    dropdown.disabled = true;
+                    console.error("REST API 키를 유효한 값으로 교체해야 합니다.");
+                    return;
+                }
+
+                // 로딩 상태 표시
+                dropdown.innerHTML = '<option selected disabled value="">-- 지역 정보 로드 중... --</option>';
+                dropdown.disabled = true;
+
+                const uniqueDistrictsSet = await fetchAllDistricts(SEARCH_KEYWORD, 1, new Set());
+
+                if (uniqueDistrictsSet.size === 0) {
+                    // API 호출은 실행되었으나 결과가 없거나 오류가 발생했을 경우 (에러 메시지는 fetchAllDistricts에서 출력됨)
+                    dropdown.innerHTML = '<option selected disabled value="">[오류] 지역 목록을 가져올 수 없습니다.</option>';
+                    dropdown.disabled = true;
+                    return;
+                }
+
+                renderDistricts(uniqueDistrictsSet);
+            }
+
+            // 지역 로드 함수 실행
+            initRegionDropdown();
+        });
 
         /*<![CDATA[*/
         (function() {
