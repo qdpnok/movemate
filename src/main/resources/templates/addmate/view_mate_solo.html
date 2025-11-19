@@ -44,8 +44,9 @@
             </div>
             <div class="view-mate-actions"
                 th:if="${session.loginUser != null and session.loginUser.userNo == mate.userNo}">
-                <a th:href="@{/addMate/edit/{id}...}" class="btn-mate-edit">수정</a>
-                <a th:href="@{/addMate/delete/{id}...}" class="btn-mate-delete">삭제</a>
+                <a th:href="@{/addMate/edit/{id}(id=*{mateNo})}" class="btn-mate-edit">수정</a>
+                <a th:href="@{/addMate/delete/{id}(id=*{mateNo})}" class="btn-mate-delete"
+                    onclick="return confirm('이 모집 글을 삭제하시겠습니까?');">삭제</a>
             </div>
             <div class="crew-management" th:if="*{mateType == 'CREW'}">
                 <h3>크루원 관리</h3>
