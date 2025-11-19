@@ -33,6 +33,40 @@ public class PostDao {
         return jdbc.query(sql, new PostRowMapper(), boardTypeNo);
     }
 
+    // 페이지네이션 조회
+    public List<Post> getPostsByPage(Long boardTypeNo, int offset, int size) {
+        int startRow = offset + 1;
+        int endRow = offset + size;
+
+        @Language("SQL")
+        String sql = """
+        SELECT
+            post_no, board_type_no, user_no,
+            title, content, created_at, image_url,
+            user_id, profile_image_url
+        FROM (
+            SELECT
+                p.post_no, p.board_type_no, p.user_no,
+                p.title, p.content, p.created_at, p.image_url,
+                u.user_id,
+                up.profile_image_url,
+                ROW_NUMBER() OVER (ORDER BY p.created_at DESC) AS rn
+            FROM POST p
+            JOIN USERS u ON p.user_no = u.user_no
+            LEFT JOIN USER_PROFILE up ON u.user_no = up.user_no
+            WHERE p.board_type_no = ?
+        )
+        WHERE rn BETWEEN ? AND ? -- 범위로 필터링
+        """;
+
+        return jdbc.query(sql, new PostRowMapper(), boardTypeNo, startRow, endRow);
+    }
+
+    public int countTotalPosts(Long boardTypeNo) {
+        String sql = "SELECT COUNT(*) FROM POST WHERE board_type_no = ?";
+        return jdbc.queryForObject(sql, Integer.class, boardTypeNo);
+    }
+
     public Post getById(Long postId) {
         @Language("SQL")
         String sql = "SELECT " +

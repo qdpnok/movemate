@@ -1,6 +1,8 @@
 package com.human.movemate.service.impl;
 import com.human.movemate.dao.PostDao;
+import com.human.movemate.dto.PageInfoDto;
 import com.human.movemate.dto.PostFormDto;
+import com.human.movemate.dto.PagedResDto;
 import com.human.movemate.model.Post;
 import com.human.movemate.service.FileStorageService;
 import com.human.movemate.service.PostService;
@@ -22,6 +24,24 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<Post> find(Long boardTypeNo) {
         return postDao.get(boardTypeNo);
+    }
+
+    @Override
+    public PagedResDto<Post> getPagination(Long boardTypeNo, int page, int size) {
+        int offset = (page - 1) * size;
+
+        int totalElements = postDao.countTotalPosts(boardTypeNo);
+
+        List<Post> list = postDao.getPostsByPage(boardTypeNo, offset, size);
+
+        int totalPages = 0;
+        if (totalElements > 0) {
+            totalPages = (int) Math.ceil((double) totalElements / size);
+        }
+
+        PageInfoDto pageInfo = new PageInfoDto(page, size, totalElements, totalPages);
+
+        return new PagedResDto<>(list, pageInfo);
     }
 
     @Override

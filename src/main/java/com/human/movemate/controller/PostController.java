@@ -1,6 +1,7 @@
 package com.human.movemate.controller;
 
 import com.human.movemate.dto.PostFormDto;
+import com.human.movemate.dto.PagedResDto;
 import com.human.movemate.model.Post;
 import com.human.movemate.model.User;
 import com.human.movemate.service.CommentService;
@@ -22,6 +23,24 @@ import java.util.List;
 public class PostController {
     private final PostService postService;
     private final CommentService commentService;
+
+    @GetMapping("/list/{boardTypeNo}")
+    public String getPostsByBoard(@PathVariable Long boardTypeNo,
+                                  @RequestParam(defaultValue = "1") int page,
+                                  @RequestParam(defaultValue = "10") int size, Model model) {
+        if (page < 1) page = 1;
+        if (size < 1) size = 10;
+
+        PagedResDto<Post> pagedRes = postService.getPagination(boardTypeNo, page, size);
+
+        model.addAttribute("pagedRes", pagedRes);
+        model.addAttribute("boardTypeNo");
+
+        log.info ("페이지네이션 data : {}", pagedRes);
+
+        if (boardTypeNo == 1) return "post/running_post_page";
+        else return "post/weight_post";
+    }
 
     @GetMapping // 러닝 게시판(디폴트 값으로 가져감)
     public String postPageRunning(Model model) {
