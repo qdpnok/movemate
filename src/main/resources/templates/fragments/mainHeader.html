@@ -34,13 +34,40 @@
           <div class="hamburger-container">
             <i class="fa-solid fa-bars hamburger"></i>
             <div class="menu">
-              <a href="/#">메이트 만들기</a>
-              <a href="/#">메이트 관리</a>
-              <a href="/#">게시판</a>
+              <a href="http://localhost:8282/addMate/solo">메이트 만들기</a>
+              <a href="http://localhost:8282/mate">메이트 관리</a>
+              <a href="http://localhost:8282/posts">게시판</a>
             </div>
           </div>
         </div>
       </div>
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburgerContainer = document.querySelector('.hamburger-container');
+            const hamburgerIcon = document.querySelector('.hamburger');
+            const menu = document.querySelector('.menu');
+
+            // 1. 햄버거 아이콘 클릭 이벤트: 메뉴를 열고 닫습니다.
+            hamburgerIcon.addEventListener('click', function(event) {
+                // 클릭 이벤트가 body까지 전파되어 메뉴가 즉시 닫히는 것을 방지
+                event.stopPropagation();
+                // 'is-open' 클래스를 토글하여 메뉴 상태를 변경
+                hamburgerContainer.classList.toggle('is-open');
+            });
+
+            // 2. 메뉴 외부 클릭 이벤트: 메뉴가 열려있을 때, 외부를 클릭하면 닫습니다.
+            document.addEventListener('click', function() {
+                // 'is-open' 클래스를 제거 (닫기)
+                hamburgerContainer.classList.remove('is-open');
+            });
+
+            // 3. 메뉴 영역 클릭 이벤트: 메뉴를 클릭했을 때 닫히지 않도록 방지
+            menu.addEventListener('click', function(event) {
+                // 클릭 이벤트가 body로 전파되는 것을 막아 닫히는 동작 방지
+                event.stopPropagation();
+            });
+        });
+    </script>
     </header>
   </body>
 </html>

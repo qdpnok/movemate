@@ -160,7 +160,18 @@ li {
 
 /* hover 시 햄버거 아이콘 변환 */
 .hamburger-container:hover .hamburger {
-  transform: rotate(90deg);
+  color: var(--primary);
+}
+
+/* [클릭 토글] is-open 클래스가 hamburger-container에 있을 때 메뉴를 표시 */
+.hamburger-container.is-open .menu {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto; /* 클릭 가능 */
+}
+
+/* [클릭 토글] is-open 클래스가 있을 때 햄버거 아이콘 색상 변경 */
+.hamburger-container.is-open .hamburger {
   color: var(--primary);
 }
 
