@@ -41,6 +41,11 @@ body {
   align-items: center;
 }
 
+#login-logo {
+  width: 180px;
+  height: 180px;
+}
+
 /* * * * * * main header style * * * * * */
 #main-header {
   width: 100vw;
@@ -234,12 +239,12 @@ footer {
   padding: 0px 0px 30px 0px;
 }
 
-.foot-box>a {
+.foot-box > a {
   margin-right: 10px;
   font-size: 10px;
 }
 
-.foot-info>p {
+.foot-info > p {
   font-size: 10px;
   margin: 16px 0px;
 }
@@ -252,12 +257,12 @@ footer {
   margin: 0px 50px;
 }
 
-.foot-cs>h1 {
+.foot-cs > h1 {
   font-size: 14px;
   font-weight: bold;
 }
 
-.foot-cs>h2 {
+.foot-cs > h2 {
   font-size: 14px;
 }
 
@@ -275,7 +280,8 @@ footer {
 
 #login-container>h1,
 #signup-container>h1,
-#mypage>h1 {
+#mypage>h1,
+#my-edit-container > h1 {
   font-size: 20px;
   font-weight: bold;
   margin: 20px;
@@ -291,7 +297,7 @@ footer {
   padding: 0px 0px 50px 0px;
 }
 
-#login-container>h1 {
+#login-container > h1 {
   font-weight: bold;
   margin: 20px 0;
   width: 100px;
@@ -435,7 +441,7 @@ footer {
   flex-direction: column;
 }
 
-#signup-box-pace>p {
+#signup-box-pace > p {
   margin-left: 10px;
   font-size: 14px;
   font-weight: bold;
@@ -701,7 +707,7 @@ hamburgerButton.addEventListener('click', () => {
 .btn-write {
   background-color: #4B5AE4;
   color: white;
-  border-radius: 8cqmax;
+  border-radius: 5px;
   font-weight: normal;
   font-size: 15px;
   text-decoration: none;
@@ -971,7 +977,6 @@ hamburgerButton.addEventListener('click', () => {
   margin: 0px auto;
   padding: 20px;
 }
-
 
 /* 상단 (제목 + 버튼) */
 .view-top-header {
@@ -1371,10 +1376,90 @@ hamburgerButton.addEventListener('click', () => {
 /* * * * * * * * * * * * * * * * * * * * * * * * */
 
 /* 마이페이지 수정 */
-#user-info-edit-container {
+#my-edit-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 60px;
+}
+
+#user-info-edit-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 60px 0 30px 0;
+}
+
+#profile-img-box {
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+#profile-img-button-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#edit-profile-button {
+  width: 80px;
+  height: 32px;
+  background-color: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+}
+
+#delete-profile-button {
+  width: 80px;
+  height: 32px;
+  background-color: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+}
+
+#edit-gender {
+  font-size: 14px;
+  margin: 10px;
+}
+
+#edit-sport-box {
+  display: flex;
+  margin: 10px;
+}
+
+.hint-edit-sport {
+  margin: 10px;
+}
+
+.edit-button-box {
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+}
+
+#profile-update-button {
+  width: 100px;
+  height: 36px;
+  background-color: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  margin: 0 10px;
+}
+
+#withdraw-button {
+  width: 100px;
+  height: 36px;
+  background-color: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  margin: 0 10px;
 }
 
 #user-info-edit-table {
@@ -1764,7 +1849,7 @@ th {
 
 /* 마이페이지 */
 #mypage-container {
-  width: 100vw;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1772,7 +1857,7 @@ th {
 }
 
 #mypage {
-  width: 100vw;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1813,36 +1898,27 @@ th {
   display: flex;
   justify-content: end;
   padding: 10px;
+  box-sizing: border-box;
 }
 
 .mypage-button {
   width: 130px;
-  height: 38px;
-  /* 조금 더 얇고 깔끔한 높이 */
-  border: none;
-  /* 기본 테두리 없애기 */
-  color: white;
-  /* 글자 색은 흰색 */
-  font-size: 14px;
-  /* 적당한 글자 크기 */
-  border-radius: 25px;
-  /* 버튼 모서리를 둥글게 */
-  cursor: pointer;
-  /* 클릭 가능한 포인터 */
-  transition: all 0.3s ease;
-  /* 부드러운 효과 */
-  text-align: center;
-  /* 텍스트 가운데 정렬 */
+  height: 38px;  /* 조금 더 얇고 깔끔한 높이 */
+  border: none;  /* 기본 테두리 없애기 */
+  color: white;  /* 글자 색은 흰색 */
+  font-size: 14px;  /* 적당한 글자 크기 */
+  border-radius: 5px;  /* 버튼 모서리를 둥글게 */
+  cursor: pointer;  /* 클릭 가능한 포인터 */
+  transition: all 0.3s ease;  /* 부드러운 효과 */
+  text-align: center;  /* 텍스트 가운데 정렬 */
 }
 
 .mypage-button:hover {
-  background-color: #357ab7;
-  /* hover 시 색상 변경 */
+  background-color: #357ab7;  /* hover 시 색상 변경 */
 }
 
 .mypage-button:focus {
-  outline: none;
-  /* 버튼에 포커스 시 기본 outline 제거 */
+  outline: none;  /* 버튼에 포커스 시 기본 outline 제거 */
 }
 
 .btn-mypost {
@@ -1867,39 +1943,103 @@ th {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 10px 0;
+}
+
+#my-match {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #sport-type-choice-bar,
 #crew-choice-bar {
+  width: 80%;
   display: flex;
   justify-content: center;
-  margin: 10px 0;
+  margin: 16px 0;
+}
+
+#my-match-box {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .choice-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 525px;
-  height: 70px;
-  border-radius: 20px;
-  background-color: #F3F4F6;
-  color: BLACK;
-  font-size: 20px;
-  text-decoration: none;
-  transition: all 0.2s ease;
+  font-size: 14px;
+  flex-grow: 1;
+  height: 42px;
+  font-weight: normal;
   border-style: none;
+  border-radius: 5px;
+  margin: 0 10px;
 }
 
-.choice-button.active {
+.card {
   display: flex;
   justify-content: center;
-  align-items: center;
-  width: 525px;
-  height: 70px;
-  border-radius: 20px;
-  background-color: #4B5AE4;
+}
+
+.card p {
+  text-align: center;
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.card a {
+  font-size: 14px;
+}
+
+#mate-cut {
+            /* 가운데 정렬을 위해 블록 요소로 변경 */
+            display: block;
+            width: 90%; /* 카드 너비에 맞춰 */
+            margin: 10px auto 0 auto; /* 중앙 정렬 */
+            padding: 8px; /* 버튼처럼 보이도록 패딩 추가 */
+            background-color: var(--accent);
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        #mate-cut:hover {
+            background-color: #e06056; /* hover 시 조금 더 어두운 빨간색 */
+            transform: translateY(-1px);
+        }
+
+/* 슬라이더 창 (이 영역 밖의 카드들은 숨겨짐) */
+#my-match-slider-window {
+  overflow: hidden;
+  width: 80%; /* 부모 컨테이너에 맞춰 설정 */
+}
+
+        /* 카드 컨테이너 (실제로 움직이는 영역) */
+#my-match-card-container {
+  display: flex;
+  transition: transform 0.4s ease-in-out; /* 부드러운 슬라이드 효과 */
+  gap: 30px; /* 카드 사이의 간격 */
+}
+
+/* 슬라이더 내부의 카드 */
+#my-match-card-container .card {
+  flex-shrink: 0; /* 카드가 찌그러지지 않도록 설정 */
+  width: 180px; /* 카드 너비 고정 (예시) */
+  /* display: none; -> JS에서 제어하므로 주석 처리 */
+}
+
+ /* 활성화된 필터 버튼 스타일 (예시) */
+.choice-button.active {
+  background-color: #4b5ae4; /* 활성화 시 색상 (예시) */
   color: white;
-  font-size: 20px;
-  text-decoration: none;
+}
+
+#cardImg {
+  width: 138px;
+  height: 138px;
 }

@@ -1,18 +1,23 @@
 package com.human.movemate.dao;
 
+import com.human.movemate.model.AddMate; // (AddMate 모델 재사용)
 import com.human.movemate.dto.MatchingDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
-@Repository                 // Spring Container에 Bean 객체 등록, 싱글톤 객체가 됨
-@RequiredArgsConstructor    // 생성자를 통한 의존성 주입을 하기 위해 사용
+@Repository
+@RequiredArgsConstructor // 생성자를 통한 의존성 주입을 하기 위해 사용
 @Slf4j                      // log 메세지 출력 지원하기 위한 lombok 기능
 public class MateDao {
     private final JdbcTemplate jdbc;    // JdbcTemplate을 의존성 주입 받기
+
 
     // 내가 보낸 신청 목록 (상대방=게시글 작성자 프로필 + 게시판 이름)
     public List<MatchingDto> findSentMatchings(Long userNo) {
@@ -66,6 +71,33 @@ public class MateDao {
                     rs.getString("postType")
             );
         });
-    }
 
-}
+
+    }
+    // DB 데이터를 AddMate 객체로 변환해주는 '번역기'
+    private final RowMapper<AddMate> mateRowMapper = new RowMapper<AddMate>() {
+        @Override
+        public AddMate mapRow(ResultSet rs, int rowNum) throws SQLException {
+            AddMate mate = new AddMate();
+            mate.setMateNo(rs.getLong("mate_no"));
+            mate.setUserNo(rs.getLong("user_no"));
+            mate.setMateType(rs.getString("mate_type"));
+            mate.setRegion(rs.getString("region"));
+            mate.setSportType(rs.getString("sport_type"));
+            mate.setMateName(rs.getString("mate_name"));
+            mate.setDescription(rs.getString("description"));
+            mate.setImageUrl(rs.getString("image_url"));
+            mate.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+            return mate;
+        }
+    };
+        // MATE 테이블의 모든 데이터를 조회하는 메서드
+        public List<AddMate> findAll () {
+            String sql = "SELECT * FROM MATE ORDER BY created_at DESC"; // 최신순 정렬
+            return jdbc.query(sql, mateRowMapper);
+        }
+
+
+        // (추후 상세보기를 위한 메서드도 추가할 수 있어요)
+        // public AddMate findById(Long mateNo) { ... }
+    }

@@ -2,6 +2,7 @@ package com.human.movemate.service.impl;
 
 
 import com.human.movemate.dao.MateDao;
+import com.human.movemate.model.AddMate;
 import com.human.movemate.dto.MatchingDto;
 import com.human.movemate.service.MateService;
 import lombok.RequiredArgsConstructor;
@@ -15,9 +16,14 @@ import java.util.List;
 @Slf4j
 public class MateServiceImpl implements MateService {
 
-    private final MateDao mateDao;
+    private final MateDao mateDao; // 창고지기(DAO)를 부름
 
     @Override
+    public List<AddMate> findAllMates() {
+        // DAO에게 모든 메이트 목록을 가져오라고 시킴
+        return mateDao.findAll();
+    }
+
     public List<MatchingDto> findReceivedApplications(Long userNo) {
         return mateDao.findReceivedMatchings(userNo);
     }

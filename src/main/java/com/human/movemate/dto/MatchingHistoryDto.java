@@ -11,9 +11,11 @@ public class MatchingHistoryDto {
     private Long applicantUserNo;
     private Long mateNo;
     private String mateType;
+    private String sportType;
     private String mateName;
     private LocalDateTime createdAt;
     private String opponentName;
     private String opponentUserId;
     private String opponentProfileImageUrl;
+    private String region;
 }
