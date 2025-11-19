@@ -21,5 +21,6 @@ public class AddMate {
     private LocalDateTime createdAt;
     private String authorId; // 작성자 ID (USERS.user_id) JOIN할거임
     private String authorProfileUrl; // 작성자 프로필 (USER_PROFILE.profile_image_url) JOIN할거임
+    private int currentMembers; // 인원수 변수
 }
 

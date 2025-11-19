@@ -280,19 +280,29 @@ public class AddMateController {
     }
 
 //    1:1 메이트 신청 민아
-    // AddMateController 안에 아래 메서드를 추가하세요
 
     // 메이트 신청하기 화면 이동
-    // 주소 예시: /addMate/apply/1 (1번 글에 신청하기)
-    @GetMapping("/apply/{mateNo}")
-    public String applyPage(@PathVariable Long mateNo, Model model) {
-        // 1. DB에서 해당 메이트 글 정보를 가져옴
+    // 1. 상세보기 페이지 (사진 1 - 카드 클릭 시 이동)
+    // 주소: /addMate/view/글번호
+    @GetMapping("/view/{mateNo}")
+    public String viewPage(@PathVariable Long mateNo, Model model) {
+        // DB에서 글 정보 가져오기
         AddMate mate = addMateService.getMateDetail(mateNo);
-
-        // 2. 화면에 전달
         model.addAttribute("mate", mate);
 
-        // 3. addmate 폴더 안의 html로 이동
+        // 상세보기 HTML 보여주기 (여기서 '메이트신청' 버튼 누르면 아래 applyPage로 이동)
+        return "addmate/add_mate_view";
+    }
+
+    // 2. 신청 폼 페이지 (사진 2 - 상세보기에서 신청 버튼 클릭 시 이동)
+    // 주소: /addMate/apply/글번호
+    @GetMapping("/apply/{mateNo}")
+    public String applyPage(@PathVariable Long mateNo, Model model) {
+        // DB에서 글 정보 가져오기 (신청 폼 상단에 정보 띄우기 위함)
+        AddMate mate = addMateService.getMateDetail(mateNo);
+        model.addAttribute("mate", mate);
+
+        // 신청 폼 HTML 보여주기
         return "addmate/add_mate_apply";
     }
 }
