@@ -51,16 +51,10 @@ public class MateController {
             userNo = 1L; // 임의 테스트 유저 번호
         }
 
-    private final MateService mateService; // 매니저(Service)를 부름
         log.info("mateHome 호출 - userNo: {}, type: {}", userNo, type);
 
-    // 손님이 "http://.../mates" 주소를 요청(GET)하면 이 메서드가 실행됨
-    @GetMapping("/mate")
-    public String showMateList(Model model) {
         List<MatchingDto> list;
 
-        // 1. 매니저에게 모든 메이트 목록을 가져오라고 시킴
-        List<AddMate> allMates = mateService.findAllMates();
         // ★★★★★ 핵심 수정 부분: 타입과 메서드 호출을 일치시킴 ★★★★★
         if ("sent".equals(type)) {
             // "sent" (보낸 신청) 요청 시 -> findSentApplications 호출
@@ -71,25 +65,15 @@ public class MateController {
         }
         // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 
-        // 2. 받은 목록을 '1:1 메이트'와 '그룹(크루) 메이트'로 분리
-        List<AddMate> soloMates = allMates.stream()
-                .filter(mate -> "SOLO".equals(mate.getMateType())) // AddMateController에서 "SOLO"로 저장함
-                .collect(Collectors.toList());
         // 1. List를 Map<PostType, List<DTO>> 형태로 그룹화
         // 이 로직은 문제가 없으며, DB에서 가져온 postType(board_name) 값으로 그룹화
         Map<String, List<MatchingDto>> groupedList = list.stream()
                 .collect(Collectors.groupingBy(MatchingDto::getPostType));
 
-        List<AddMate> crewMates = allMates.stream()
-                .filter(mate -> "CREW".equals(mate.getMateType())) // AddMateController에서 "CREW"로 저장함
-                .collect(Collectors.toList());
         model.addAttribute("groupedList", groupedList);
         model.addAttribute("type", type);
         model.addAttribute("userNo", userNo);
 
-        // 3. '쟁반(Model)'에 담아서 HTML 파일에게 전달
-        model.addAttribute("soloMates", soloMates);
-        model.addAttribute("crewMates", crewMates);
         // DTO 로그는 디버깅에 매우 유용합니다.
         if (list != null && !list.isEmpty()) {
             log.info("--- DTO List Content Start (Size: {}) ---", list.size());
@@ -101,8 +85,7 @@ public class MateController {
             log.info("조회된 Matching 목록이 비어 있습니다. userNo: {}", userNo);
         }
 
-        // 4. "templates/mate/mate.html" 파일을 화면에 보여줌
-        return "mate/mate";
         return "post/mateManage";
     }
 }
+

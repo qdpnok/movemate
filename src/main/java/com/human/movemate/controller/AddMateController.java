@@ -3,6 +3,7 @@ package com.human.movemate.controller;
 import com.human.movemate.dto.AddMateFormDto;
 import com.human.movemate.model.AddMate;
 import com.human.movemate.service.AddMateService;
+import com.human.movemate.service.MateService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 // '메이트 모집' (1:1, 그룹) 관련 컨트롤러
 @Controller
 @RequiredArgsConstructor
@@ -22,6 +26,31 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/addMate")
 public class AddMateController {
     private final AddMateService addMateService;
+    private final MateService mateService;
+
+    // 손님이 "http://.../mates" 주소를 요청(GET)하면 이 메서드가 실행됨
+    @GetMapping
+    public String showMateList(Model model) {
+
+        // 1. 매니저에게 모든 메이트 목록을 가져오라고 시킴
+        List<AddMate> allMates = mateService.findAllMates();
+
+        // 2. 받은 목록을 '1:1 메이트'와 '그룹(크루) 메이트'로 분리
+        List<AddMate> soloMates = allMates.stream()
+                .filter(mate -> "SOLO".equals(mate.getMateType())) // AddMateController에서 "SOLO"로 저장함
+                .collect(Collectors.toList());
+
+        List<AddMate> crewMates = allMates.stream()
+                .filter(mate -> "CREW".equals(mate.getMateType())) // AddMateController에서 "CREW"로 저장함
+                .collect(Collectors.toList());
+
+        // 3. '쟁반(Model)'에 담아서 HTML 파일에게 전달
+        model.addAttribute("soloMates", soloMates);
+        model.addAttribute("crewMates", crewMates);
+
+        // 4. "templates/mate/mate.html" 파일을 화면에 보여줌
+        return "mate/mate";
+    }
 
     // 1:1 메이트 생성 폼 페이지
     // GET/addMate/solo

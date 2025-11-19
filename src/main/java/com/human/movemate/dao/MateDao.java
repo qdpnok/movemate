@@ -13,9 +13,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-@RequiredArgsConstructor
-@Repository                 // Spring Container에 Bean 객체 등록, 싱글톤 객체가 됨
-@RequiredArgsConstructor    // 생성자를 통한 의존성 주입을 하기 위해 사용
+@RequiredArgsConstructor // 생성자를 통한 의존성 주입을 하기 위해 사용
 @Slf4j                      // log 메세지 출력 지원하기 위한 lombok 기능
 public class MateDao {
     private final JdbcTemplate jdbc;    // JdbcTemplate을 의존성 주입 받기
@@ -34,23 +32,6 @@ public class MateDao {
                 "JOIN USER_PROFILE T3 ON T2.USER_NO = T3.USER_NO " +
                 "WHERE T1.APPLICANT_USER_NO = ?";
 
-    // DB 데이터를 AddMate 객체로 변환해주는 '번역기'
-    private final RowMapper<AddMate> mateRowMapper = new RowMapper<AddMate>() {
-        @Override
-        public AddMate mapRow(ResultSet rs, int rowNum) throws SQLException {
-            AddMate mate = new AddMate();
-            mate.setMateNo(rs.getLong("mate_no"));
-            mate.setUserNo(rs.getLong("user_no"));
-            mate.setMateType(rs.getString("mate_type"));
-            mate.setRegion(rs.getString("region"));
-            mate.setSportType(rs.getString("sport_type"));
-            mate.setMateName(rs.getString("mate_name"));
-            mate.setDescription(rs.getString("description"));
-            mate.setImageUrl(rs.getString("image_url"));
-            mate.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
-            return mate;
-        }
-    };
         return jdbc.query(sql, new Object[]{userNo}, (rs, rowNum) -> {
             return new MatchingDto(
                     null,
@@ -90,12 +71,33 @@ public class MateDao {
                     rs.getString("postType")
             );
         });
-    // MATE 테이블의 모든 데이터를 조회하는 메서드
-    public List<AddMate> findAll() {
-        String sql = "SELECT * FROM MATE ORDER BY created_at DESC"; // 최신순 정렬
-        return jdbc.query(sql, mateRowMapper);
-    }
 
-    // (추후 상세보기를 위한 메서드도 추가할 수 있어요)
-    // public AddMate findById(Long mateNo) { ... }
-}
+
+    }
+    // DB 데이터를 AddMate 객체로 변환해주는 '번역기'
+    private final RowMapper<AddMate> mateRowMapper = new RowMapper<AddMate>() {
+        @Override
+        public AddMate mapRow(ResultSet rs, int rowNum) throws SQLException {
+            AddMate mate = new AddMate();
+            mate.setMateNo(rs.getLong("mate_no"));
+            mate.setUserNo(rs.getLong("user_no"));
+            mate.setMateType(rs.getString("mate_type"));
+            mate.setRegion(rs.getString("region"));
+            mate.setSportType(rs.getString("sport_type"));
+            mate.setMateName(rs.getString("mate_name"));
+            mate.setDescription(rs.getString("description"));
+            mate.setImageUrl(rs.getString("image_url"));
+            mate.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+            return mate;
+        }
+    };
+        // MATE 테이블의 모든 데이터를 조회하는 메서드
+        public List<AddMate> findAll () {
+            String sql = "SELECT * FROM MATE ORDER BY created_at DESC"; // 최신순 정렬
+            return jdbc.query(sql, mateRowMapper);
+        }
+
+
+        // (추후 상세보기를 위한 메서드도 추가할 수 있어요)
+        // public AddMate findById(Long mateNo) { ... }
+    }

@@ -9,7 +9,6 @@ import java.util.List;
 public interface MateService {
     List<MatchingDto> findReceivedApplications(Long userNo); // 받은 신청자
     List<MatchingDto> findSentApplications(Long userNo);     // 보낸 신청자
-}
 
     // 모든 메이트 목록을 가져오는 기능
     List<AddMate> findAllMates();
