@@ -4,7 +4,7 @@
   width: 90%;
   max-width: 1000px;
   /* ⭐️⭐️ [핵심] 상하 40px, 좌우 auto(자동) -> 화면 중앙 정렬 ⭐️⭐️ */
-  margin: 40px 0;
+  margin: 0 auto;
   padding: 20px;
   background-color: #fff;
   border-radius: 10px;
