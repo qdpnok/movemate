@@ -7,6 +7,7 @@
 <head>
     <meta charset="UTF-8" />
     <title>my page</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 </head>
 <body>
 <div layout:fragment="content">
@@ -46,161 +47,186 @@
                         <button class="choice-button" data-filter-group="type" data-filter="crew">메이트 크루</button>
                     </div>
 
-<!--                    <div id="my-match-box">-->
-<!--                        <button class="arrow-btn" id="prev-btn">&#8592;</button>-->
+                    <!-- 데이터 없음 메시지 -->
+                    <div id="no-match-data">
+                        <p>현재 선택된 필터에 해당하는 매칭 내역이 없습니다.</p>
+                    </div>
 
-<!--                        <div id="my-match-slider-window">-->
-<!--                            <div id="my-match-card-container">-->
-<!--                                <div class="card" th:each="match : ${matchList}"-->
-<!--                                th:data-sport-type="${match.sportType}"-->
-<!--                                th:data-match-type="${match.mateType}">-->
-<!--                                <img id="cardImg" th:src="${match.opponentProfileImageUrl} != null ? @{'/files/'+${match.opponentProfileImageUrl}} : @{'/images/profile.png'}"/>-->
-<!--                                <p th:text="${match.opponentName}"></p>-->
-<!--                                <p th:text="${match.region}"></p>-->
-<!--                    -->
-<!--                                <a id="mate-cut" href="#">메이트 해지</a>-->
-<!--                            </div>-->
+                    <!-- Swiper 구조 시작 -->
+                    <div class="swiper mySwiper">
+                        <div class="swiper-wrapper" id="swiper-wrapper-content">
+                            <!-- 카드 리스트 (JS로 필터링되어 들어감) -->
+                            <!-- th:each는 데이터를 JS로 넘기기 위한 임시 컨테이너(template) 역할만 하고,
+                                 실제 렌더링은 JS가 담당하도록 구조를 변경합니다. -->
+                            <div class="swiper-slide card-item" th:each="match : ${matchList}"
+                                 th:data-sport-type="${match.sportType}"
+                                 th:data-match-type="${match.mateType}"
+                                 style="display:none;"> <!-- 초기엔 숨김 처리 (JS가 복사해서 사용) -->
 
-<!--                            </div>-->
-<!--                        </div>-->
+                                <a th:href="@{/mates/{mateId}(mateId=${match.mateNo})}" class="card-title-link">
+                                    <img th:src="${match.opponentProfileImageUrl} != null ? @{'/files/'+${match.opponentProfileImageUrl}} : @{'/images/profile.png'}"/>
+                                </a>
+                                <p th:text="${match.opponentName}"></p>
+                                <p th:text="${match.region}"></p>
 
-<!--                        <button class="arrow-btn" id="next-btn">&#8594;</button>-->
-<!--                    </div>-->
+                                <a id="mate-cut" th:href="@{/mates/terminate(mateNo=${match.mateNo})}"
+                                   onclick="return confirm('해당 메이트와의 매칭을 정말로 해지하시겠습니까?');">메이트 해지</a>
+                            </div>
+                        </div>
+
+                        <!-- 네비게이션 버튼 -->
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                        <!-- 페이지네이션 (점) -->
+                        <div class="swiper-pagination"></div>
+                    </div>
+                    <!-- Swiper 구조 끝 -->
                 </div>
 
             </div>
 
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
     <script>
         const deleteButton = document.getElementById('delete-button');
-      const deleteForm = document.getElementById('delete-form');
+        const deleteForm = document.getElementById('delete-form');
 
-      deleteButton.addEventListener('click', () => {
-        // 사용자에게 최종적으로 탈퇴 여부를 확인
-        if (confirm('정말로 회원탈퇴를 하시겠습니까? 모든 정보가 삭제 처리되며 복구가 불가능할 수 있습니다.')) {
-            // 확인을 누르면 숨겨진 폼을 전송 (POST 요청)
-            deleteForm.submit();
-        }
-    });
+        deleteButton.addEventListener('click', () => {
+            if (confirm('정말로 회원탈퇴를 하시겠습니까? 모든 정보가 삭제 처리되며 복구가 불가능할 수 있습니다.')) {
+                deleteForm.submit();
+            }
+        });
+
         document.addEventListener('DOMContentLoaded', () => {
+            // 1. 초기 데이터 확보 (Thymeleaf로 렌더링된 원본 카드들을 배열로 저장)
+            // display:none 처리된 원본 요소들을 복제해서 사용합니다.
+            const originalCards = Array.from(document.querySelectorAll('.card-item'));
+            const swiperWrapper = document.getElementById('swiper-wrapper-content');
+            const noDataMessage = document.getElementById('no-match-data');
+            const swiperContainer = document.querySelector('.mySwiper');
 
-            // --- 요소 선택 ---
-        const sliderContainer = document.getElementById('my-match-card-container');
-        const allCards = sliderContainer.querySelectorAll('.card');
-        const prevBtn = document.getElementById('prev-btn');
-        const nextBtn = document.getElementById('next-btn');
-        const filterButtons = document.querySelectorAll('.choice-button[data-filter-group]');
+            let swiperInstance = null;
 
-        // --- 상태 변수 ---
-        let currentFilters = {
-            sport: 'running', // HTML 버튼의 data-filter 값과 일치
-            type: '1v1'       // HTML 버튼의 data-filter 값과 일치
-        };
-        let sliderIndex = 0;
+            // 2. 필터 상태
+            let currentFilters = {
+                sport: 'running',
+                type: '1v1'
+            };
 
-        // --- 함수 정의 ---
-
-        /**
-         * 1. 필터 버튼 클릭 시 UI 업데이트 및 필터 상태 변경 (handleFilterClick 함수는 수정 불필요)
-         */
-        function handleFilterClick(event) {
-            const button = event.target;
-            const group = button.dataset.filterGroup;
-            const filterValue = button.dataset.filter;
-
-            currentFilters[group] = filterValue;
-
-            document.querySelectorAll(`.choice-button[data-filter-group="${group}"]`).forEach(btn => {
-                btn.classList.remove('active');
-            });
-
-            button.classList.add('active');
-            applyFiltersAndResetSlider();
-        }
-
-        /**
-         * 2. 현재 필터(currentFilters)에 맞춰 카드를 보여주거나 숨김 (🚨 이 부분이 가장 중요합니다)
-         */
-        function applyFiltersAndResetSlider() {
-            sliderIndex = 0;
-            let visibleCardCount = 0;
-
-            allCards.forEach(card => {
-                // 1) 종목 필터링: HTML의 data-sport-type 속성 사용
-                const sportData = card.dataset.sportType.toLowerCase();
-                const cardSportType = sportData.includes('러닝') || sportData.includes('running') ? 'running' : 
-                      sportData.includes('웨이트') || sportData.includes('weight') ? 'weight' : 'unknown';
-
-                // 2) 매칭 타입 필터링: HTML의 data-match-type 속성 사용 (MATE 테이블의 '1:1' 또는 'GROUP' 값에 따라)
-                const cardMatchType = card.dataset.matchType.toLowerCase().includes('group') ? 'crew' : '1v1'; 
-
-                // 필터 조건 확인
-                const sportMatch = currentFilters.sport === cardSportType;
-                const typeMatch = currentFilters.type === cardMatchType;
-
-                // 두 필터가 모두 일치하면 보여주고, 아니면 숨김
-                if (sportMatch && typeMatch) {
-                    card.style.display = 'block';
-                    visibleCardCount++;
-                } else {
-                    card.style.display = 'none';
+            // 3. Swiper 초기화 함수
+            function initSwiper() {
+                if (swiperInstance) {
+                    swiperInstance.destroy(true, true); // 기존 인스턴스 파괴
                 }
+
+                swiperInstance = new Swiper(".mySwiper", {
+                    slidesPerView: 3,     // 한 번에 3개 보이기
+                    slidesPerGroup: 3,    // 그룹 단위로 이동 (페이지 넘김 효과)
+                    spaceBetween: 30,     // 카드 사이 간격 30px
+
+                    observer: true,
+                    observeParents: true,
+                    
+                    loop: false,          // 반복 안함
+                    autoplay: false,      // 자동 넘김 X (요구사항)
+                    navigation: {
+                        nextEl: ".swiper-button-next",
+                        prevEl: ".swiper-button-prev",
+                    },
+                    pagination: {
+                        el: ".swiper-pagination",
+                        clickable: true,
+                    },
+                    // 반응형 설정 (모바일 대응)
+                    breakpoints: {
+                        320: {
+                            slidesPerView: 1,
+                            slidesPerGroup: 1,
+                            spaceBetween: 10
+                        },
+                        640: {
+                            slidesPerView: 2,
+                            slidesPerGroup: 2,
+                            spaceBetween: 20
+                        },
+                        1024: {
+                            slidesPerView: 3,
+                            slidesPerGroup: 3,
+                            spaceBetween: 30
+                        }
+                    }
+                });
+            }
+
+            // 4. 필터 적용 및 렌더링 함수
+            function filterAndRender() {
+                swiperWrapper.innerHTML = ''; // 기존 슬라이드 비우기
+                let visibleCount = 0;
+
+                originalCards.forEach(card => {
+                    // 데이터 속성 가져오기
+                    const rawSportType = card.dataset.sportType ? card.dataset.sportType.toLowerCase() : '';
+                    const rawMatchType = card.dataset.matchType ? card.dataset.matchType.toLowerCase() : '';
+
+                    // 매핑 로직
+                    const cardSportType = (rawSportType.includes('러닝') || rawSportType.includes('running')) ? 'running' :
+                                          (rawSportType.includes('웨이트') || rawSportType.includes('weight')) ? 'weight' : 'unknown';
+
+                    const cardMatchType = (rawMatchType.includes('group') || rawMatchType.includes('크루')) ? 'crew' : '1v1';
+
+                    // 필터 비교
+                    const sportMatch = currentFilters.sport === cardSportType;
+                    const typeMatch = currentFilters.type === cardMatchType;
+
+                    if (sportMatch && typeMatch) {
+                        // 조건에 맞으면 요소를 복제해서 Swiper Wrapper에 추가
+                        const clonedCard = card.cloneNode(true);
+                        clonedCard.style.display = 'flex'; // 숨김 해제 (flex로 변경하여 내부 정렬 유지)
+                        // swiper-slide 클래스가 있어야 작동함 (이미 class="swiper-slide card-item" 상태)
+                        swiperWrapper.appendChild(clonedCard);
+                        visibleCount++;
+                    }
+                });
+
+                // 데이터 유무에 따른 UI 처리
+                if (visibleCount === 0) {
+                    noDataMessage.style.display = 'block';
+                    swiperContainer.style.display = 'none';
+                } else {
+                    noDataMessage.style.display = 'none';
+                    swiperContainer.style.display = 'block';
+                    // 카드가 추가된 후 Swiper 초기화 (DOM 변경 후 적용)
+                    initSwiper();
+                }
+            }
+
+            // 5. 버튼 이벤트 리스너
+            const filterButtons = document.querySelectorAll('.choice-button[data-filter-group]');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const target = event.target;
+                    const group = target.dataset.filterGroup;
+                    const filterValue = target.dataset.filter;
+
+                    // 상태 업데이트
+                    currentFilters[group] = filterValue;
+
+                    // 버튼 스타일 업데이트
+                    document.querySelectorAll(`.choice-button[data-filter-group="${group}"]`).forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    target.classList.add('active');
+
+                    // 필터링 및 재렌더링 실행
+                    filterAndRender();
+                });
             });
 
-            // 슬라이더 위치 업데이트 (리셋)
-            updateSliderPosition(visibleCardCount);
-        }
-
-        /**
-         * 3. 슬라이더 위치(transform)를 업데이트 (수정 불필요)
-         */
-        function updateSliderPosition(visibleCardCount) {
-            if (visibleCardCount === 0 || allCards.length === 0) {
-                sliderContainer.style.transform = 'translateX(0px)';
-                prevBtn.disabled = true;
-                nextBtn.disabled = true;
-                return;
-            }
-
-            const cardWidth = 180;
-            const cardGap = 30;
-            const cardMoveDistance = cardWidth + cardGap;
-            const moveX = sliderIndex * cardMoveDistance;
-            sliderContainer.style.transform = `translateX(-${moveX}px)`;
-
-            prevBtn.disabled = sliderIndex === 0;
-
-            const visibleInWindow = 3;
-            nextBtn.disabled = sliderIndex >= (visibleCardCount - visibleInWindow);
-        }
-
-        // --- 이벤트 리스너 연결 (수정 불필요) ---
-        filterButtons.forEach(button => {
-            button.addEventListener('click', handleFilterClick);
+            // --- 초기 실행 ---
+            filterAndRender();
         });
-
-        prevBtn.addEventListener('click', () => {
-            if (sliderIndex > 0) {
-                sliderIndex--;
-                const visibleCount = sliderContainer.querySelectorAll('.card[style*="display: block"]').length;
-                updateSliderPosition(visibleCount);
-            }
-        });
-
-        nextBtn.addEventListener('click', () => {
-            const visibleCount = sliderContainer.querySelectorAll('.card[style*="display: block"]').length;
-            const visibleInWindow = 3;
-            if (sliderIndex < (visibleCount - visibleInWindow)) {
-                sliderIndex++;
-                updateSliderPosition(visibleCount);
-            }
-        });
-
-        // --- 초기 실행 ---
-        applyFiltersAndResetSlider();
-    });
-
     </script>
 </div>
 </body>

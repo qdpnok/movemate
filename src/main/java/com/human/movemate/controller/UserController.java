@@ -59,10 +59,10 @@ public class UserController {
         User user = (User) session.getAttribute("loginUser");
         if(user == null) return "redirect:/";
         model.addAttribute("userInfo", userService.getByNo(user.getUserNo()));
-//        List<MatchingHistoryDto> dto = matchingService.findHistoryByNo(user.getUserNo());
-//
-//        log.info("가져온 정보: {}", dto);
-//        model.addAttribute("matchList", dto);
+        List<MatchingHistoryDto> dto = matchingService.findHistoryByNo(user.getUserNo());
+
+        log.info("가져온 정보: {}", dto);
+        model.addAttribute("matchList", dto);
         return "users/mypage";
     }
 
