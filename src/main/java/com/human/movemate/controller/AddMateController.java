@@ -2,6 +2,7 @@ package com.human.movemate.controller;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import com.human.movemate.dto.AddMateFormDto;
+import com.human.movemate.dto.MateApplyFormDto;
 import com.human.movemate.dto.MateMemberDto;
 import com.human.movemate.model.AddMate;
 import com.human.movemate.model.User;
@@ -301,6 +302,7 @@ public class AddMateController {
         // DB에서 글 정보 가져오기 (신청 폼 상단에 정보 띄우기 위함)
         AddMate mate = addMateService.getMateDetail(mateNo);
         model.addAttribute("mate", mate);
+        model.addAttribute("mateApplyForm", new MateApplyFormDto());
 
         // 신청 폼 HTML 보여주기
         return "addmate/add_mate_apply";
