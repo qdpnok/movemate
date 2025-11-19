@@ -11,7 +11,7 @@ public interface AddMateService {
     AddMate findById(Long mateNo); // 게시글 상세 조회
     void updateMate(Long mateNo, AddMateFormDto addMateFormDto, Long userNo); // 게시글 수정
     void deleteMate(Long mateNo, Long userNo); // 삭제
-    List<AddMate> findMyCrews(Long userNo, String sportType); // 내가 만든 크루 목록 조회
+    List<AddMate> findMyMates(Long userNo, String mateType, String sportType); // 내가 만든 크루 목록 조회
 
 
 }

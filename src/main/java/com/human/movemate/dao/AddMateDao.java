@@ -72,6 +72,8 @@ public class AddMateDao {
         }
     }
 
+
+
     // 수정
     public void update(AddMate mate) {
         String sql;
