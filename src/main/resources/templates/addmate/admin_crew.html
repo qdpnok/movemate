@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+    layout:decorate="~{/layout/main}">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <title>Title</title>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <div class="view-container">
+            <h1 class="view-mate-title">크루원 관리</h1>
+            <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+
+            <div class="crew-member-list">
+
+                <div class="empty-message" th:if="${#lists.isEmpty(members)}">
+                    <p>가입된 크루원이 없습니다.</p>
+                </div>
+
+                <div class="crew-member-card" th:each="member : ${members}">
+                    <img th:src="${member.userProfileUrl == null} ? @{/images/default_profile.png} : @{'/files/' + ${member.userProfileUrl}}"
+                        class="member-img" alt="프로필">
+
+                    <div class="member-info">
+                        <p><strong>크루원 : </strong> <span th:text="${member.userName}">이름</span></p>
+                        <p><strong>지역 : </strong> <span th:text="${member.userRegion}">지역</span></p>
+                        <p><strong>크루 가입일 : </strong> <span
+                                th:text="${#temporals.format(member.joinedAt, 'yy-MM-dd')}">날짜</span></p>
+                        <p><strong>크루 가입 기간 : </strong> <span>D+...</span></p>
+                    </div>
+
+                    <div class="member-action">
+                        <a th:if="${member.userNo != session.loginUser.userNo}"
+                            th:href="@{/addMate/kick/{mateId}/{memId}(mateId=${mate.mateNo}, memId=${member.memberNo})}"
+                            class="btn-kick" onclick="return confirm('이 크루원을 강퇴하시겠습니까?');">
+                            크루원 강퇴
+                        </a>
+
+                        <span th:if="${member.userNo == session.loginUser.userNo}"
+                            style="color:#4B5AE4; font-weight:bold;">
+                            Crew Leader
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <a th:href="@{/addMate/my/crew}" class="btn-back">목록으로</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
