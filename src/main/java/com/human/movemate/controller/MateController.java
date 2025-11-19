@@ -88,4 +88,3 @@ public class MateController {
         return "post/mateManage";
     }
 }
-

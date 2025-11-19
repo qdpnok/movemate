@@ -46,26 +46,26 @@
                         <button class="choice-button" data-filter-group="type" data-filter="crew">메이트 크루</button>
                     </div>
 
-                    <div id="my-match-box">
-                        <button class="arrow-btn" id="prev-btn">&#8592;</button>
+<!--                    <div id="my-match-box">-->
+<!--                        <button class="arrow-btn" id="prev-btn">&#8592;</button>-->
 
-                        <div id="my-match-slider-window">
-                            <div id="my-match-card-container">
-                                <div class="card" th:each="match : ${matchList}"
-                                th:data-sport-type="${match.sportType}"
-                                th:data-match-type="${match.mateType}">
-                                <img id="cardImg" th:src="${match.opponentProfileImageUrl} != null ? @{'/files/'+${match.opponentProfileImageUrl}} : @{'/images/profile.png'}"/>
-                                <p th:text="${match.opponentName}"></p>
-                                <p th:text="${match.region}"></p>
-                    
-                                <a id="mate-cut" href="#">메이트 해지</a>
-                            </div>
+<!--                        <div id="my-match-slider-window">-->
+<!--                            <div id="my-match-card-container">-->
+<!--                                <div class="card" th:each="match : ${matchList}"-->
+<!--                                th:data-sport-type="${match.sportType}"-->
+<!--                                th:data-match-type="${match.mateType}">-->
+<!--                                <img id="cardImg" th:src="${match.opponentProfileImageUrl} != null ? @{'/files/'+${match.opponentProfileImageUrl}} : @{'/images/profile.png'}"/>-->
+<!--                                <p th:text="${match.opponentName}"></p>-->
+<!--                                <p th:text="${match.region}"></p>-->
+<!--                    -->
+<!--                                <a id="mate-cut" href="#">메이트 해지</a>-->
+<!--                            </div>-->
 
-                            </div>
-                        </div>
+<!--                            </div>-->
+<!--                        </div>-->
 
-                        <button class="arrow-btn" id="next-btn">&#8594;</button>
-                    </div>
+<!--                        <button class="arrow-btn" id="next-btn">&#8594;</button>-->
+<!--                    </div>-->
                 </div>
 
             </div>
