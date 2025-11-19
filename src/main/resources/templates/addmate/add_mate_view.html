@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.w3.org/1999/xhtml"
+  layout:decorate="~{/layout/main}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>메이트 상세보기</title>
+    <link rel="stylesheet" th:href="@{/css/mate-apply.css}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <div layout:fragment="content">
+      <div class="detail-container">
+        <h2 class="detail-title">상세보기</h2>
+
+        <div class="detail-card">
+          <div class="detail-image-area">
+            <img
+              th:if="${mate.imageUrl != null}"
+              th:src="@{/files/{url}(url=${mate.imageUrl})}"
+              alt="메이트 사진"
+            />
+            <div th:if="${mate.imageUrl == null}" class="default-detail-img">
+              <i
+                th:class="${mate.mateType == 'CREW' ? 'fa-solid fa-users' : 'fa-solid fa-user'}"
+              ></i>
+            </div>
+          </div>
+
+          <div class="detail-info-area">
+            <div class="info-row">
+              <span
+                class="label"
+                th:text="${mate.mateType == 'CREW' ? '크루명 :' : '메이트명 :'}"
+                >메이트명 :</span
+              >
+              <span class="value" th:text="${mate.mateName}"></span>
+            </div>
+            <div class="info-row">
+              <span class="label">지역 :</span>
+              <span class="value" th:text="${mate.region}"></span>
+            </div>
+            <div class="info-row">
+              <span class="label">종목 :</span>
+              <span class="value" th:text="${mate.sportType}"></span>
+            </div>
+            <div class="info-row description-row">
+              <span
+                class="label"
+                th:text="${mate.mateType == 'CREW' ? '모임 설명 :' : '메이트설명 :'}"
+                >메이트설명 :</span
+              >
+              <span
+                class="value description"
+                th:text="${mate.description}"
+              ></span>
+            </div>
+
+            <div
+              th:if="${mate.mateType == 'CREW'}"
+              class="crew-members-display"
+            >
+              <i class="fa-solid fa-users"></i>
+              <span th:text="|${mate.currentMembers} / 10|"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-btn-area">
+          <a
+            th:href="@{/addMate/apply/{mateNo}(mateNo=${mate.mateNo})}"
+            class="btn-apply blue-btn"
+            style="
+              text-decoration: none;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            "
+          >
+            메이트신청
+          </a>
+          <button
+            type="button"
+            class="btn-apply coral-btn"
+            onclick="history.back()"
+          >
+            취소
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
