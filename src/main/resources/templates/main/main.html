@@ -44,31 +44,34 @@
           <div class="sec_runningcrew">
             <div class="sec_name">
               <p>🏃‍♂️🏃‍♀️ 요즘 인기있는 러닝크루 TOP 3</p>
-            </div class="top-3-crew">
-              <a
-                th:each="crew : ${top3Crew}"
-                class="mate-card crew"
-                th:href="@{/addMate/view/{no}(no=${crew.mateNo})}"
-                style="text-decoration: none; color: inherit; display: block"
-              >
-                  <div class="mate-card-image">
-                      <img th:src="@{/images/members.png}" alt="크루 프로필" />
-                  </div>
+            </div>
+              <div  class="top-3-crew">
+                  <a
+                          th:each="crew : ${top3Crew}"
+                          class="mate-card crew"
+                          th:href="@{/addMate/view/{no}(no=${crew.mateNo})}"
+                          style="text-decoration: none; color: inherit; display: block"
+                  >
+                      <div class="mate-card-image">
+                          <img th:src="@{/images/members.png}" alt="크루 프로필" />
+                      </div>
 
-                  <div class="mate-card-info">
-                      <p class="mate-name" th:text="${crew.mateName}">메이트명</p>
-                      <p class="mate-region">
-                          <i class="fa-solid fa-location-dot"></i>
-                          <span th:text="${crew.region}">지역</span>
-                      </p>
-                      <p class="mate-count">
-                          <i class="fa-solid fa-users"></i>
-                          <span
-                          ><span th:text="${crew.currentMembers}">1</span>/10</span
-                          >
-                      </p>
-                  </div>
-              </a>
+                      <div class="mate-card-info">
+                          <p class="mate-name" th:text="${crew.mateName}">메이트명</p>
+                          <p class="mate-region">
+                              <i class="fa-solid fa-location-dot"></i>
+                              <span th:text="${crew.region}">지역</span>
+                          </p>
+                          <p class="mate-count">
+                              <i class="fa-solid fa-users"></i>
+                              <span
+                              ><span th:text="${crew.currentMembers}">1</span>/10</span
+                              >
+                          </p>
+                      </div>
+                  </a>
+              </div>
+
           </div>
           <div class="sec_search">
             <div class="sec_name">
