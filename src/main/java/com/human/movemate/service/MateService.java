@@ -2,6 +2,7 @@ package com.human.movemate.service;
 
 import com.human.movemate.model.AddMate;
 import com.human.movemate.dto.MatchingDto;
+import com.human.movemate.model.Post;
 import com.human.movemate.model.UserProfile;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface MateService {
 
     // (추후 상세보기를 위한 기능도 추가할 수 있어요)
     // AddMate findMateById(Long mateNo);
+
+    List<AddMate> findTop3Crew();
 }

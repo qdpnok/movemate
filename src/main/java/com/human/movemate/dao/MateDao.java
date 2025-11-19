@@ -2,8 +2,11 @@ package com.human.movemate.dao;
 
 import com.human.movemate.model.AddMate; // (AddMate 모델 재사용)
 import com.human.movemate.dto.MatchingDto;
+import com.human.movemate.model.Post;
+import com.human.movemate.model.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.intellij.lang.annotations.Language;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -74,6 +77,22 @@ public class MateDao {
 
 
     }
+
+    // 상위 게시글 3개만 조회하기 - 크루
+    public List<AddMate> findTop3Crew() {
+        @Language("SQL")
+        String sql = """
+        SELECT *
+        FROM (SELECT *
+              FROM MATE
+              WHERE mate_type = 'CREW'
+              ORDER BY current_members DESC, created_at ASC)
+        WHERE rownum <= 3
+        """;
+
+        return jdbc.query(sql, mateRowMapper);
+    }
+
     // DB 데이터를 AddMate 객체로 변환해주는 '번역기'
     private final RowMapper<AddMate> mateRowMapper = new RowMapper<AddMate>() {
         @Override
@@ -101,4 +120,5 @@ public class MateDao {
 
         // (추후 상세보기를 위한 메서드도 추가할 수 있어요)
         // public AddMate findById(Long mateNo) { ... }
-    }
+
+}
