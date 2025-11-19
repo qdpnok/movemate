@@ -34,8 +34,11 @@
         </button>
       </div>
 
+      <!-- 글 생성 버튼 -->
+      <a th:href="@{/addMate/crew}" class="mate-create-button">크루 만들기</a>
       <div class="mate-section active" id="solo-section">
         <h2 class="mate-section-title">1:1 러닝 메이트</h2>
+
 
         <div class="mate-grid">
           <a th:each="mate : ${soloMates}" class="mate-card solo"
@@ -96,7 +99,7 @@
           <p>아직 크루가 없습니다.</p>
         </div>
 
-        <a th:href="@{/addMate/crew}" class="mate-create-button">크루 만들기</a>
+
       </div>
     </div>
 
