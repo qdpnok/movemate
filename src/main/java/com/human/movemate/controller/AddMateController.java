@@ -276,8 +276,7 @@ public class AddMateController {
             log.error("메이트 삭제 실패: {}", e.getMessage());
             redirectAttributes.addFlashAttribute("errorMessage", "삭제에 실패했습니다: " + e.getMessage());
         }
-        // (임시) 삭제 후 메인으로 (목록 페이지 완성 시 그곳으로)
-        return "redirect:/";
+        return "redirect:/addMate/" + mateNo;
     }
 
 //    1:1 메이트 신청 민아
