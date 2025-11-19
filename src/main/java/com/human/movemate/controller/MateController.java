@@ -1,5 +1,6 @@
 package com.human.movemate.controller;
 
+import com.human.movemate.model.AddMate;
 import com.human.movemate.dto.MatchingDto;
 import com.human.movemate.service.MateService;
 import lombok.RequiredArgsConstructor;
@@ -87,3 +88,4 @@ public class MateController {
         return "post/mateManage";
     }
 }
+

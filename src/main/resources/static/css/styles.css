@@ -41,6 +41,11 @@ body {
   align-items: center;
 }
 
+#login-logo {
+  width: 180px;
+  height: 180px;
+}
+
 /* * * * * * main header style * * * * * */
 #main-header {
   width: 100vw;
@@ -245,12 +250,12 @@ footer {
   padding: 0px 0px 30px 0px;
 }
 
-.foot-box>a {
+.foot-box > a {
   margin-right: 10px;
   font-size: 10px;
 }
 
-.foot-info>p {
+.foot-info > p {
   font-size: 10px;
   margin: 16px 0px;
 }
@@ -263,12 +268,12 @@ footer {
   margin: 0px 50px;
 }
 
-.foot-cs>h1 {
+.foot-cs > h1 {
   font-size: 14px;
   font-weight: bold;
 }
 
-.foot-cs>h2 {
+.foot-cs > h2 {
   font-size: 14px;
 }
 
@@ -303,7 +308,7 @@ footer {
   padding: 0px 0px 50px 0px;
 }
 
-#login-container>h1 {
+#login-container > h1 {
   font-weight: bold;
   margin: 20px 0;
   width: 100px;
@@ -447,7 +452,7 @@ footer {
   flex-direction: column;
 }
 
-#signup-box-pace>p {
+#signup-box-pace > p {
   margin-left: 10px;
   font-size: 14px;
   font-weight: bold;
@@ -713,7 +718,7 @@ hamburgerButton.addEventListener('click', () => {
 .btn-write {
   background-color: #4B5AE4;
   color: white;
-  border-radius: 8cqmax;
+  border-radius: 5px;
   font-weight: normal;
   font-size: 15px;
   text-decoration: none;
@@ -983,7 +988,6 @@ hamburgerButton.addEventListener('click', () => {
   margin: 0px auto;
   padding: 20px;
 }
-
 
 /* 상단 (제목 + 버튼) */
 .view-top-header {

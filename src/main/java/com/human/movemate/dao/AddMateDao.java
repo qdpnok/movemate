@@ -1,6 +1,6 @@
 package com.human.movemate.dao;
 
-import com.human.movemate.model.AddMate;
+import com.human.movemate.model.AddMate; // (AddMate 모델 사용)
 import lombok.RequiredArgsConstructor;
 import org.intellij.lang.annotations.Language;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -18,9 +18,9 @@ public class AddMateDao {
     private final JdbcTemplate jdbc;
 
     // 메이트 모집 글을 DB에 INSERT
-    // @param mate Service가 전달한 AddMate 모델 객체
     public void save(AddMate mate) {
         // mate_no, created_at은 DB의 트리거/디폴트로 자동 생성됨
+        // [수정] 테이블 이름을 'ADD_MATE'에서 'MATE'로 변경
         @Language("SQL")
         String sql = "INSERT INTO MATE (user_no, mate_type, region, sport_type, mate_name, description, image_url) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
