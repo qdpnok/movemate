@@ -19,6 +19,7 @@ public class MainController {
     @GetMapping("/")
     public String mainPage(Model model) {
         model.addAttribute("top3Crew", mateService.findTop3Crew());
+        model.addAttribute("top3Solo", mateService.findTop3Solo());
 
         return "main/main";
     }

@@ -542,62 +542,158 @@ main {
   color: #f3f4f6;
 }
 
+/* --- 섹션 스타일 --- */
+.main_sec {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.sec_runningcrew,
+.sec_search,
+.sec_add {
+    margin-bottom: 40px;
+}
+
 .sec_name {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
 }
 
-.mate-card {
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
-  overflow: hidden;
-  background-color: #fff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  /* 호버 효과 설정 (0.3초 동안 부드럽게) */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: none;
+.sec_name p {
+    font-size: 1.25rem; /* 20px */
+    font-weight: 700;
+    color: #333;
 }
 
-.mate-card.crew .mate-card-image {
+/* --- TOP 3 CREW 섹션 (핵심 수정) --- */
+.main-card-box {
+    display: grid;
+    /* [수정] 3개의 동일한 너비의 컬럼으로 고정 */
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 25px;
+    margin-bottom: 60px;
+}
+
+/* --- 메이트 카드 기본 스타일 --- */
+.main-mate-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    /* 호버 효과 설정 (0.3초 동안 부드럽게) */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: block; /* a 태그이므로 block 설정 */
+    text-decoration: none;
+    color: inherit;
+}
+
+/* 호버 효과 */
+.main-mate-card:hover {
+    transform: translateY(-5px); /* 살짝 위로 이동 */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* 그림자 진하게 */
+}
+
+/* --- 이미지 및 정보 스타일 (기존 유지) --- */
+.main-mate-card.crew .main-mate-card-image {
+    width: 100%;
+    height: 200px;
+    background-color: #f7f7f7; /* 배경색 밝게 변경 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.main-mate-card.crew .main-mate-card-image img {
+    width: 60%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* 카드 이미지 (1:1) */
+.main-mate-card.solo .main-mate-card-image {
   width: 100%;
   height: 200px;
-  background-color: #fff;
+  background-color: #f0f0f0;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+}
+.main-mate-card.solo .main-mate-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 팁 카드 */
+.main-mate-card.tip .main-mate-card-image {
+  width: 100%;
+  height: 200px;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-sizing: border-box;
 }
-.mate-card.crew .mate-card-image img {
-  width: 60%;
-  height: auto;
-  object-fit: contain;
+.main-mate-card.tip .main-mate-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* 카드 정보 텍스트 */
 .mate-card-info {
-  padding: 18px;
+    padding: 18px;
+    text-align: center; /* 정보 텍스트 중앙 정렬 */
 }
+
 .mate-card-info p {
-  margin: 0 0 8px 0;
-  display: flex;
-  align-items: center;
-  font-size: 15px;
-  color: #555;
-  justify-content: center;
+    margin: 0 0 8px 0;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    color: #555;
+    justify-content: center;
 }
 
 .mate-card-info p i {
-  margin-right: 8px;
-  color: #888;
-  width: 16px;
-  text-align: center;
+    margin-right: 8px;
+    color: #888;
+    width: 16px;
+    text-align: center;
 }
+
 .mate-card-info .mate-name {
-  font-size: 18px;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 12px;
+}
+
+/* --- 반응형 디자인 추가 --- */
+
+/* 태블릿 (768px 이하): 2열 배치 */
+@media (max-width: 768px) {
+    .top-3-crew {
+        /* [반응형] 3열 대신 2열로 변경 */
+        grid-template-columns: repeat(2, 1fr); 
+    }
+    .sec_name p {
+        font-size: 1.15rem;
+    }
+}
+
+/* 모바일 (500px 이하): 1열 배치 */
+@media (max-width: 500px) {
+    .top-3-crew {
+        /* [반응형] 1열로 변경 */
+        grid-template-columns: 1fr; 
+    }
 }
 
 /* =================================================== */

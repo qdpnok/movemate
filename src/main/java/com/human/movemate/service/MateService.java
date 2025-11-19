@@ -18,4 +18,6 @@ public interface MateService {
     // AddMate findMateById(Long mateNo);
 
     List<AddMate> findTop3Crew();
+
+    List<AddMate> findTop3Solo();
 }
