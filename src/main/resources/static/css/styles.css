@@ -172,7 +172,8 @@ li {
 .hamburger-container.is-open .menu {
   opacity: 1;
   transform: translateY(0);
-  pointer-events: auto; /* 클릭 가능 */
+  pointer-events: auto;
+  /* 클릭 가능 */
 }
 
 /* [클릭 토글] is-open 클래스가 있을 때 햄버거 아이콘 색상 변경 */
@@ -250,12 +251,12 @@ footer {
   padding: 0px 0px 30px 0px;
 }
 
-.foot-box > a {
+.foot-box>a {
   margin-right: 10px;
   font-size: 10px;
 }
 
-.foot-info > p {
+.foot-info>p {
   font-size: 10px;
   margin: 16px 0px;
 }
@@ -268,12 +269,12 @@ footer {
   margin: 0px 50px;
 }
 
-.foot-cs > h1 {
+.foot-cs>h1 {
   font-size: 14px;
   font-weight: bold;
 }
 
-.foot-cs > h2 {
+.foot-cs>h2 {
   font-size: 14px;
 }
 
@@ -289,10 +290,10 @@ footer {
   font-size: 14px;
 }
 
-#login-container > h1,
-#signup-container > h1,
-#mypage > h1,
-#my-edit-container > h1 {
+#login-container>h1,
+#signup-container>h1,
+#mypage>h1,
+#my-edit-container>h1 {
   font-size: 20px;
   font-weight: bold;
   margin: 20px;
@@ -308,7 +309,7 @@ footer {
   padding: 0px 0px 50px 0px;
 }
 
-#login-container > h1 {
+#login-container>h1 {
   font-weight: bold;
   margin: 20px 0;
   width: 100px;
@@ -452,7 +453,7 @@ footer {
   flex-direction: column;
 }
 
-#signup-box-pace > p {
+#signup-box-pace>p {
   margin-left: 10px;
   font-size: 14px;
   font-weight: bold;
@@ -544,75 +545,80 @@ main {
 
 /* --- 섹션 스타일 --- */
 .main_sec {
-    width: 100%;
-    padding: 20px;
-    box-sizing: border-box;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .sec_runningcrew,
 .sec_search,
 .sec_add {
-    margin-bottom: 40px;
+  margin-bottom: 40px;
 }
 
 .sec_name {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
 .sec_name p {
-    font-size: 1.25rem; /* 20px */
-    font-weight: 700;
-    color: #333;
+  font-size: 1.25rem;
+  /* 20px */
+  font-weight: 700;
+  color: #333;
 }
 
 /* --- TOP 3 CREW 섹션 (핵심 수정) --- */
 .main-card-box {
-    display: grid;
-    /* [수정] 3개의 동일한 너비의 컬럼으로 고정 */
-    grid-template-columns: repeat(3, 1fr);
-    gap: 25px;
-    margin-bottom: 60px;
+  display: grid;
+  /* [수정] 3개의 동일한 너비의 컬럼으로 고정 */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  margin-bottom: 60px;
 }
 
 /* --- 메이트 카드 기본 스타일 --- */
 .main-mate-card {
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
-    overflow: hidden;
-    background-color: #fff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    /* 호버 효과 설정 (0.3초 동안 부드럽게) */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: block; /* a 태그이므로 block 설정 */
-    text-decoration: none;
-    color: inherit;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  /* 호버 효과 설정 (0.3초 동안 부드럽게) */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: block;
+  /* a 태그이므로 block 설정 */
+  text-decoration: none;
+  color: inherit;
 }
 
 /* 호버 효과 */
 .main-mate-card:hover {
-    transform: translateY(-5px); /* 살짝 위로 이동 */
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* 그림자 진하게 */
+  transform: translateY(-5px);
+  /* 살짝 위로 이동 */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  /* 그림자 진하게 */
 }
 
 /* --- 이미지 및 정보 스타일 (기존 유지) --- */
 .main-mate-card.crew .main-mate-card-image {
-    width: 100%;
-    height: 200px;
-    background-color: #f7f7f7; /* 배경색 밝게 변경 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    box-sizing: border-box;
+  width: 100%;
+  height: 200px;
+  background-color: #f7f7f7;
+  /* 배경색 밝게 변경 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .main-mate-card.crew .main-mate-card-image img {
-    width: 60%;
-    height: auto;
-    object-fit: contain;
+  width: 60%;
+  height: auto;
+  object-fit: contain;
 }
 
 /* 카드 이미지 (1:1) */
@@ -624,6 +630,7 @@ main {
   align-items: center;
   justify-content: center;
 }
+
 .main-mate-card.solo .main-mate-card-image img {
   width: 100%;
   height: 100%;
@@ -640,6 +647,7 @@ main {
   justify-content: center;
   box-sizing: border-box;
 }
+
 .main-mate-card.tip .main-mate-card-image img {
   width: 100%;
   height: 100%;
@@ -648,52 +656,54 @@ main {
 
 /* 카드 정보 텍스트 */
 .mate-card-info {
-    padding: 18px;
-    text-align: center; /* 정보 텍스트 중앙 정렬 */
+  padding: 18px;
+  text-align: center;
+  /* 정보 텍스트 중앙 정렬 */
 }
 
 .mate-card-info p {
-    margin: 0 0 8px 0;
-    display: flex;
-    align-items: center;
-    font-size: 15px;
-    color: #555;
-    justify-content: center;
+  margin: 0 0 8px 0;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  color: #555;
+  justify-content: center;
 }
 
 .mate-card-info p i {
-    margin-right: 8px;
-    color: #888;
-    width: 16px;
-    text-align: center;
+  margin-right: 8px;
+  color: #888;
+  width: 16px;
+  text-align: center;
 }
 
 .mate-card-info .mate-name {
-    font-size: 18px;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12px;
 }
 
 /* --- 반응형 디자인 추가 --- */
 
 /* 태블릿 (768px 이하): 2열 배치 */
 @media (max-width: 768px) {
-    .top-3-crew {
-        /* [반응형] 3열 대신 2열로 변경 */
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .sec_name p {
-        font-size: 1.15rem;
-    }
+  .top-3-crew {
+    /* [반응형] 3열 대신 2열로 변경 */
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sec_name p {
+    font-size: 1.15rem;
+  }
 }
 
 /* 모바일 (500px 이하): 1열 배치 */
 @media (max-width: 500px) {
-    .top-3-crew {
-        /* [반응형] 1열로 변경 */
-        grid-template-columns: 1fr;
-    }
+  .top-3-crew {
+    /* [반응형] 1열로 변경 */
+    grid-template-columns: 1fr;
+  }
 }
 
 /* =================================================== */
@@ -705,6 +715,7 @@ main {
  * - 헤더와 로고 크기를 줄임 */
 
 @media (max-width: 1024px) {
+
   /* 메뉴바가 화면을 차지하지 않도록 숨김
   (이 지점에서 햄버거 메뉴 아이콘(☰)을 표시해야함)  */
   .category-bar {
@@ -815,7 +826,8 @@ hamburgerButton.addEventListener('click', () => {
   justify-content: center;
   align-items: center;
   font-size: 30px;
-  height: 200px;
+  font-weight: bold;
+  height: 150px;
 }
 
 /* 탭 메뉴 (러닝/웨이트) */
@@ -824,7 +836,7 @@ hamburgerButton.addEventListener('click', () => {
   justify-content: center;
   align-items: center;
   gap: 50px;
-  height: 200px;
+  height: 100px;
 }
 
 .weight-post a,
@@ -832,14 +844,15 @@ hamburgerButton.addEventListener('click', () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 525px;
-  height: 70px;
-  border-radius: 20px;
+  width: 500px;
+  height: 50px;
+  border-radius: 8px;
   background-color: #f3f4f6;
   color: BLACK;
   font-size: 20px;
   text-decoration: none;
   transition: all 0.2s ease;
+  cursor: pointer;
 }
 
 /* 게시판 선택되면 스타일 적용 */
@@ -848,13 +861,14 @@ hamburgerButton.addEventListener('click', () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 525px;
-  height: 70px;
-  border-radius: 20px;
+  width: 500px;
+  height: 50px;
+  border-radius: 8px;
   background-color: #4b5ae4;
   color: white;
   font-size: 20px;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .add-post {
@@ -1692,8 +1706,7 @@ th {
 }
 
 .mate-form-group select.mate-input {
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23888" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>')
-    no-repeat right 20px center;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23888" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>') no-repeat right 20px center;
   background-size: 12px 12px;
 }
 
@@ -1998,402 +2011,434 @@ th {
 
 /* 마이페이지 */
 /* 마이페이지 */
-        #mypage-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 0;
-        }
+#mypage-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+}
 
-        #mypage {
-            width: 100%;
-            max-width: 1200px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
+#mypage {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
 
-        h1 {
-            font-size: 28px;
-            color: var(--dark);
-            margin-bottom: 20px;
-        }
+h1 {
+  font-size: 28px;
+  color: var(--dark);
+  margin-bottom: 20px;
+}
 
-        #my-info {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+#my-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-        #my-profile {
-            width: 100%;
-            max-width: 600px; /* 프로필 정보 영역 최대 폭 설정 */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+#my-profile {
+  width: 100%;
+  max-width: 600px;
+  /* 프로필 정보 영역 최대 폭 설정 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
 
-        #profile {
-            width: 250px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-evenly;
-            margin: 0 20px;
-        }
+#profile {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin: 0 20px;
+}
 
-        #profile p {
-            font-size: 16px;
-            margin: 5px 0;
-            color: #666;
-            white-space: nowrap;
-        }
+#profile p {
+  font-size: 16px;
+  margin: 5px 0;
+  color: #666;
+  white-space: nowrap;
+}
 
-        .img-round-small {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            border-style: none;
-            overflow: hidden;
-            object-fit: cover;
-            margin: 0 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
+.img-round-small {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border-style: none;
+  overflow: hidden;
+  object-fit: cover;
+  margin: 0 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
 
-        #my-button-filed {
-            width: 100%;
-            max-width: 1200px;
-            display: flex;
-            justify-content: flex-end; /* 오른쪽 정렬 */
-            padding: 0 20px; /* 좌우 여백 */
-            margin-bottom: 20px;
-            box-sizing: border-box;
-        }
+#my-button-filed {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: flex-end;
+  /* 오른쪽 정렬 */
+  padding: 0 20px;
+  /* 좌우 여백 */
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
 
-        #my-button {
-            display: flex;
-            gap: 10px; /* 버튼 사이 간격 */
-        }
+#my-button {
+  display: flex;
+  gap: 10px;
+  /* 버튼 사이 간격 */
+}
 
-        .mypage-button {
-            width: 130px;
-            height: 38px;
-            border: none;
-            color: white;
-            font-size: 14px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
+.mypage-button {
+  width: 130px;
+  height: 38px;
+  border: none;
+  color: white;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
 
-        .mypage-button:hover {
-            opacity: 0.9;
-        }
+.mypage-button:hover {
+  opacity: 0.9;
+}
 
-        .mypage-button:focus {
-            outline: none;
-        }
+.mypage-button:focus {
+  outline: none;
+}
 
-        .btn-mypost { background-color: var(--dark); }
-        .btn-edit-myinfo { background-color: var(--primary); }
-        .btn-danger { background-color: var(--accent); }
+.btn-mypost {
+  background-color: var(--dark);
+}
 
-        .sub-title {
-            font-size: 20px;
-            font-weight: bold;
-            color: white;
-            background-color: var(--primary);
-            width: 100%;
-            height: 60px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 30px 0 10px 0;
-        }
+.btn-edit-myinfo {
+  background-color: var(--primary);
+}
 
-        #my-match {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 60px;
-        }
+.btn-danger {
+  background-color: var(--accent);
+}
 
-        #sport-type-choice-bar,
-        #crew-choice-bar {
-            width: 90%;
-            max-width: 800px;
-            display: flex;
-            justify-content: center;
-            margin: 16px 0;
-            gap: 10px;
-        }
+.sub-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  background-color: var(--primary);
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0 10px 0;
+}
 
-        #my-match-box {
-            width: 100%;
-            display: flex;
-            max-width: 900px; /* 슬라이더 전체 영역 최대 폭 */
-            justify-content: center;
-            position: relative;
-            padding: 0 50px; /* 화살표 공간 확보 */
-        }
+#my-match {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 60px;
+}
 
-        .choice-button {
-            font-size: 14px;
-            flex-grow: 1;
-            height: 42px;
-            font-weight: normal;
-            border-style: solid;
-            border-width: 1px;
-            border-color: var(--primary);
-            color: var(--primary);
-            background-color: white;
-            border-radius: 5px;
-            margin: 0;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
+#sport-type-choice-bar,
+#crew-choice-bar {
+  width: 90%;
+  max-width: 800px;
+  display: flex;
+  justify-content: center;
+  margin: 16px 0;
+  gap: 10px;
+}
 
-        .choice-button.active {
-            background-color: var(--primary);
-            color: white;
-        }
+#my-match-box {
+  width: 100%;
+  display: flex;
+  max-width: 900px;
+  /* 슬라이더 전체 영역 최대 폭 */
+  justify-content: center;
+  position: relative;
+  padding: 0 50px;
+  /* 화살표 공간 확보 */
+}
 
-        /* Swiper 화살표 색상 변경 (요구사항 1) */
-        .swiper-button-next,
-        .swiper-button-prev {
-            color: var(--primary) !important; /* #4b5ae4 색상 적용 */
-            transition: color 0.3s;
-        }
+.choice-button {
+  font-size: 14px;
+  flex-grow: 1;
+  height: 42px;
+  font-weight: normal;
+  border-style: solid;
+  border-width: 1px;
+  border-color: var(--primary);
+  color: var(--primary);
+  background-color: white;
+  border-radius: 5px;
+  margin: 0;
+  cursor: pointer;
+  transition: all 0.2s;
+}
 
-        .swiper-button-next:hover,
-        .swiper-button-prev:hover {
-            opacity: 0.8;
-        }
+.choice-button.active {
+  background-color: var(--primary);
+  color: white;
+}
 
-        /* 1. Swiper 컨테이너 크기 잡기 */
-        .mySwiper {
-            width: 100%;
-            max-width: 800px;
-            padding: 20px 0 40px 0; /* 상하 여백 및 페이지네이션 공간 */
-        }
+/* Swiper 화살표 색상 변경 (요구사항 1) */
+.swiper-button-next,
+.swiper-button-prev {
+  color: var(--primary) !important;
+  /* #4b5ae4 색상 적용 */
+  transition: color 0.3s;
+}
 
-        /* 2. 슬라이드 높이 자동 조절 (내용물만큼만 잡히게 함) */
-        .swiper-slide {
-            height: auto !important;
-            display: flex;
-            justify-content: center;
-            align-items: stretch; /* 카드 높이를 일치시킵니다. */
-        }
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  opacity: 0.8;
+}
 
-        /* 3. 카드 아이템 스타일링 (필수: 크기 및 디자인 고정) */
-        .card-item {
-            width: 100%;
-            max-width: 300px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            padding: 20px;
-            box-sizing: border-box;
+/* 1. Swiper 컨테이너 크기 잡기 */
+.mySwiper {
+  width: 100%;
+  max-width: 800px;
+  padding: 20px 0 40px 0;
+  /* 상하 여백 및 페이지네이션 공간 */
+}
 
-            /* 내부 요소 정렬 및 버튼을 아래로 밀기 위해 flex column 사용 */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
+/* 2. 슬라이드 높이 자동 조절 (내용물만큼만 잡히게 함) */
+.swiper-slide {
+  height: auto !important;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  /* 카드 높이를 일치시킵니다. */
+}
 
-        .card-title-link {
-            display: block;
-            flex-shrink: 0;
-        }
+/* 3. 카드 아이템 스타일링 (필수: 크기 및 디자인 고정) */
+.card-item {
+  width: 100%;
+  max-width: 300px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  box-sizing: border-box;
 
-        /* 4. 카드 내부 이미지 크기 강제 고정 (요구사항 2: 정사각형 80x80) */
-        .card-item img {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            border: 1px solid #eee;
-        }
+  /* 내부 요소 정렬 및 버튼을 아래로 밀기 위해 flex column 사용 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
-        /* 5. 텍스트 줄바꿈 방지 */
-        .card-item p {
-            margin: 0;
-            text-align: center;
-            font-size: 14px;
-            word-break: keep-all;
-        }
+.card-title-link {
+  display: block;
+  flex-shrink: 0;
+}
 
-        /* 6. 메이트 해지 버튼 스타일 및 위치 조정 */
-        #mate-cut {
-            font-size: 12px;
-            color: white;
-            background-color: var(--accent);
-            padding: 8px 15px;
-            border-radius: 5px;
-            text-decoration: none;
-            margin-top: auto; /* 남은 공간을 밀어내어 맨 아래에 위치 */
-            cursor: pointer;
-            width: 100%;
-            text-align: center;
-            transition: background-color 0.2s;
-        }
+/* 4. 카드 내부 이미지 크기 강제 고정 (요구사항 2: 정사각형 80x80) */
+.card-item img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border: 1px solid #eee;
+}
 
-        #mate-cut:hover {
-            background-color: #e06056;
-        }
+/* 5. 텍스트 줄바꿈 방지 */
+.card-item p {
+  margin: 0;
+  text-align: center;
+  font-size: 14px;
+  word-break: keep-all;
+}
 
-        #no-match-data {
-            text-align: center;
-            padding: 40px;
-            color: #666;
-            font-size: 16px;
-        }
+/* 6. 메이트 해지 버튼 스타일 및 위치 조정 */
+#mate-cut {
+  font-size: 12px;
+  color: white;
+  background-color: var(--accent);
+  padding: 8px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-top: auto;
+  /* 남은 공간을 밀어내어 맨 아래에 위치 */
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  transition: background-color 0.2s;
+}
 
-        @media (max-width: 900px) {
-             #my-match-box {
-                max-width: 100%; /* 화면이 좁아지면 최대 폭 제한 해제 */
-            }
-            .mySwiper {
-                max-width: 100%;
-                padding: 20px 0 40px 0;
-            }
-        }
+#mate-cut:hover {
+  background-color: #e06056;
+}
 
-        /* 반응형 디자인 */
-        @media (max-width: 768px) {
-            #my-profile {
-                flex-direction: column;
-            }
-            .img-round-small {
-                margin-bottom: 20px;
-            }
-            #my-button-filed {
-                justify-content: center;
-            }
-            #my-match-box {
-                padding: 0 20px;
-            }
-        }
+#no-match-data {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-size: 16px;
+}
+
+@media (max-width: 900px) {
+  #my-match-box {
+    max-width: 100%;
+    /* 화면이 좁아지면 최대 폭 제한 해제 */
+  }
+
+  .mySwiper {
+    max-width: 100%;
+    padding: 20px 0 40px 0;
+  }
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  #my-profile {
+    flex-direction: column;
+  }
+
+  .img-round-small {
+    margin-bottom: 20px;
+  }
+
+  #my-button-filed {
+    justify-content: center;
+  }
+
+  #my-match-box {
+    padding: 0 20px;
+  }
+}
+
 /* * * * * * * * * * * * * * * * * * * * * * * * */
 /* * 여기부터 mate manage 게시판 스타일 * * */
 /* * * * * * * * * * * * * * * * * * * * * * * * */
 .postcontainer {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
 
-        .profile-card {
-            width: 250px;
-            height: 350px;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 15px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-            background-color: #fff;
-            text-align: center;
-            transition: transform 0.2s ease;
-            margin: 10px;
-        }
+.profile-card {
+  width: 250px;
+  height: 350px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  text-align: center;
+  transition: transform 0.2s ease;
+  margin: 10px;
+}
 
-        .profile-card:hover {
-            transform: translateY(-5px);
-        }
+.profile-card:hover {
+  transform: translateY(-5px);
+}
 
-        .profile-card img {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 15px;
-        }
+.profile-card img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
 
-        .profile-card .name {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
+.profile-card .name {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
 
-        .profile-card .region {
-            font-size: 14px;
-            color: #666;
-        }
+.profile-card .region {
+  font-size: 14px;
+  color: #666;
+}
 
-        /* ------------------------------------------------ */
-        /* 🚨 버튼 스타일을 위한 CSS 추가 및 수정 🚨 */
-        .manage-menu {
-            display: flex;
-            justify-content: center; /* 버튼을 중앙에 배치 */
-            margin-bottom: 30px;
-            gap: 15px; /* 버튼 사이 간격 */
-        }
+/* ------------------------------------------------ */
+/* 🚨 버튼 스타일을 위한 CSS 추가 및 수정 🚨 */
+.manage-menu {
+  display: flex;
+  justify-content: center;
+  /* 버튼을 중앙에 배치 */
+  margin-bottom: 30px;
+  gap: 15px;
+  /* 버튼 사이 간격 */
+}
 
-        /* 기본 버튼 스타일 */
-        .manage-menu a {
-            display: inline-block;
-            padding: 10px 25px;
-            border: 1px solid #ddd;
-            border-radius: 8px; /* 모서리 둥글게 */
-            text-decoration: none;
-            color: #444;
-            background-color: #f0f0f0;
-            font-size: 16px;
-            font-weight: normal; /* 기존 active a의 bold를 일반화 */
-            transition: all 0.2s ease;
-        }
+/* 기본 버튼 스타일 */
+.manage-menu a {
+  display: inline-block;
+  padding: 10px 25px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  /* 모서리 둥글게 */
+  text-decoration: none;
+  color: #444;
+  background-color: #f0f0f0;
+  font-size: 16px;
+  font-weight: normal;
+  /* 기존 active a의 bold를 일반화 */
+  transition: all 0.2s ease;
+}
 
-        /* 마우스 오버 시 스타일 */
-        .manage-menu a:hover {
-            background-color: #e0e0e0;
-            border-color: #ccc;
-        }
+/* 마우스 오버 시 스타일 */
+.manage-menu a:hover {
+  background-color: #e0e0e0;
+  border-color: #ccc;
+}
 
-        /* 현재 활성화된 탭의 버튼 스타일 */
-        .manage-menu .active { /* <a> 태그에 active 클래스가 직접 붙습니다 */
-            font-weight: bold;
-            color: #fff;
-            background-color: #5c6bc0;
-            border-color: #5c6bc0;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
-        }
-        /* ------------------------------------------------ */
+/* 현재 활성화된 탭의 버튼 스타일 */
+.manage-menu .active {
+  /* <a> 태그에 active 클래스가 직접 붙습니다 */
+  font-weight: bold;
+  color: #fff;
+  background-color: #5c6bc0;
+  border-color: #5c6bc0;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* ------------------------------------------------ */
 
 
-        /* 조회 중인 매칭 신청 목록이 비어 있을때의 조건 */
-        .no-data-message {
-            font-size: 16px;
-            color: #999;
-            text-align: center;
-            margin-top: 50px;
-        }
+/* 조회 중인 매칭 신청 목록이 비어 있을때의 조건 */
+.no-data-message {
+  font-size: 16px;
+  color: #999;
+  text-align: center;
+  margin-top: 50px;
+}
 
-        /* 메이트 신청 목록 여러 줄로 나오게함 */
-        .postcontainer .cards-wrapper {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
+/* 메이트 신청 목록 여러 줄로 나오게함 */
+.postcontainer .cards-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
 
-        .group-title {
-            font-size: 22px;
-            font-weight: bold;
-            color: #333;
-            border-bottom: 2px solid #5c6bc0;
-            padding-bottom: 5px;
-            margin-top: 40px; /* 위쪽 여백으로 그룹 간 간격 확보 */
-            margin-bottom: 25px;
-        }
+.group-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+  border-bottom: 2px solid #5c6bc0;
+  padding-bottom: 5px;
+  margin-top: 40px;
+  /* 위쪽 여백으로 그룹 간 간격 확보 */
+  margin-bottom: 25px;
+}
+
 /* * * * * * * * * * * * * * * * * * * * * * * * */
 /* * 여기까지 mate manage 게시판 스타일 * * */
 /* * * * * * * * * * * * * * * * * * * * * * * * */

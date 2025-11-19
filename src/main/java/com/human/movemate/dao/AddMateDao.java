@@ -41,7 +41,7 @@ public class AddMateDao {
         @Language("SQL")
         String sql = "SELECT " +
                 "  m.mate_no, m.user_no, m.mate_type, m.region, m.sport_type, " +
-                "  m.mate_name, m.description, m.image_url, m.created_at, " +
+                "  m.mate_name, m.description, m.image_url, m.created_at, m.current_members, " + // 💡 m.current_members 추가
                 "  u.user_id, up.profile_image_url " +
                 "FROM MATE m " +
                 "JOIN USERS u ON m.user_no = u.user_no " +
@@ -50,7 +50,7 @@ public class AddMateDao {
         try {
             return jdbc.queryForObject(sql, new AddMateRowMapper(), mateNo);
         } catch (EmptyResultDataAccessException e) {
-            return null; // 글이 없으면 null
+            return null;
         }
     }
 
@@ -121,11 +121,12 @@ public class AddMateDao {
             mate.setImageUrl(rs.getString("image_url"));
             mate.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
             // 메이트 우측하단 크루아이콘 인원수 표기
-            try {
-                mate.setCurrentMembers(rs.getInt("current_members"));
-            } catch (SQLException e) {
-                mate.setCurrentMembers(1); // 컬럼 없으면 기본 1명
-            }
+
+            // ★ 여기에 있던 try-catch문(current_members) 삭제한 이유
+            // 코드가 중복 호출되어 예외가 완벽하게 처리되지 않았고 성능 저하를 유발함, 그리고 아키텍처 위반이라고 함
+            // 해결책으로 SQL 쿼리에 m.current_members를 명시적으로 추가하는 것이 가장 명확하고 유지보수가 쉬운 해결책이라고 함
+            // 무엇보다 이거 때문에 제가 힘겹게 구현해놓은 크루 생성 글 수정, 크루원 관리 페이지로 연결이 안되어서 삭제했슴다!
+
 
             // JOIN된 필드
             mate.setAuthorId(rs.getString("user_id"));

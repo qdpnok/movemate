@@ -3,6 +3,7 @@ import com.human.movemate.dao.AddMateDao;
 import com.human.movemate.dao.MateMemberDao;
 import com.human.movemate.dto.AddMateFormDto;
 import com.human.movemate.model.AddMate;
+import com.human.movemate.model.MateMember;
 import com.human.movemate.service.AddMateService;
 import com.human.movemate.service.FileStorageService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ public class AddMateServiceImpl implements AddMateService {
     private final AddMateDao addMateDao; // 메이트 DB 담당
     private final FileStorageService fileStorageService; // 파일 저장 담당 (기존 것)
     private final MateMemberDao mateMemberDao;
+    private static final String DEFAULT_MATE_IMAGE_URL = "mates/default_mate_image.png"; // 기본프로필
 
     // 1:1 메이트 신청 민아
     // 구현체에 메서드 오버라이딩
@@ -41,6 +43,10 @@ public class AddMateServiceImpl implements AddMateService {
             // "mates"라는 하위 폴더에 (userNo) ID 기반으로 파일 저장
             // 예: "mates/1_abc.jpg"
             storedFileName = fileStorageService.storeFile(file, "mates", null);
+        }
+        // 만약에 업로드한 프사가 없다면 기본 프사로 설정하기 위해 이미지 경로 설정
+        if (storedFileName == null || storedFileName.isEmpty()) {
+            storedFileName = DEFAULT_MATE_IMAGE_URL;
         }
         // DTO -> Model(AddMate) 객체로 변환
         AddMate mate = new AddMate();
