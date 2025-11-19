@@ -17,6 +17,13 @@ public class AddMateServiceImpl implements AddMateService {
     private final AddMateDao addMateDao; // 메이트 DB 담당
     private final FileStorageService fileStorageService; // 파일 저장 담당 (기존 것)
 
+    // 1:1 메이트 신청 민아
+    // 구현체에 메서드 오버라이딩
+    @Override
+    public AddMate getMateDetail(Long mateNo) {
+        return addMateDao.findById(mateNo);
+    }
+
 
     @Override
     public void saveMate(AddMateFormDto addMateFormDto, Long userNo) {

@@ -44,22 +44,27 @@
           <h2 class="mate-section-title">1:1 러닝 메이트</h2>
 
           <div class="mate-grid">
+
             <div
               th:each="mate : ${soloMates}"
               class="mate-card solo"
               th:data-sport="${mate.sportType == '러닝' ? 'running' : 'weight'}"
             >
+                <a th:href="@{/addMate/apply/{mateNo}(mateNo=${mate.mateNo})}">
               <div class="mate-card-image">
-                <img
-                  th:if="${mate.imageUrl != null}"
-                  th:src="@{/files/{url}(url=${mate.imageUrl})}"
-                  alt="메이트 프로필"
-                />
-                <img
-                  th:if="${mate.imageUrl == null}"
-                  th:src="@{/images/기본_프로필.png}"
-                  alt="기본 프로필"
-                />
+
+
+
+                  <img
+                          th:if="${mate.imageUrl != null}"
+                          th:src="@{/files/{url}(url=${mate.imageUrl})}"
+                          alt="메이트 프로필"
+                  />
+                  <img
+                          th:if="${mate.imageUrl == null}"
+                          th:src="@{/images/기본_프로필.png}"
+                          alt="기본 프로필"
+                  />
               </div>
 
               <div class="mate-card-info">
@@ -69,6 +74,7 @@
                   <span th:text="${mate.region}">지역</span>
                 </p>
               </div>
+                </a>
             </div>
           </div>
 

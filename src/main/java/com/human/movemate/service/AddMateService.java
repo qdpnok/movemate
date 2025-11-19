@@ -9,4 +9,6 @@ public interface AddMateService {
     AddMate findById(Long mateNo); // 게시글 상세 조회
     void updateMate(Long mateNo, AddMateFormDto addMateFormDto, Long userNo); // 게시글 수정
     void deleteMate(Long mateNo, Long userNo); // 삭제
+    // 인터페이스에 메서드 정의 추가(1;1 메이트 신청 민아)
+    AddMate getMateDetail(Long mateNo);
 }
