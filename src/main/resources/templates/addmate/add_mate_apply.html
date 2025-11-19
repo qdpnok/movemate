@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.w3.org/1999/xhtml"
+  layout:decorate="~{/layout/main}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>1:1 메이트 신청하기</title>
+    <link rel="stylesheet" th:href="@{/css/mate-apply.css}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <div layout:fragment="content">
+      <div class="apply-container">
+        <h2
+          class="apply-title"
+          th:text="${mate.mateType == 'CREW' ? '크루 신청하기' : '1:1 메이트 신청하기'}"
+        >
+          1:1 메이트 신청하기
+        </h2>
+
+        <div class="mate-info-card">
+          <div class="mate-info-img">
+            <img
+              th:if="${mate.imageUrl != null}"
+              th:src="@{/files/{url}(url=${mate.imageUrl})}"
+              alt="메이트 사진"
+            />
+
+            <div th:if="${mate.imageUrl == null}" style="text-align: center">
+              <i
+                class="fa-solid fa-user"
+                style="font-size: 80px; color: #ccc"
+              ></i>
+            </div>
+          </div>
+
+          <div class="mate-info-text">
+            <p>
+              <span class="info-label">메이트명 :</span>
+              <span th:text="${mate.mateName}"></span>
+            </p>
+            <p>
+              <span class="info-label">지역 :</span>
+              <span th:text="${mate.region}"></span>
+            </p>
+            <p>
+              <span class="info-label">종목 :</span>
+              <span th:text="${mate.sportType}"></span>
+            </p>
+            <p>
+              <span class="info-label">메이트설명 :</span>
+              <span th:text="${mate.description}"></span>
+            </p>
+          </div>
+        </div>
+
+        <form
+          th:action="@{/addMate/apply/{mateNo}(mateNo=${mate.mateNo})}"
+          th:object="${mateApplyForm}"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          <div class="apply-form-group">
+            <div class="apply-label-box">
+              <i class="fa-regular fa-id-card"></i>
+              <span>신청자명</span>
+            </div>
+            <input
+              type="text"
+              class="apply-input"
+              placeholder="신청자명을 입력해주세요"
+            />
+          </div>
+
+          <div class="apply-form-group">
+            <div class="apply-label-box">
+              <i class="fa-regular fa-user-circle"></i>
+              <span>사진등록</span>
+            </div>
+            <input
+              type="text"
+              class="apply-input"
+              placeholder="프로필 사진을 등록해주세요"
+              readonly
+            />
+          </div>
+
+          <div class="apply-textarea-group">
+            <div
+              class="apply-label-box"
+              style="border: none; padding-left: 0; margin-bottom: 0"
+            >
+              <div
+                style="
+                  border: 1px solid #ddd;
+                  width: 140px;
+                  height: 50px;
+                  display: flex;
+                  align-items: center;
+                  padding-left: 10px;
+                  box-sizing: border-box;
+                  background: #fff;
+                "
+              >
+                <i class="fa-regular fa-pen-to-square"></i>
+                <span style="font-weight: 600">신청메시지</span>
+              </div>
+            </div>
+            <textarea
+              class="apply-textarea-box"
+              placeholder="신청메시지를 작성해주세요"
+            ></textarea>
+          </div>
+
+          <div class="apply-btn-area">
+            <button type="submit" class="btn-apply btn-blue">등록</button>
+            <button
+              type="button"
+              class="btn-apply btn-red"
+              onclick="history.back()"
+            >
+              취소
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

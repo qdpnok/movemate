@@ -2,12 +2,17 @@ package com.human.movemate.dao;
 
 import com.human.movemate.dto.MatchingDetailDto;
 import com.human.movemate.dto.MatchingDto;
+import com.human.movemate.model.Post;
+import com.human.movemate.model.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 @Repository                 // Spring Container에 Bean 객체 등록, 싱글톤 객체가 됨
@@ -78,6 +83,37 @@ public class MateDao {
                     rs.getString("postType")
             );
         });
+
+
+    }
+
+    // 상위 게시글 3개만 조회하기 - 크루
+    public List<AddMate> findTop3Crew() {
+        @Language("SQL")
+        String sql = """
+        SELECT *
+        FROM (SELECT *
+              FROM MATE
+              WHERE mate_type = 'CREW' AND sport_type = '러닝'
+              ORDER BY current_members DESC, created_at ASC)
+        WHERE rownum <= 3
+        """;
+
+        return jdbc.query(sql, mateRowMapper);
+    }
+
+    public List<AddMate> findTop3Solo() {
+        @Language("SQL")
+        String sql = """
+        SELECT *
+        FROM (SELECT *
+              FROM MATE
+              WHERE mate_type = 'SOLO'
+              ORDER BY created_at DESC)
+        WHERE rownum <= 3
+        """;
+
+        return jdbc.query(sql, mateRowMapper);
     }
 
     public MatchingDetailDto findMatchingDetail(Long matchNo) {
@@ -126,5 +162,11 @@ public class MateDao {
             return dto;
         }
     }
+
+}
+
+
+        // (추후 상세보기를 위한 메서드도 추가할 수 있어요)
+        // public AddMate findById(Long mateNo) { ... }
 
 }

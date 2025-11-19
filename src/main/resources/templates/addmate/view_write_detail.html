@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+    layout:decorate="~{/layout/main}">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <title>내가 쓴 글</title>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <div class="view-container" th:object="${mate}">
+
+            <h1 class="board" th:text="${pageTitle}">상세 조회</h1>
+
+            <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+            <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+
+            <div class="view-mate-box" style="margin-bottom: 30px;">
+                <div class="view-mate-image">
+                    <img th:if="*{imageUrl != null}" th:src="@{'/files/' + *{imageUrl}}" alt="메이트 사진">
+                    <img th:if="*{imageUrl == null}" th:src="@{/images/default_mate_image.png}" alt="기본 이미지">
+                </div>
+
+                <div class="view-mate-details">
+                    <dl>
+                        <dt>메이트명</dt>
+                        <dd th:text="*{mateName}">메이트명</dd>
+
+                        <dt>작성자</dt>
+                        <dd th:text="*{authorId}">작성자ID</dd>
+
+                        <dt>지역</dt>
+                        <dd th:text="*{region}">지역명</dd>
+
+                        <dt>종목</dt>
+                        <dd th:text="*{sportType}">종목명</dd>
+
+                        <dt>설명</dt>
+                        <dd class="description" th:text="*{description}">
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+
+                <div class="view-mate-actions"
+                    th:if="${session.loginUser != null and session.loginUser.userNo == mate.userNo}">
+
+                    <a th:href="@{/addMate/edit/{id}(id=*{mateNo})}" class="btn-mate-edit">수정</a>
+
+                    <a th:href="@{/addMate/delete/{id}(id=*{mateNo})}" class="btn-mate-delete"
+                        onclick="return confirm('정말 이 글을 삭제하시겠습니까?');">삭제</a>
+
+                </div>
+
+                <div th:unless="${session.loginUser != null and session.loginUser.userNo == mate.userNo}">
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

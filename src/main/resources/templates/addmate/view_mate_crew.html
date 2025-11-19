@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+    layout:decorate="~{/layout/main}">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <title>내가 만든 크루 관리</title>
+</head>
+
+<body>
+    <div layout:fragment="content">
+
+        <div class="view-container">
+
+            <h1 class="board" th:text="${pageTitle}">내가 만든 크루 관리</h1>
+
+            <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+            <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+
+            <div class="post-box">
+                <a th:href="@{/addMate/my/crew(sport='러닝')}" th:classappend="${activeTab == '러닝'} ? 'active'"
+                    class="my-crew-btn">러닝 크루</a>
+                <a th:href="@{/addMate/my/crew(sport='웨이트')}" th:classappend="${activeTab == '웨이트'} ? 'active'"
+                    class="my-crew-btn">짐 크루</a>
+            </div>
+
+            <div class="crew-list-header">나의 크루 조회</div>
+
+            <div class="crew-list-wrapper">
+                <div class="empty-message" th:if="${#lists.isEmpty(mateList)}">
+                    <p>생성한 크루가 없습니다.</p>
+                </div>
+
+                <div class="view-mate-box crew-card" th:each="mate : ${mateList}">
+                    <div class="view-mate-image">
+                        <img th:if="${mate.imageUrl != null}" th:src="@{'/files/' + ${mate.imageUrl}}" alt="크루 사진">
+                        <img th:if="${mate.imageUrl == null}" th:src="@{/images/default_mate_image.png}" alt="기본 이미지">
+                    </div>
+                    <div class="view-mate-details">
+                        <dl>
+                            <dt>크루명</dt>
+                            <dd th:text="${mate.mateName}">크루명</dd>
+                            <dt>지역</dt>
+                            <dd th:text="${mate.region}">지역</dd>
+                            <dt>종목</dt>
+                            <dd th:text="${mate.sportType}">러닝</dd>
+                            <dt>모임설명</dt>
+                            <dd class="description" th:text="${mate.description}">글 내용...</dd>
+                        </dl>
+                    </div>
+
+                    <div class="crew-card-actions">
+                        <a th:href="@{/addMate/edit/{id}(id=${mate.mateNo})}" class="btn-crew-edit">크루 정보 수정</a>
+
+                        <a th:href="@{/addMate/admin/{id}(id=${mate.mateNo})}" class="btn-crew-manage">크루원 관리</a>
+
+                        <a th:href="@{/addMate/delete/{id}(id=${mate.mateNo})}" class="btn-crew-delete"
+                            onclick="return confirm('크루를 삭제하시겠습니까?');">크루 삭제</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
