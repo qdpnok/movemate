@@ -1,5 +1,6 @@
 package com.human.movemate.controller;
 
+import com.human.movemate.dto.ApplyResDto;
 import com.human.movemate.dto.MatchingDetailDto;
 import com.human.movemate.dto.MatchingDto;
 import com.human.movemate.dto.MatchingHistoryDto;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -32,22 +32,6 @@ public class MateController {
 
 
     @GetMapping("")
-//    public String mateHome(@RequestParam(required = false, defaultValue = "sent") String type,
-//                           @RequestParam Long userNo, Model model) {
-//        // type이 sent이면 내가 신청한 목록, received면 받은 목록
-//        // Controller에서 URL 파라미터 type을 보고, “sent”인지 “received”인지 판단
-//        if ("sent".equals(type)) {
-//            List<MatchingDto> sentList = mateService.findReceivedApplications(userNo);
-//            model.addAttribute("list", sentList);
-//            model.addAttribute("type", "sent");
-//        } else if ("received".equals(type)) {
-//            List<MatchingDto> receivedList = mateService.findSentApplications(userNo);
-//            model.addAttribute("list", receivedList);
-//            model.addAttribute("type", "received");
-//        }
-//        return "post/mateManage";   // Thymeleaf가 찾을 템플릿 파일 경로 설정
-//    }
-
     public String mateHome(
             @RequestParam(required = false, defaultValue = "sent") String type,
             // @RequestParam(required = false) Long userNo, // ⬅️ 삭제하거나 주석 처리
@@ -68,7 +52,7 @@ public class MateController {
 
         log.info("mateHome 호출 - userNo: {}, type: {}", userNo, type);
 
-        List<MatchingDto> list;
+        List<ApplyResDto> list;
 
         // ★★★★★ 핵심 수정 부분: 타입과 메서드 호출을 일치시킴 ★★★★★
         if ("sent".equals(type)) {
@@ -83,18 +67,22 @@ public class MateController {
         // 1. List를 Map<PostType, List<DTO>> 형태로 그룹화
 //        Map<String, List<MatchingDto>> groupedList = list.stream()
 //                .collect(Collectors.groupingBy(MatchingDto::getPostType));
-        Map<String, List<MatchingDto>> groupedList = list.stream()
-                .collect(Collectors.groupingBy(
-                        // 그룹 키를 결정하는 함수: SOLO만 '1:1'로 변환하고 나머지는 그대로 사용
-                        dto -> {
-                            String postType = dto.getPostType();
-                            if ("SOLO".equals(postType)) {
-                                return "1:1";
-                            }
-                            // "CREW"를 포함한 나머지 모든 타입은 원본 값 그대로 반환
-                            return postType;
-                        }
-                ));
+//        Map<String, List<MatchingDto>> groupedList = list.stream()
+//                .collect(Collectors.groupingBy(
+//                        // 그룹 키를 결정하는 함수: SOLO만 '1:1'로 변환하고 나머지는 그대로 사용
+//                        dto -> {
+//                            String postType = dto.getPostType();
+//                            if ("SOLO".equals(postType)) {
+//                                return "1:1";
+//                            }
+//                            // "CREW"를 포함한 나머지 모든 타입은 원본 값 그대로 반환
+//                            return postType;
+//                        }
+//                ));
+        Map<String, Map<String, List<ApplyResDto>>> groupedList = list.stream()
+                .collect(Collectors.groupingBy(ApplyResDto::getMateType,
+                        Collectors.groupingBy(ApplyResDto::getSportType)));
+
 
         model.addAttribute("groupedList", groupedList);
         model.addAttribute("type", type);
@@ -103,7 +91,7 @@ public class MateController {
         // DTO 로그는 디버깅에 매우 유용합니다.
         if (list != null && !list.isEmpty()) {
             log.info("--- DTO List Content Start (Size: {}) ---", list.size());
-            for (MatchingDto dto : list) {
+            for (ApplyResDto dto : list) {
                 log.info("DTO Item: {}", dto);
             }
             log.info("--- DTO List Content End ---");
