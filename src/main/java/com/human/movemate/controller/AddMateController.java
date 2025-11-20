@@ -1,9 +1,8 @@
 package com.human.movemate.controller;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import com.human.movemate.dto.AddMateFormDto;
-import com.human.movemate.dto.MateApplyFormDto;
-import com.human.movemate.dto.MateMemberDto;
+
+import com.human.movemate.dto.*;
 import com.human.movemate.model.AddMate;
 import com.human.movemate.model.User;
 import com.human.movemate.service.AddMateService;
@@ -304,16 +303,18 @@ public class AddMateController {
         // DB에서 글 정보 가져오기 (신청 폼 상단에 정보 띄우기 위함)
         AddMate mate = addMateService.getMateDetail(mateNo);
         model.addAttribute("mate", mate);
-        model.addAttribute("mateApplyForm", new MateApplyFormDto());
+        model.addAttribute("mateApplyForm", new ApplyReqDto());
 
         // 신청 폼 HTML 보여주기
         return "addmate/add_mate_apply";
     }
+
+
     // 3. 신청 처리 (폼에서 '등록' 클릭 시 실행)
     @PostMapping("/apply/{mateNo}")
     public String processApply(
             @PathVariable Long mateNo,
-            @ModelAttribute MateApplyFormDto mateApplyForm,
+            @ModelAttribute ApplyReqDto applyReqDto,
             HttpSession session,
             RedirectAttributes rttr) {
 
@@ -324,12 +325,13 @@ public class AddMateController {
             return "redirect:/login";
         }
 
-        // 2. 글 번호 세팅
-        mateApplyForm.setMateNo(mateNo);
+        // 2. 글 번호, 인간번호 세팅
+        applyReqDto.setMateNo(mateNo);
+        applyReqDto.setApplicantUserNo(loginUser.getUserNo());
 
         try {
             // 3. 서비스 호출 (신청 정보 DB 저장)
-            mateMemberService.applyForMate(mateApplyForm, loginUser.getUserNo());
+            mateMemberService.applyForMate(applyReqDto);
             rttr.addFlashAttribute("successMessage", "메이트 신청이 완료되었습니다!");
 
             // 신청 완료 후 '메이트 목록'(/addMate)으로 이동
