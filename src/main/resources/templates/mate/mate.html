@@ -1,111 +1,138 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
-  layout:decorate="~{/layout/main}">
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.w3.org/1999/xhtml"
+  layout:decorate="~{/layout/main}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>메이트 만들기</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <title>메이트 만들기</title>
+    <link rel="stylesheet" th:href="@{/css/mate-list.css}" />
 
-  <link rel="stylesheet" th:href="@{/css/mate-list.css}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
+  </head>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
-</head>
+  <body>
+    <div layout:fragment="content">
+      <div class="mate-container">
+        <h1 class="mate-page-title">메이트 만들기</h1>
 
-<body>
-  <div layout:fragment="content">
-    <div class="mate-container">
-      <h1 class="board">메이트 만들기</h1>
-
-      <div class="mate-tab-bar large-tab">
-        <button class="mate-tab-button active" data-tab-filter="running">
-          러닝 메이트
-        </button>
-        <button class="mate-tab-button" data-tab-filter="weight">
-          웨이트 메이트
-        </button>
-      </div>
-
-      <div class="mate-tab-bar small-tab">
-        <button class="mate-tab-button active" data-tab-filter="solo">
-          1:1 메이트
-        </button>
-        <button class="mate-tab-button" data-tab-filter="group">
-          메이트 크루
-        </button>
-      </div>
-
-      <!-- 글 생성 버튼 -->
-      <a th:href="@{/addMate/solo}" class="mate-create-button">1:1 메이트 만들기</a>
-      <a th:href="@{/addMate/crew}" class="mate-create-button">크루 만들기</a>
-      <div class="mate-section active" id="solo-section">
-        <h2 class="mate-section-title">1:1 러닝 메이트</h2>
-
-
-        <div class="mate-grid">
-          <a th:each="mate : ${soloMates}" class="mate-card solo"
-            th:href="@{/addMate/view/{mateNo}(mateNo=${mate.mateNo})}"
-            th:data-sport="${mate.sportType == '러닝' ? 'running' : 'weight'}"
-            style="text-decoration: none; color: inherit; display: block">
-            <div class="mate-card-image">
-              <img th:if="${mate.imageUrl != null}" th:src="@{/files/{url}(url=${mate.imageUrl})}" alt="메이트 프로필" />
-              <img th:if="${mate.imageUrl == null}" th:src="@{/images/기본_프로필.png}" alt="기본 프로필" />
-            </div>
-
-            <div class="mate-card-info">
-              <p class="mate-name" th:text="${mate.mateName}">메이트명</p>
-              <p class="mate-region">
-                <i class="fa-solid fa-location-dot"></i>
-                <span th:text="${mate.region}">지역</span>
-              </p>
-            </div>
-          </a>
+        <div class="mate-tab-bar large-tab">
+          <button class="mate-tab-button active" data-tab-filter="running">
+            러닝 메이트
+          </button>
+          <button class="mate-tab-button" data-tab-filter="weight">
+            웨이트 메이트
+          </button>
         </div>
 
-        <div th:if="${#lists.isEmpty(soloMates)}" class="no-mates">
-          <p>아직 1:1 메이트가 없습니다.</p>
+        <div class="mate-tab-bar small-tab">
+          <button class="mate-tab-button active" data-tab-filter="solo">
+            1:1 메이트
+          </button>
+          <button class="mate-tab-button" data-tab-filter="group">
+            메이트 크루
+          </button>
         </div>
 
+        <div class="mate-section active" id="solo-section">
+          <h2 class="mate-section-title">1:1 러닝 메이트</h2>
 
+          <div class="mate-grid">
+            <a
+              th:each="mate : ${soloMates}"
+              class="mate-card solo"
+              th:href="@{/addMate/view/{mateNo}(mateNo=${mate.mateNo})}"
+              th:data-sport="${mate.sportType == '러닝' ? 'running' : 'weight'}"
+              style="text-decoration: none; color: inherit; display: block"
+            >
+              <div class="mate-card-image">
+                <img
+                  th:if="${mate.imageUrl != null}"
+                  th:src="@{/files/{url}(url=${mate.imageUrl})}"
+                  alt="메이트 프로필"
+                />
+                <div th:if="${mate.imageUrl == null}" class="default-profile">
+                  <i class="fa-solid fa-user"></i>
+                </div>
+              </div>
+
+              <div class="mate-card-info">
+                <p class="mate-name" th:text="${mate.mateName}">메이트명</p>
+                <p class="mate-region">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <span th:text="${mate.region}">지역</span>
+                </p>
+              </div>
+            </a>
+          </div>
+
+          <div th:if="${#lists.isEmpty(soloMates)}" class="no-mates">
+            <p>아직 1:1 메이트가 없습니다.</p>
+          </div>
+
+          <a th:href="@{/addMate/solo}" class="mate-create-button"
+            >1:1 메이트 만들기</a
+          >
+        </div>
+
+        <div class="mate-section" id="group-section">
+          <h2 class="mate-section-title">러닝 크루</h2>
+
+          <div class="mate-grid">
+            <a
+              th:each="mate : ${crewMates}"
+              class="mate-card crew"
+              th:href="@{/addMate/view/{no}(no=${mate.mateNo})}"
+              th:data-sport="${mate.sportType == '러닝' ? 'running' : 'weight'}"
+              style="text-decoration: none; color: inherit; display: block"
+            >
+              <div class="mate-card-image">
+                <img
+                  th:if="${mate.imageUrl != null and mate.imageUrl != ''}"
+                  th:src="@{/files/{url}(url=${mate.imageUrl})}"
+                  alt="크루 이미지"
+                />
+                <div
+                  th:if="${mate.imageUrl == null or mate.imageUrl == ''}"
+                  class="default-profile"
+                >
+                  <i class="fa-solid fa-users"></i>
+                </div>
+              </div>
+
+              <div class="mate-card-info">
+                <p class="mate-name" th:text="${mate.mateName}">메이트명</p>
+                <p class="mate-region">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <span th:text="${mate.region}">지역</span>
+                </p>
+                <p class="mate-count">
+                  <i class="fa-solid fa-users"></i>
+                  <span
+                    ><span th:text="${mate.currentMembers}">1</span>/10</span
+                  >
+                </p>
+              </div>
+            </a>
+          </div>
+
+          <div th:if="${#lists.isEmpty(crewMates)}" class="no-mates">
+            <p>아직 크루가 없습니다.</p>
+          </div>
+
+          <a th:href="@{/addMate/crew}" class="mate-create-button"
+            >크루 만들기</a
+          >
+        </div>
       </div>
 
-      <div class="mate-section" id="group-section">
-        <h2 class="mate-section-title">러닝 크루</h2>
-
-        <div class="mate-grid">
-          <a th:each="mate : ${crewMates}" class="mate-card crew" th:href="@{/addMate/view/{no}(no=${mate.mateNo})}"
-            th:data-sport="${mate.sportType == '러닝' ? 'running' : 'weight'}"
-            style="text-decoration: none; color: inherit; display: block">
-            <div class="mate-card-image">
-              <img th:if="${mate.imageUrl != null and mate.imageUrl != ''}"
-                th:src="@{/files/{url}(url=${mate.imageUrl})}" alt="크루 이미지" />
-              <img th:if="${mate.imageUrl == null or mate.imageUrl == ''}" th:src="@{/images/members.png}"
-                alt="기본 크루 이미지" />
-            </div>
-
-            <div class="mate-card-info">
-              <p class="mate-name" th:text="${mate.mateName}">메이트명</p>
-              <p class="mate-region">
-                <i class="fa-solid fa-location-dot"></i>
-                <span th:text="${mate.region}">지역</span>
-              </p>
-              <p class="mate-count">
-                <i class="fa-solid fa-users"></i>
-                <span><span th:text="${mate.currentMembers}">1</span>/10</span>
-              </p>
-            </div>
-          </a>
-        </div>
-
-        <div th:if="${#lists.isEmpty(crewMates)}" class="no-mates">
-          <p>아직 크루가 없습니다.</p>
-        </div>
-
-
-      </div>
+      <script th:src="@{/js/mate-filter.js}"></script>
     </div>
-
-    <script th:src="@{/js/mate-filter.js}"></script>
-  </div>
-</body>
-
+  </body>
 </html>
