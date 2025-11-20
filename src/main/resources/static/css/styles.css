@@ -2518,3 +2518,162 @@ h1 {
 /* * * * * * * * * * * * * * * * * * * * * * * * */
 /* * 여기까지 mate manage 게시판 스타일 * * */
 /* * * * * * * * * * * * * * * * * * * * * * * * */
+
+
+/* ==================================================== */
+/* 메이트 신청 상세 조회 (mateDetail.html) 전용 스타일 */
+/* ==================================================== */
+
+.mate-detail-wrap {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 0 10px;
+}
+
+.board-title {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 800;
+  /* 더 굵게 */
+  margin-bottom: 30px;
+  color: #333;
+}
+
+/* === 메인 섹션 구분 블록 (RECEIVED / SENT) === */
+.match-card-block {
+  margin-bottom: 40px;
+  border: 1px solid var(--dashed-border);
+  border-radius: 8px;
+  overflow: hidden;
+  /* 헤더와 본문이 잘리도록 */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* 섹션 헤더 (받은 신청 조회 / 보낸 신청 조회) */
+.section-header {
+  padding: 12px 20px;
+  background-color: var(--primary);
+  color: white;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  /* 둥근 모서리 제거 후 본문과 붙도록 */
+  border-radius: 0;
+}
+
+/* --- 프로필 및 정보 블록 (카드 본문) --- */
+.profile-card-content {
+  padding: 40px 30px;
+  background-color: white;
+  display: flex;
+}
+
+.profile-info-block {
+  display: flex;
+  align-items: flex-start;
+  padding-bottom: 15px;
+}
+
+.profile-img {
+  width: 200px;
+  height: 200px;
+  border-radius: 5px;
+  object-fit: cover;
+  margin-right: 20px;
+  flex-shrink: 0;
+  border: none;
+}
+
+.text-info-block {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-top: 5px;
+}
+
+.text-info-block span {
+  font-size: 16px;
+}
+
+
+
+.message-text {
+  padding-top: 10px;
+  border-top: 1px dashed var(--dashed-border);
+  font-size: 16px;
+  color: #444;
+}
+
+/* === 액션 바 컨테이너 === */
+.action-bar {
+  padding: 0 30px 20px;
+  display: flex;
+  justify-content: center;
+
+}
+
+/* RECEIVED 액션 바 내부 스타일 */
+.received-actions {
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+  margin-top: 15px;
+}
+
+
+
+.received-actions .action-form {
+  display: flex;
+  max-width: 350px;
+  width: 100%;
+  gap: 15px;
+}
+
+/* SENT 액션 바 내부 스타일 */
+.sent-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px 0;
+}
+
+
+/* === 버튼 공통 === */
+.btn-action {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  text-align: center;
+  text-decoration: none;
+}
+
+.received-actions .btn-action {
+  flex: 1;
+  /* RECEIVED 버튼을 균등하게 분배 */
+  padding: 12px 0;
+  /* 버튼 너비 제한 */
+}
+
+.btn-accept {
+  background-color: var(--primary);
+  color: white;
+}
+
+/* 수락: 보라색 */
+.btn-reject {
+  background-color: var(--accent);
+  color: white;
+}
+
+/* 거절: 빨간색 */
+.btn-cancel {
+  background-color: var(--accent);
+  color: white;
+}
+
+/* 신청 취소: 빨간색 */
