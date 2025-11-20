@@ -816,7 +816,7 @@ hamburgerButton.addEventListener('click', () => {
 /* * * * * * * * * * * * * * * * * * * * * * * */
 
 .post-container {
-  max-width: 1200px;
+  max-width: 800px;
   margin: 0px auto;
   padding: 0 20px;
 }
@@ -828,15 +828,22 @@ hamburgerButton.addEventListener('click', () => {
   font-size: 30px;
   font-weight: bold;
   height: 150px;
+  color: black;
 }
 
 /* 탭 메뉴 (러닝/웨이트) */
 .post-box {
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 50px;
+  gap: 20px;
   height: 100px;
+  min-width: 0;
+}
+
+.weight-post,
+.running-post {
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 
 .weight-post a,
@@ -844,7 +851,7 @@ hamburgerButton.addEventListener('click', () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 500px;
+  width: 100%;
   height: 50px;
   border-radius: 8px;
   background-color: #f3f4f6;
@@ -853,6 +860,8 @@ hamburgerButton.addEventListener('click', () => {
   text-decoration: none;
   transition: all 0.2s ease;
   cursor: pointer;
+  flex-grow: 0;
+  flex-shrink: 0;
 }
 
 /* 게시판 선택되면 스타일 적용 */
@@ -861,7 +870,7 @@ hamburgerButton.addEventListener('click', () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 500px;
+  width: auto;
   height: 50px;
   border-radius: 8px;
   background-color: #4b5ae4;
@@ -950,13 +959,20 @@ hamburgerButton.addEventListener('click', () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 40px;
+  margin: 40px 0;
+}
+
+.pagination > div {
+    display: flex;
+    flex-wrap: wrap; /* 핵심: 내용이 넘치면 다음 줄로 이동하도록 설정 */
+    justify-content: center;
+    gap: 5px;
 }
 
 .page-link,
 .page-arrow {
+  display: inline-block;
   padding: 8px 12px;
-  margin: 0 5px;
   border: 1px solid #dee2e6;
   border-radius: 4px;
   color: #555;
@@ -973,9 +989,9 @@ hamburgerButton.addEventListener('click', () => {
 }
 
 .page-link.active {
-  background-color: #007bff;
+  background-color: var(--primary);
   color: #fff;
-  border-color: #007bff;
+  border-color: var(--primary);
   font-weight: bold;
 }
 
@@ -1019,15 +1035,28 @@ hamburgerButton.addEventListener('click', () => {
   align-items: center;
 }
 
+#boardTypeNo,
 .write-form-group input[type="text"],
-.write-form-group select {
+.write-form-group select,
+.write-form-group textarea {
   display: block;
   width: 100%;
   padding: 10px 15px;
   border: 1px solid #ddd;
   border-radius: 12px;
   font-size: 1rem;
-  background-color: #f3f4f6;
+  background-color: var(--light);
+}
+
+.write-form-group input[type="text"],
+.write-form-group select {
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.write-form-group select {
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23888" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>') no-repeat right 20px center;
+  background-size: 12px 12px;
 }
 
 #boardTypeNo {
@@ -1646,7 +1675,7 @@ th {
   /* 행 간격 */
   border: 1px solid #ddd;
   border-radius: 12px;
-  background-color: #fcfcfc;
+  background-color: #f3f4f6;
   overflow: hidden;
   /* 둥근 모서리 적용 */
 }
@@ -1679,18 +1708,18 @@ th {
   margin-right: 10px;
   color: #555;
   width: 20px;
-  /* 아이콘 정렬 */
   text-align: center;
 }
 
 /* 폼 입력창 (select, input) */
-.mate-form-group .mate-input {
+.mate-form-group .mate-input,
+.mate-form-group .mateselect-input {
   flex-grow: 1;
   height: 60px;
   padding: 0 20px;
   border: none;
   border-radius: 8px;
-  background: F3F4F6;
+  background-color: #F3F4F6;
   font-size: 1rem;
   color: gray;
   appearance: none;
@@ -1705,9 +1734,12 @@ th {
   color: gray;
 }
 
-.mate-form-group select.mate-input {
+.mate-form-group select.mate-input,
+.mate-form-group select.mateselect-input {
   background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23888" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>') no-repeat right 20px center;
   background-size: 12px 12px;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 /* 파일 업로드 영역 (기존 write.html의 스타일 재활용) */
@@ -1890,14 +1922,29 @@ th {
 /* * * * * * * * * * * * * * * * * * * * * * * * */
 
 
+.my-management-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.mate-post-box {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  /* 버튼 사이 간격 유지 */
+  height: auto;
+}
+
 
 .my-crew-btn {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 525px;
+  width: 500px;
   height: 50px;
-  border-radius: 20px;
+  border-radius: 8px;
   background-color: #F3F4F6;
   color: BLACK;
   font-size: 20px;
@@ -1909,9 +1956,9 @@ th {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 525px;
+  width: 500px;
   height: 50px;
-  border-radius: 20px;
+  border-radius: 8px;
   background-color: #4B5AE4;
   color: white;
   font-size: 20px;
@@ -1975,6 +2022,7 @@ th {
   margin-top: 20px;
   padding-top: 20px;
   border-top: 2px dotted #ccc;
+  gap: 30;
 }
 
 .btn-crew-edit,
@@ -1985,7 +2033,7 @@ th {
   padding: 10px 0;
   text-align: center;
   text-decoration: none;
-  border-radius: 25px;
+  border-radius: 8px;
   color: white;
   font-weight: 700;
   font-size: 1rem;

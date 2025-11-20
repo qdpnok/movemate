@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
-    layout:decorate="~{/layout/main}">
+      layout:decorate="~{/layout/main}">
 
 <head>
     <meta charset="UTF-8">
@@ -17,72 +17,90 @@
 
 
 <body>
-    <div layout:fragment="content">
-        <div class="post-container">
-            <h1 class="board">메이트 게시판</h1>
+<div layout:fragment="content">
+    <div class="post-container">
+        <h1 class="board">메이트 게시판</h1>
 
-            <div th:if="${successMessage}" class="alert alert-success">
-                <p th:text="${successMessage}"></p>
-            </div>
-            <div th:if="${errorMessage}" class="alert alert-danger">
-                <p th:text="${errorMessage}"></p>
-            </div>
-
-            <div class="post-box">
-                <div class="running-post">
-                    <a th:href="@{/posts}">러닝 게시판</a>
-                </div>
-                <div class="weight-post active">
-                    <a th:href="@{/posts/weight}">웨이트 게시판</a>
-                </div>
-            </div>
-
-            <div class="add-post">
-                <a th:href="@{/posts/write}" class="btn-write">글쓰기</a>
-            </div>
-            <div class="post-card">
-
-                <div class="card" th:each="post : ${postList}">
-
-                    <a th:href="@{/posts/{postId}(postId=${post.postNo}, from='weight')}" class="card-title-link">
-                        <h3 class="card-title" th:text="${post.title}">게시글 제목</h3>
-                    </a>
-
-                    <p class="card-content" th:text="${post.content}">게시글 내용 미리보기</p>
-                    <div class="card-footer">
-                        <span class="author" th:text="|작성자: ${post.authorId}|">작성자</span>
-                        <span class="date" th:text="${#temporals.format(post.createdAt,'yy-MM-dd HH:mm')}">작성일</span>
-                    </div>
-                </div>
-                <div class="empty-message" th:if="${#lists.isEmpty(postList)}">
-                    <p>등록된 게시글이 없습니다.</p>
-                </div>
-            </div>
-
-            <nav class="pagination">
-                <a href="#" class="page-arrow">&lt;&lt;</a>
-                <a href="#" class="page-arrow">&lt;</a>
-
-                <a href="#" class="page-link active">1</a>
-                <a href="#" class="page-link">2</a>
-                <a href="#" class="page-link">3</a>
-                <a href="#" class="page-link">4</a>
-                <a href="#" class="page-link">5</a>
-                <a href="#" class="page-link">6</a>
-                <a href="#" class="page-link">7</a>
-                <a href="#" class="page-link">8</a>
-                <a href="#" class="page-link">9</a>
-                <a href="#" class="page-link">10</a>
-
-                <a href="#" class="page-arrow">&gt;</a>
-                <a href="#" class="page-arrow">&gt;&gt;</a>
-            </nav>
+        <div th:if="${successMessage}" class="alert alert-success">
+            <p th:text="${successMessage}"></p>
         </div>
+        <div th:if="${errorMessage}" class="alert alert-danger">
+            <p th:text="${errorMessage}"></p>
+        </div>
+
+        <div class="post-box">
+            <div class="running-post">
+                <a th:href="@{/posts/running/1}">러닝 게시판</a>
+            </div>
+            <div class="weight-post active">
+                <a th:href="@{/posts/weight/1}">웨이트 게시판</a>
+            </div>
+        </div>
+
+        <div class="add-post">
+            <a th:href="@{/posts/write}" class="btn-write">글쓰기</a>
+        </div>
+        <div class="post-card">
+
+            <div class="card" th:each="post : ${pagedRes.dataList}">
+
+                <a th:href="@{/posts/{postId}(postId=${post.postNo}, from='weight')}" class="card-title-link">
+                    <h3 class="card-title" th:text="${post.title}">게시글 제목</h3>
+                </a>
+
+                <p class="card-content" th:text="${post.content}">게시글 내용 미리보기</p>
+                <div class="card-footer">
+                    <span class="author" th:text="|작성자: ${post.authorId}|">작성자</span>
+                    <span class="date" th:text="${#temporals.format(post.createdAt,'yy-MM-dd HH:mm')}">작성일</span>
+                </div>
+            </div>
+            <div class="empty-message" th:if="${#lists.isEmpty(pagedRes.dataList)}">
+                <p>등록된 게시글이 없습니다.</p>
+            </div>
+        </div>
+
+        <nav class="pagination">
+            <!-- currentBoardPath 정의 변경: /posts/running/list/ -> /posts/running/ -->
+            <div th:with="info=${pagedRes.pageInfo},
+          blockSize=10,
+          startPage=${(info.page - 1) / blockSize * blockSize + 1},
+          safeTotalPages=${info.totalPages == 0 ? 1 : info.totalPages},
+          endPage=${(startPage + blockSize - 1) < safeTotalPages ? (startPage + blockSize - 1) : safeTotalPages},
+
+          currentBoardPath=${boardTypeNo == 1 ? '/posts/running/' : '/posts/weight/'}">
+
+                <!-- 1. << (처음으로) 링크: /posts (기본 경로로 리다이렉트) -->
+                <a th:href="@{/posts}"
+                   class="page-arrow" th:classappend="${info.page == 1} ? 'disabled' : ''">&lt;&lt;</a>
+
+                <!-- 2. < (이전 블록) 링크: 명시적 경로 + 페이지 번호 -->
+                <a th:if="${startPage > blockSize}"
+                   th:href="@{${currentBoardPath} + ${startPage - blockSize}}"
+                   class="page-arrow">&lt;</a>
+                <span th:unless="${startPage > blockSize}" class="page-arrow disabled">&lt;</span>
+
+                <th:block th:each="i : ${#numbers.sequence(startPage, endPage)}">
+                    <!-- 현재 페이지는 활성화 클래스 적용 -->
+                    <a th:if="${i == info.page}" href="#" class="page-link active" th:text="${i}">1</a>
+                    <!-- 3. 특정 페이지 링크: 명시적 경로 + 페이지 번호 -->
+                    <a th:unless="${i == info.page}"
+                       th:href="@{${currentBoardPath} + ${i}}"
+                       class="page-link" th:text="${i}">2</a>
+                </th:block>
+
+                <!-- 4. > (다음 블록) 링크: 명시적 경로 + 페이지 번호 -->
+                <a th:if="${endPage < info.totalPages}"
+                   th:href="@{${currentBoardPath} + ${startPage + blockSize}}"
+                   class="page-arrow">&gt;</a>
+                <span th:unless="${endPage < info.totalPages}" class="page-arrow disabled">&gt;</span>
+
+                <!-- 5. >> (마지막 페이지) 링크: 명시적 경로 + 마지막 페이지 번호 -->
+                <a th:href="@{${currentBoardPath} + ${info.totalPages}}"
+                   class="page-arrow" th:classappend="${info.page == info.totalPages or info.totalPages == 0} ? 'disabled' : ''">&gt;&gt;</a>
+            </div>
+        </nav>
     </div>
-    <script>
-
-
-    </script>
+</div>
 </body>
 
 </html>
