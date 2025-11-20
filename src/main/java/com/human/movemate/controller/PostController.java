@@ -24,33 +24,35 @@ public class PostController {
     private final PostService postService;
     private final CommentService commentService;
 
-    @GetMapping("/list/{boardTypeNo}")
-    public String getPostsByBoard(@PathVariable Long boardTypeNo,
-                                  @RequestParam(defaultValue = "1") int page,
+    @GetMapping("/running/{page}")
+    public String getPageRunning(@PathVariable int page,
                                   @RequestParam(defaultValue = "10") int size, Model model) {
         if (page < 1) page = 1;
         if (size < 1) size = 10;
 
-        PagedResDto<Post> pagedRes = postService.getPagination(boardTypeNo, page, size);
+        PagedResDto<Post> pagedRes = postService.getPagination(1L, page, size);
 
         model.addAttribute("pagedRes", pagedRes);
-        model.addAttribute("boardTypeNo");
+        model.addAttribute("boardTypeNo", 1);
 
-        log.info ("페이지네이션 data : {}", pagedRes);
+        log.info ("페이지네이션 data : {}", pagedRes.getPageInfo());
 
-        if (boardTypeNo == 1) return "post/running_post_page";
-        else return "post/weight_post";
-    }
-
-    @GetMapping // 러닝 게시판(디폴트 값으로 가져감)
-    public String postPageRunning(Model model) {
-        model.addAttribute("postList", postService.find(1L));
         return "post/running_post";
     }
 
-    @GetMapping("/weight") // 웨이트 게시판
-    public String postPageWeight(Model model) {
-        model.addAttribute("postList", postService.find(2L));
+    @GetMapping("/weight/{page}")
+    public String getPageWeight(@PathVariable int page,
+                                  @RequestParam(defaultValue = "10") int size, Model model) {
+        if (page < 1) page = 1;
+        if (size < 1) size = 10;
+
+        PagedResDto<Post> pagedRes = postService.getPagination(2L, page, size);
+
+        model.addAttribute("pagedRes", pagedRes);
+        model.addAttribute("boardTypeNo", 2);
+
+        log.info ("페이지네이션 data : {}", pagedRes.getPageInfo());
+
         return "post/weight_post";
     }
 
