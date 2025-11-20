@@ -606,19 +606,22 @@ main {
 .main-mate-card.crew .main-mate-card-image {
   width: 100%;
   height: 200px;
-  background-color: #f7f7f7;
-  /* 배경색 밝게 변경 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  box-sizing: border-box;
+  /* 이미지 높이 고정 */
+  background-color: #f0f0f0;
+  /* 기본 배경색 */
+  overflow: hidden;
+  /* 넘치는 이미지 자르기 */
+  position: relative;
+  /* 위치 기준점 */
+  display: block;
 }
 
 .main-mate-card.crew .main-mate-card-image img {
-  width: 60%;
-  height: auto;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* 비율 유지하며 꽉 채우기 */
+  display: block;
 }
 
 /* 카드 이미지 (1:1) */
@@ -652,6 +655,23 @@ main {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* --- 기본 프로필 아이콘 스타일 (꽉 찬 느낌) --- */
+.default-profile {
+  width: 100%;
+  height: 100%;
+  background-color: #e0e0e0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.default-profile i {
+  font-size: 160px;
+  color: #ffffff;
+  transform: translateY(15px);
 }
 
 /* 카드 정보 텍스트 */
@@ -962,11 +982,12 @@ hamburgerButton.addEventListener('click', () => {
   margin: 40px 0;
 }
 
-.pagination > div {
-    display: flex;
-    flex-wrap: wrap; /* 핵심: 내용이 넘치면 다음 줄로 이동하도록 설정 */
-    justify-content: center;
-    gap: 5px;
+.pagination>div {
+  display: flex;
+  flex-wrap: wrap;
+  /* 핵심: 내용이 넘치면 다음 줄로 이동하도록 설정 */
+  justify-content: center;
+  gap: 5px;
 }
 
 .page-link,
@@ -2369,10 +2390,20 @@ h1 {
 /* * * * * * * * * * * * * * * * * * * * * * * * */
 /* * 여기부터 mate manage 게시판 스타일 * * */
 /* * * * * * * * * * * * * * * * * * * * * * * * */
+
+.manage-container {
+  max-width: 1000px;
+  margin: 0px auto;
+  padding: 0 20px;
+}
+
 .postcontainer {
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 30px auto;
   padding: 0 20px;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
 }
 
 .profile-card {
@@ -2390,10 +2421,7 @@ h1 {
   text-align: center;
   transition: transform 0.2s ease;
   margin: 10px;
-}
-
-.profile-card:hover {
-  transform: translateY(-5px);
+  gap: 10px;
 }
 
 .profile-card img {
@@ -2415,30 +2443,30 @@ h1 {
   color: #666;
 }
 
-/* ------------------------------------------------ */
-/* 🚨 버튼 스타일을 위한 CSS 추가 및 수정 🚨 */
 .manage-menu {
   display: flex;
-  justify-content: center;
-  /* 버튼을 중앙에 배치 */
-  margin-bottom: 30px;
+  justify-content: space-between;
+  width: 100%;
+  height: 50px;
   gap: 15px;
-  /* 버튼 사이 간격 */
 }
 
-/* 기본 버튼 스타일 */
 .manage-menu a {
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  flex-shrink: 1;
+  width: 100%;
+  height: 50px;
   padding: 10px 25px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  /* 모서리 둥글게 */
   text-decoration: none;
   color: #444;
   background-color: #f0f0f0;
   font-size: 16px;
   font-weight: normal;
-  /* 기존 active a의 bold를 일반화 */
   transition: all 0.2s ease;
 }
 
@@ -2450,11 +2478,9 @@ h1 {
 
 /* 현재 활성화된 탭의 버튼 스타일 */
 .manage-menu .active {
-  /* <a> 태그에 active 클래스가 직접 붙습니다 */
   font-weight: bold;
   color: #fff;
-  background-color: #5c6bc0;
-  border-color: #5c6bc0;
+  background-color: #4b5ae4;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
 }
 
@@ -2474,6 +2500,8 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  justify-content: space-between;
+  padding: 20px;
 }
 
 .group-title {
@@ -2490,3 +2518,162 @@ h1 {
 /* * * * * * * * * * * * * * * * * * * * * * * * */
 /* * 여기까지 mate manage 게시판 스타일 * * */
 /* * * * * * * * * * * * * * * * * * * * * * * * */
+
+
+/* ==================================================== */
+/* 메이트 신청 상세 조회 (mateDetail.html) 전용 스타일 */
+/* ==================================================== */
+
+.mate-detail-wrap {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 0 10px;
+}
+
+.board-title {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 800;
+  /* 더 굵게 */
+  margin-bottom: 30px;
+  color: #333;
+}
+
+/* === 메인 섹션 구분 블록 (RECEIVED / SENT) === */
+.match-card-block {
+  margin-bottom: 40px;
+  border: 1px solid var(--dashed-border);
+  border-radius: 8px;
+  overflow: hidden;
+  /* 헤더와 본문이 잘리도록 */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* 섹션 헤더 (받은 신청 조회 / 보낸 신청 조회) */
+.section-header {
+  padding: 12px 20px;
+  background-color: var(--primary);
+  color: white;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  /* 둥근 모서리 제거 후 본문과 붙도록 */
+  border-radius: 0;
+}
+
+/* --- 프로필 및 정보 블록 (카드 본문) --- */
+.profile-card-content {
+  padding: 40px 30px;
+  background-color: white;
+  display: flex;
+}
+
+.profile-info-block {
+  display: flex;
+  align-items: flex-start;
+  padding-bottom: 15px;
+}
+
+.profile-img {
+  width: 200px;
+  height: 200px;
+  border-radius: 5px;
+  object-fit: cover;
+  margin-right: 20px;
+  flex-shrink: 0;
+  border: none;
+}
+
+.text-info-block {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-top: 5px;
+}
+
+.text-info-block span {
+  font-size: 16px;
+}
+
+
+
+.message-text {
+  padding-top: 10px;
+  border-top: 1px dashed var(--dashed-border);
+  font-size: 16px;
+  color: #444;
+}
+
+/* === 액션 바 컨테이너 === */
+.action-bar {
+  padding: 0 30px 20px;
+  display: flex;
+  justify-content: center;
+
+}
+
+/* RECEIVED 액션 바 내부 스타일 */
+.received-actions {
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+  margin-top: 15px;
+}
+
+
+
+.received-actions .action-form {
+  display: flex;
+  max-width: 350px;
+  width: 100%;
+  gap: 15px;
+}
+
+/* SENT 액션 바 내부 스타일 */
+.sent-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px 0;
+}
+
+
+/* === 버튼 공통 === */
+.btn-action {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  text-align: center;
+  text-decoration: none;
+}
+
+.received-actions .btn-action {
+  flex: 1;
+  /* RECEIVED 버튼을 균등하게 분배 */
+  padding: 12px 0;
+  /* 버튼 너비 제한 */
+}
+
+.btn-accept {
+  background-color: var(--primary);
+  color: white;
+}
+
+/* 수락: 보라색 */
+.btn-reject {
+  background-color: var(--accent);
+  color: white;
+}
+
+/* 거절: 빨간색 */
+.btn-cancel {
+  background-color: var(--accent);
+  color: white;
+}
+
+/* 신청 취소: 빨간색 */

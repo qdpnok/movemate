@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{/layout/main}"
+>
+<head>
+    <meta charset="UTF-8" />
+    <title>1:1 mate list</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div id="match-list-solo-container">
+        <h1 class="board">메이트 크루 매칭 목록</h1>
+        <div class="post-box">
+            <div th:classappend="${currentSportType == 'running'} ? 'active' : ''" class="running-post">
+                <a th:href="@{/mate/matching/crew/running}">러닝 크루</a>
+            </div>
+            <div th:classappend="${currentSportType == 'weight'} ? 'active' : ''" class="weight-post">
+                <a th:href="@{/mate/matching/crew/weight}">웨이트 크루</a>
+            </div>
+        </div>
+        <h2 th:if="${currentSportType == 'running'}" class="sub-title">러닝 크루</h2>
+        <h2 th:if="${currentSportType == 'weight'}" class="sub-title">웨이트 크루</h2>
+        <div class="card-box">
+            <div class="matching-card" th:if="${!matches.isEmpty()}">
+                <div class="matching-card-img-info" th:each="match : ${matches}">
+                    <img th:src="${match.imageUrl} != null ? @{'/files/'+${userInfo.profileImageUrl}} : @{'/images/profile.png'}" alt="메이트 사진" class="matching-card-img">
+                    <div class="matching-card-info">
+                        <p>크루명 : <span th:text="*{mateName}">이름</span></p>
+                        <p>지역 : <span th:text="*{region}">지역</span></p>
+                        <p>종목 : <span th:text="*{sportType}">종목</span></p>
+                        <p>크루 가입일 : <span th:text="${#temporals.format(match.createdAt, 'yy-MM-dd')}">날짜</span></p>
+                        <p>크루 가입 기간 : <span th:text="|D+${match.getDurationDays()}|">기간</span></p>
+                    </div>
+                </div>
+                <div class="cut_mate_bar">
+                    <button id="go-posts">게시판 가기</button>
+                    <button id="mate-cut">탈퇴하기</button>
+                </div>
+            </div>
+            <div class="empty-message" th:if="${matches.isEmpty()}">
+                <p>매칭 정보가 없습니다.</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

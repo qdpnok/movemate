@@ -64,9 +64,9 @@
                                  style="display:none;"> <!-- 초기엔 숨김 처리 (JS가 복사해서 사용) -->
 
                                 <a th:href="@{/mates/{mateId}(mateId=${match.mateNo})}" class="card-title-link">
-                                    <img th:src="${match.opponentProfileImageUrl} != null ? @{'/files/'+${match.opponentProfileImageUrl}} : @{'/images/profile.png'}"/>
+                                    <img th:src="${match.imageUrl} != null ? @{'/files/'+${match.imageUrl}} : @{'/images/profile.png'}"/>
                                 </a>
-                                <p th:text="${match.opponentName}"></p>
+                                <p th:text="${match.mateName}"></p>
                                 <p th:text="${match.region}"></p>
 
                                 <a id="mate-cut" th:href="@{/mates/terminate(mateNo=${match.mateNo})}"
