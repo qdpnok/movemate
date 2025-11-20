@@ -53,7 +53,17 @@
                           style="text-decoration: none; color: inherit; display: block"
                   >
                       <div class="main-mate-card-image">
-                          <img th:src="@{/images/members.png}" alt="크루 프로필" />
+                          <img
+                                  th:if="${crew.imageUrl != null and crew.imageUrl != ''}"
+                                  th:src="@{/files/{url}(url=${crew.imageUrl})}"
+                                  alt="크루 이미지"
+                          />
+                          <div
+                                  th:if="${crew.imageUrl == null or crew.imageUrl == ''}"
+                                  class="default-profile"
+                          >
+                              <i class="fa-solid fa-users"></i>
+                          </div>
                       </div>
 
                       <div class="mate-card-info">
