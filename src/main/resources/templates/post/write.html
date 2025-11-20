@@ -24,9 +24,9 @@
                 <div class="write-form-group">
                     <label for="boardTypeNo">게시판 선택</label>
                     <select id="boardTypeNo" th:field="*{boardTypeNo}">
-                        <option value="">게시판을 선택해주세요</option>
-                        <option value="1">러닝 게시판</option>
-                        <option value="2">웨이트 게시판</option>
+                        <option class="write-form" value="">게시판을 선택해주세요</option>
+                        <option class="write-form" value="1">러닝 게시판</option>
+                        <option class="write-form" value="2">웨이트 게시판</option>
                     </select>
                 </div>
 
@@ -38,8 +38,8 @@
                 <div class="write-form-group file-group">
                     <label class="file-label">사진 업로드</label>
                     <div class="file-input-wrapper">
-                        <input id="postImageInput" class="file-input-real" type="file" name="postImage"
-                            accept="image/*" />
+                        <input id="postImageInput" class="file-input-real" type="file" th:field="*{postImage}"
+                            name="postImage" accept="image/*" />
                         <label for="postImageInput" class="file-input-fake">
                             <span class="file-placeholder">(선택) 업로드할 이미지를 선택해주세요</span>
                         </label>
@@ -58,6 +58,25 @@
             </form>
 
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+
+                try {
+                    const fileInput = document.getElementById('postImageInput');
+                    const filePlaceholder = document.querySelector('.file-placeholder');
+
+                    fileInput.addEventListener('change', () => {
+                        if (fileInput.files.length > 0) {
+                            filePlaceholder.textContent = fileInput.files[0].name;
+                        } else {
+                            filePlaceholder.textContent = '(선택) 업로드할 이미지를 선택해주세요';
+                        }
+                    });
+                } catch (e) {
+                    console.error("파일 업로드 스크립트 오류:", e);
+                }
+            });
+        </script>
     </div>
 
 </body>

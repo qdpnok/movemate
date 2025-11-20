@@ -20,3 +20,4 @@ public class MatchServiceImpl implements MatchingService {
         return matchDao.findByNo(no);
     }
 }
+
