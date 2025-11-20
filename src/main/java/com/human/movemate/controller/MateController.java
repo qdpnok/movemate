@@ -183,4 +183,25 @@ public class MateController {
         return "mate/match_list_solo";
     }
 
+    @GetMapping("/matching/crew/{sportType}")
+    public String myMatchCrew(@PathVariable String sportType, HttpSession session, Model model) {
+        User user = (User) session.getAttribute("loginUser");
+
+        if (user == null) {
+            log.warn("탈퇴 실패: 권한 없는 사용자 또는 비로그인 상태");
+            // 보안을 위해 권한이 없으면 메인으로 리다이렉트
+            return "redirect:/";
+        }
+
+        String type;
+        if (Objects.equals(sportType, "running")) type = "러닝";
+        else type = "웨이트";
+
+        List<MatchingHistoryDto> matchList = matchingService.findByType(user.getUserNo(), "CREW", type);
+        model.addAttribute("matches", matchList);
+        model.addAttribute("currentSportType", sportType);
+
+        return "mate/match_list_crew";
+    }
+
 }
