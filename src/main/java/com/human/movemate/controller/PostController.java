@@ -120,7 +120,7 @@ public class PostController {
             // return "redirect:/posts/write";
         }
         // 저장이 성공하든 실패하든, 메시지를 담아서 목록 페이지로 리다이렉트
-        return "redirect:/posts"; // 추후 이(가) 완료되었습니다 공통 페이지로 변경 필요
+        return "redirect:/running/1"; // 추후 이(가) 완료되었습니다 공통 페이지로 변경 필요
     }
 
     // "어디서 왔는지"를 @RequestParam(value = "from")으로 받음
