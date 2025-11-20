@@ -1,5 +1,6 @@
 package com.human.movemate.dao;
 
+import com.human.movemate.dto.ApplyReqDto;
 import com.human.movemate.dto.MateMemberDto;
 import com.human.movemate.model.MateMember;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,10 @@ public class MateMemberDao {
         jdbc.update("DELETE FROM MATE_MEMBER WHERE member_no = ?", memberNo);
     }
 
-    public void save(MateMember mateMember) {
+    public boolean save(ApplyReqDto applyReqDto) {
+        @Language("SQL")
+        String sql = "INSERT INTO MATE_APPLICATION (mate_no, applicant_user_no, application_message) VALUES (?, ?, ?)";
+
+        return jdbc.update(sql, applyReqDto.getMateNo(), applyReqDto.getApplicantUserNo(), applyReqDto.getApplicationMessage()) > 0;
     }
 }
