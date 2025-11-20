@@ -1,6 +1,8 @@
 package com.human.movemate.service.impl;
 
-
+import com.human.movemate.dao.AddMateDao;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.transaction.annotation.Transactional;
 import com.human.movemate.dao.MateDao;
 import com.human.movemate.dto.MatchingDetailDto;
 import com.human.movemate.model.AddMate;
@@ -11,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,6 +22,7 @@ import java.util.List;
 public class MateServiceImpl implements MateService {
 
     private final MateDao mateDao; // 창고지기(DAO)를 부름
+    private final AddMateDao addMateDao; // 창고지기(DAO)를 부름
 
     @Override
     public List<AddMate> findAllMates() {
@@ -62,6 +66,55 @@ public class MateServiceImpl implements MateService {
     @Override
     public List<AddMate> findTop3Solo() {
         return mateDao.findTop3Solo();
+    }
+
+    // 매칭 상태 변경 로직
+    @Override
+    @Transactional // DB 작업을 하나의 논리적 단위로 묶어줍니다.
+    public void updateMatchingStatus(Long matchNo, String status) {
+
+        // 1. DAO를 호출하여 매칭 상태를 변경
+        mateDao.updateStatus(matchNo, status);
+
+        // 2. [비즈니스 로직]: 수락 시 (status == "ACCEPT")
+        if ("ACCEPT".equals(status)) {
+            try {
+                // 2-1. 매칭 번호로 모집글 번호를 찾습니다.
+                Long mateNo = mateDao.findMateNoByMatchNo(matchNo);
+
+                // 2-2. 해당 모집글의 현재 인원(current_members)을 1 증가시킵니다.
+                addMateDao.incrementCurrentMembers(mateNo); // ⬅️ AddMateDao 사용으로 수정
+
+                // 2-3. ★★★ 핵심: MATE_MEMBER 테이블에 신청자 추가 로직 (MateMemberDao가 필요)
+                // MatchingDetailDto detail = mateDao.findMatchingDetail(matchNo);
+                // if (detail != null && mateMemberDao != null) {
+                //     mateMemberDao.save(new MateMember(mateNo, detail.getApplicantNo()));
+                // }
+
+                log.info("매칭 수락 완료: MatchNo={}, MateNo={}. MATE 인원 1 증가 처리됨.", matchNo, mateNo);
+
+            } catch (EmptyResultDataAccessException e) {
+                log.error("매칭({})에 연결된 모집글(Mate)을 찾을 수 없습니다. 인원 증가 실패. 트랜잭션 롤백됨.", matchNo);
+                throw new RuntimeException("매칭된 모집글 정보를 찾을 수 없습니다.", e);
+            }
+        }
+
+        log.info("매칭 상태 변경 완료: MatchNo={}, Status={}", matchNo, status);
+    }
+
+    @Override
+    public List<MatchingDto> findAcceptedMatchings(Long userNo) {
+        // 1. 내가 만든 글에 수락된 사람 목록 (내가 수락자)
+        List<MatchingDto> receivedAccepts = mateDao.findAcceptedMatchingsByWriter(userNo);
+
+        // 2. 내가 신청해서 수락된 글 목록 (내가 신청자)
+        List<MatchingDto> sentAccepts = mateDao.findAcceptedMatchingsByApplicant(userNo);
+
+        // 3. 두 목록을 합치기 (나의 모든 매칭 완료 목록)
+        List<MatchingDto> combinedList = new ArrayList<>(receivedAccepts);
+        combinedList.addAll(sentAccepts);
+
+        return combinedList;
     }
 
 }

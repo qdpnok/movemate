@@ -31,12 +31,14 @@ public class MateDao {
                 "T1.MATCH_NO, " +
                 "T4.USER_NO AS userNo, T2.NAME AS name, T3.REGION AS region, " + // ★ 상대방: 모집글 작성자(T4.USER_NO)
                 "T3.PROFILE_IMAGE_URL AS profileImageUrl, T1.STATUS AS MATCH_STATUS, " +
-                "T4.MATE_NAME AS postTitle, T4.MATE_TYPE AS postType " +
+                "T4.MATE_NAME AS postTitle, T4.MATE_TYPE AS postType, " +
+                "T4.SPORT_TYPE AS sportType " +
                 "FROM MATCHING T1 " +
                 "JOIN MATE T4 ON T1.MATE_NO = T4.MATE_NO " +             // MATCHING과 MATE 연결
                 "JOIN USERS T2 ON T4.USER_NO = T2.USER_NO " +            // MATE 작성자(상대방) 정보 조인
                 "JOIN USER_PROFILE T3 ON T2.USER_NO = T3.USER_NO " +
-                "WHERE T1.APPLICANT_USER_NO = ?"; // 로그인 유저가 신청자
+                "WHERE T1.APPLICANT_USER_NO = ?" + // 로그인 유저가 신청자
+                "AND T1.STATUS = '대기'"; // '대기' 상태인 것만 조회하도록 추가, 수락/거절 버튼 누른 대상자 안보이게 함
 
         // 쿼리 결과 매핑 (MatchingDto에 맞게 수정)
         return jdbc.query(sql, new Object[]{userNo}, (rs, rowNum) -> {
@@ -48,7 +50,8 @@ public class MateDao {
                     rs.getString("profileImageUrl"),
                     rs.getString("MATCH_STATUS"),
                     rs.getString("postTitle"),
-                    rs.getString("postType")
+                    rs.getString("postType"),
+                    rs.getString("sportType")
             );
         });
     }
@@ -64,12 +67,14 @@ public class MateDao {
                 "T1.MATCH_NO, " +
                 "T1.APPLICANT_USER_NO AS userNo, T2.NAME AS name, T3.REGION AS region, " + // ★ 상대방: 신청자(T1.APPLICANT_USER_NO)
                 "T3.PROFILE_IMAGE_URL AS profileImageUrl, T1.STATUS AS MATCH_STATUS, " +
-                "T4.MATE_NAME AS postTitle, T4.MATE_TYPE AS postType " +
+                "T4.MATE_NAME AS postTitle, T4.MATE_TYPE AS postType, " +
+                "T4.SPORT_TYPE AS sportType " +
                 "FROM MATCHING T1 " +
                 "JOIN MATE T4 ON T1.MATE_NO = T4.MATE_NO " +             // MATCHING과 MATE 연결
                 "JOIN USERS T2 ON T1.APPLICANT_USER_NO = T2.USER_NO " +  // 신청자(상대방) 정보 조인
                 "JOIN USER_PROFILE T3 ON T2.USER_NO = T3.USER_NO " +
-                "WHERE T4.USER_NO = ?"; // 로그인 유저가 모집글 작성자
+                "WHERE T4.USER_NO = ?" + // 로그인 유저가 모집글 작성자
+                "AND T1.STATUS = '대기'"; // '대기' 상태인 것만 조회하도록 추가, 수락/거절 버튼 누른 대상자 안보이게 함
 
         // 쿼리 결과 매핑 (MatchingDto에 맞게 수정)
         return jdbc.query(sql, new Object[]{userNo}, (rs, rowNum) -> {
@@ -81,7 +86,8 @@ public class MateDao {
                     rs.getString("profileImageUrl"),
                     rs.getString("MATCH_STATUS"),
                     rs.getString("postTitle"),
-                    rs.getString("postType")
+                    rs.getString("postType"),
+                    rs.getString("sportType")
             );
         });
 
@@ -187,6 +193,92 @@ public class MateDao {
 
             return dto;
         }
+    }
+
+    // 매칭 신청 상태 업데이트(ACCEPT, REJECT)
+    public void updateStatus(Long matchNo, String status) {
+        @Language("SQL")
+        // MATCHING 테이블의 STATUS를 변경합니다.
+        String sql = "UPDATE MATCHING SET STATUS = ? WHERE MATCH_NO = ?";
+        jdbc.update(sql, status, matchNo);
+    }
+
+    // 매칭 번호를 통해 모집글 번호(mateNo)를 조회
+    public Long findMateNoByMatchNo(Long matchNo) throws EmptyResultDataAccessException {
+        @Language("SQL")
+        // MATCHING 테이블에서 MATE_NO를 조회합니다.
+        String sql = "SELECT MATE_NO FROM MATCHING WHERE MATCH_NO = ?";
+        try {
+            // 단일 값(Long)을 조회합니다.
+            return jdbc.queryForObject(sql, Long.class, matchNo);
+        } catch (EmptyResultDataAccessException e) {
+            log.error("MatchNo {}에 해당하는 MateNo를 찾을 수 없습니다.", matchNo);
+            throw e;
+        }
+    }
+
+//    로그인 유저가 신청자인 경우
+    public List<MatchingDto> findAcceptedMatchingsByApplicant(Long userNo) {
+        @Language("SQL")
+        String sql = "SELECT " +
+                "T1.MATCH_NO, " +
+                "T4.USER_NO AS userNo, T2.NAME AS name, T3.REGION AS region, " + // 상대방: 모집글 작성자
+                "T3.PROFILE_IMAGE_URL AS profileImageUrl, T1.STATUS AS MATCH_STATUS, " +
+                "T4.MATE_NAME AS postTitle, T4.MATE_TYPE AS postType, " +
+                "T4.SPORT_TYPE AS sportType " +
+                "FROM MATCHING T1 " +
+                "JOIN MATE T4 ON T1.MATE_NO = T4.MATE_NO " +
+                "JOIN USERS T2 ON T4.USER_NO = T2.USER_NO " +
+                "JOIN USER_PROFILE T3 ON T2.USER_NO = T3.USER_NO " +
+                "WHERE T1.APPLICANT_USER_NO = ?" +
+                "AND T1.STATUS = 'ACCEPT'"; // ★ 수락 완료 조건
+
+        // jdbc.query 실행 및 Mapping 로직 추가
+        return jdbc.query(sql, new Object[]{userNo}, (rs, rowNum) -> {
+            return new MatchingDto(
+                    rs.getLong("MATCH_NO"),
+                    rs.getLong("userNo"), // 모집글 작성자의 userNo
+                    rs.getString("name"),
+                    rs.getString("region"),
+                    rs.getString("profileImageUrl"),
+                    rs.getString("MATCH_STATUS"),
+                    rs.getString("postTitle"),
+                    rs.getString("postType"),
+                    rs.getString("sportType")
+            );
+        });
+    }
+
+    // 로그인 유저가 모집글 작성자일 때
+    public List<MatchingDto> findAcceptedMatchingsByWriter(Long userNo) {
+        @Language("SQL")
+        String sql = "SELECT " +
+                "T1.MATCH_NO, " +
+                "T1.APPLICANT_USER_NO AS userNo, T2.NAME AS name, T3.REGION AS region, " + // 상대방: 신청자
+                "T3.PROFILE_IMAGE_URL AS profileImageUrl, T1.STATUS AS MATCH_STATUS, " +
+                "T4.MATE_NAME AS postTitle, T4.MATE_TYPE AS postType, " +
+                "T4.SPORT_TYPE AS sportType " +
+                "FROM MATCHING T1 " +
+                "JOIN MATE T4 ON T1.MATE_NO = T4.MATE_NO " +
+                "JOIN USERS T2 ON T1.APPLICANT_USER_NO = T2.USER_NO " +
+                "JOIN USER_PROFILE T3 ON T2.USER_NO = T3.USER_NO " +
+                "WHERE T4.USER_NO = ?" +
+                "AND T1.STATUS = 'ACCEPT'"; // ★ 수락 완료 조건
+
+        // jdbc.query 실행 및 Mapping 로직 추가
+        return jdbc.query(sql, new Object[]{userNo}, (rs, rowNum) -> {
+            return new MatchingDto(
+                    rs.getLong("MATCH_NO"),
+                    rs.getLong("userNo"), // 신청자의 userNo
+                    rs.getString("name"),
+                    rs.getString("region"),
+                    rs.getString("profileImageUrl"),
+                    rs.getString("MATCH_STATUS"),
+                    rs.getString("postTitle"),
+                    rs.getString("postType"),
+                    rs.getString("sportType")
+            );
+        });
     }
 
 }

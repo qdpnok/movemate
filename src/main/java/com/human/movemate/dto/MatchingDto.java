@@ -18,4 +18,5 @@ public class MatchingDto {
     private String postTitle;      // 관련 글 제목 (선택)
 
     private String postType;
+    private String sportType;
 }

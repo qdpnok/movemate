@@ -17,7 +17,7 @@
             margin: 30px auto;
             padding: 0 20px;
         }
-
+        /* ... (생략: profile-card 스타일) ... */
         .profile-card {
             width: 250px;
             height: 350px;
@@ -59,7 +59,7 @@
         }
 
         /* ------------------------------------------------ */
-        /* 🚨 버튼 스타일을 위한 CSS 추가 및 수정 🚨 */
+        /*  버튼 스타일을 위한 CSS 추가 및 수정  */
         .manage-menu {
             display: flex;
             justify-content: center; /* 버튼을 중앙에 배치 */
@@ -135,6 +135,9 @@
 
         <a th:classappend="${type == 'sent'} ? 'active'"
            th:href="@{/mate(type='sent', userNo=${userNo})}">보낸 신청 조회</a>
+
+        <a th:classappend="${type == 'accepted'} ? 'active'"
+           th:href="@{/mate(type='accepted', userNo=${userNo})}">매칭 완료 조회</a>
     </nav>
 
     <div class="postcontainer">
@@ -154,7 +157,8 @@
                             <p class="name" th:text="${matching.name}">상대방 이름</p>
                             <p class="region" th:text="${matching.region}">상대방 지역</p>
 
-                            <p class="status" th:text="${matching.status}"></p>
+                            <p th:if="${type != 'accepted'}" class="status" th:text="${matching.status}"></p>
+                            <p th:if="${type == 'accepted'}" class="post-title" th:text="${matching.postTitle}"></p>
                         </div>
                     </a>
                 </div>

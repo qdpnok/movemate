@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -69,27 +70,39 @@ public class MateController {
         if ("sent".equals(type)) {
             // "sent" (보낸 신청) 요청 시 -> findSentApplications 호출
             list = mateService.findSentApplications(userNo);
-        } else { // "received"일 경우
-            // "received" (받은 신청) 요청 시 -> findReceivedApplications 호출
+        } else if ("received".equals(type)) {
+            // // "received" (받은 신청) 요청 시 -> findReceivedApplications 호출
             list = mateService.findReceivedApplications(userNo);
+        } else if ("accepted".equals(type)) {
+            // [추가된 로직] "accepted" (매칭 완료) 요청 시 -> findAcceptedMatchings 호출
+            list = mateService.findAcceptedMatchings(userNo);
+        } else {
+            // 정의되지 않은 타입이 들어왔을 경우 기본값(sent) 처리
+            log.warn("알 수 없는 매칭 타입 요청: {}", type);
+            list = mateService.findSentApplications(userNo);
+            type = "sent";
         }
+
         // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 
         // 1. List를 Map<PostType, List<DTO>> 형태로 그룹화
 //        Map<String, List<MatchingDto>> groupedList = list.stream()
 //                .collect(Collectors.groupingBy(MatchingDto::getPostType));
+
+//        Map<String, List<MatchingDto>> groupedList = list.stream()
+//                .collect(Collectors.groupingBy(
+//                        // 그룹 키를 결정하는 함수: SOLO만 '1:1'로 변환하고 나머지는 그대로 사용
+//                        dto -> {
+//                            String postType = dto.getPostType();
+//                            if ("SOLO".equals(postType)) {
+//                                return "1:1";
+//                            }
+//                            // "CREW"를 포함한 나머지 모든 타입은 원본 값 그대로 반환
+//                            return postType;
+//                        }
+//                ));
         Map<String, List<MatchingDto>> groupedList = list.stream()
-                .collect(Collectors.groupingBy(
-                        // 그룹 키를 결정하는 함수: SOLO만 '1:1'로 변환하고 나머지는 그대로 사용
-                        dto -> {
-                            String postType = dto.getPostType();
-                            if ("SOLO".equals(postType)) {
-                                return "1:1";
-                            }
-                            // "CREW"를 포함한 나머지 모든 타입은 원본 값 그대로 반환
-                            return postType;
-                        }
-                ));
+                .collect(Collectors.groupingBy(this::getGroupingKey));
 
         model.addAttribute("groupedList", groupedList);
         model.addAttribute("type", type);
@@ -107,6 +120,28 @@ public class MateController {
         }
 
         return "post/mateManage";
+    }
+
+    /**
+     * MatchingDto의 타입(SOLO/CREW)과 운동 종류(러닝/웨이트)를 조합하여 그룹핑 키를 생성합니다.
+     */
+    private String getGroupingKey(MatchingDto matching) {
+        String type = matching.getPostType();   // SOLO 또는 CREW
+        // ★★★ Null 방지 코드 추가: sportType이 null이면 빈 문자열("")로 처리합니다. ★★★
+        String sport = (matching.getSportType() != null) ? matching.getSportType() : "";
+
+        if ("SOLO".equals(type)) {
+            // 비교할 때도 안정성을 위해 리터럴 문자열을 앞에 둡니다.
+            if ("러닝".equals(sport)) return "1:1 러닝 신청";
+            if ("웨이트".equals(sport)) return "1:1 웨이트 신청";
+        } else if ("CREW".equals(type)) {
+            if ("러닝".equals(sport)) return "러닝 크루 신청";
+            if ("웨이트".equals(sport)) return "웨이트 크루 신청";
+        }
+
+        // DAO에서 sportType을 가져오지 못한 경우
+        log.warn("분류 실패: Type={}, Sport={}", type, sport.isEmpty() ? "NULL" : sport);
+        return type + " " + sport + " (분류 오류)";
     }
 
     @GetMapping("/detail")
@@ -155,6 +190,51 @@ public class MateController {
         model.addAttribute("viewType", viewType);
 
         return "post/mateDetail";       // 뷰 경로
+    }
+
+    // -------------------------------------------------------------
+    // ★★★ 수락/거절 폼 제출 처리 엔드포인트 구현 ★★★
+    // -------------------------------------------------------------
+    @PostMapping("/matching/action")
+    public String handleMatchingAction(
+            @RequestParam Long matchNo,
+            @RequestParam String action, // "ACCEPT" 또는 "REJECT"
+            HttpSession session
+    ) {
+        User loginUser = (User) session.getAttribute("loginUser");
+
+        if (loginUser == null) {
+            log.warn("비로그인 유저가 매칭 처리 시도.");
+            return "redirect:/login";
+        }
+        Long loggedInUserNo = loginUser.getUserNo();
+
+        // 1. 권한 검사를 위한 상세 정보 조회
+        MatchingDetailDto detail = mateService.getMatchingDetail(matchNo, loggedInUserNo);
+
+        // 유효성 및 권한 검사
+        if (detail == null ||
+                !(action.equals("ACCEPT") || action.equals("REJECT")) ||
+                !detail.getMateWriterNo().equals(loggedInUserNo))
+        {
+            log.warn("잘못된 요청 또는 권한 없는 유저({})가 매칭({}) 처리 시도.", loggedInUserNo, matchNo);
+            // 권한이 없거나 요청이 잘못되면 상세 페이지로 복귀
+            return "redirect:/mate/detail?matchNo=" + matchNo;
+        }
+
+        try {
+            // 2. Service 호출하여 상태 변경 및 인원 증가 로직 처리
+            mateService.updateMatchingStatus(matchNo, action);
+            log.info("매칭 처리 완료: MatchNo={}, Action={}", matchNo, action);
+
+            // 3. 처리가 완료되면 '받은 신청 조회' 목록으로 이동 (목록에서 사라짐)
+            return "redirect:/mate?type=received";
+
+        } catch (Exception e) {
+            log.error("매칭 처리 중 오류 발생: MatchNo={}", matchNo, e);
+            // 오류 발생 시 상세 페이지로 리다이렉트
+            return "redirect:/mate/detail?matchNo=" + matchNo;
+        }
     }
 
 }

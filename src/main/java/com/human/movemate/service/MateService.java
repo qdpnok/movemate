@@ -13,6 +13,11 @@ public interface MateService {
     List<MatchingDto> findSentApplications(Long userNo);     // 보낸 신청자
     MatchingDetailDto getMatchingDetail(Long matchNo, Long loggedInUserNo);
 
+    // 매칭 상태를 변경하는 메서드
+    void updateMatchingStatus(Long matchNo, String status);
+
+    List<MatchingDto> findAcceptedMatchings(Long userNo);
+
     // 모든 메이트 목록을 가져오는 기능
     List<AddMate> findAllMates();
 

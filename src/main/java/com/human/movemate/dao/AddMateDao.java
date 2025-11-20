@@ -154,4 +154,12 @@ public class AddMateDao {
             return null;
         }
     }
+
+    // 모집글의 현재 인원(current_members)을 1씩 증가
+    public void incrementCurrentMembers(Long mateNo) {
+        @Language("SQL")
+        String sql = "UPDATE MATE SET current_members = current_members + 1 WHERE mate_no = ?";
+        jdbc.update(sql, mateNo);
+    }
+
 }
