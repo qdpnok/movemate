@@ -21,6 +21,7 @@ import java.util.List;
 public class MatchDao {
     private final JdbcTemplate jdbc;
 
+    // 매칭 기록 조회 (기존 코드 유지)
     public List<MatchingHistoryDto> findByNo(Long userNo) {
         final String matchTypeDerivation = """
             (CASE
@@ -60,6 +61,15 @@ public class MatchDao {
 
         return jdbc.query(sql, new MatchHistoryRowMapper(), userNo, userNo, userNo);
     }
+
+    // MATCHING 테이블에 데이터 저장!
+    public void save(Long mateNo, Long applicantUserNo) {
+        @Language("SQL")
+        String sql = "INSERT INTO MATCHING (mate_no, applicant_user_no, status) VALUES (?, ?, 'PENDING')";
+
+        jdbc.update(sql, mateNo, applicantUserNo);
+    }
+
 
     // RowMapper
     static class MatchHistoryRowMapper implements RowMapper<MatchingHistoryDto> {

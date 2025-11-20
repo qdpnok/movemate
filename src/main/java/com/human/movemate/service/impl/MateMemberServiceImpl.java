@@ -1,5 +1,6 @@
 package com.human.movemate.service.impl;
 
+import com.human.movemate.dao.MatchDao; // MatchDao 추가함
 import com.human.movemate.dao.MateMemberDao;
 import com.human.movemate.dto.MateApplyFormDto;
 import com.human.movemate.dto.MateMemberDto;
@@ -19,6 +20,7 @@ import java.util.List;
 public class MateMemberServiceImpl implements MateMemberService {
 
     private final MateMemberDao mateMemberDao;
+    private final MatchDao matchDao; // 매칭 테이블 저장을 위해 필요해
     private final FileStorageService fileStorageService; // 파일 저장 도와주는 친구
 
     // 1. 팀원이 만든 기능 구현 (크루원 목록)
@@ -56,6 +58,7 @@ public class MateMemberServiceImpl implements MateMemberService {
         mateMember.setStatus("PENDING"); // 대기 상태
 
         // DAO에게 저장시키기
+        matchDao.save(formDto.getMateNo(), userNo);
         mateMemberDao.save(mateMember);
     }
 }
