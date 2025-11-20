@@ -982,11 +982,12 @@ hamburgerButton.addEventListener('click', () => {
   margin: 40px 0;
 }
 
-.pagination > div {
-    display: flex;
-    flex-wrap: wrap; /* 핵심: 내용이 넘치면 다음 줄로 이동하도록 설정 */
-    justify-content: center;
-    gap: 5px;
+.pagination>div {
+  display: flex;
+  flex-wrap: wrap;
+  /* 핵심: 내용이 넘치면 다음 줄로 이동하도록 설정 */
+  justify-content: center;
+  gap: 5px;
 }
 
 .page-link,
@@ -2389,10 +2390,20 @@ h1 {
 /* * * * * * * * * * * * * * * * * * * * * * * * */
 /* * 여기부터 mate manage 게시판 스타일 * * */
 /* * * * * * * * * * * * * * * * * * * * * * * * */
+
+.manage-container {
+  max-width: 1000px;
+  margin: 0px auto;
+  padding: 0 20px;
+}
+
 .postcontainer {
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 30px auto;
   padding: 0 20px;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
 }
 
 .profile-card {
@@ -2410,10 +2421,6 @@ h1 {
   text-align: center;
   transition: transform 0.2s ease;
   margin: 10px;
-}
-
-.profile-card:hover {
-  transform: translateY(-5px);
 }
 
 .profile-card img {
@@ -2435,30 +2442,30 @@ h1 {
   color: #666;
 }
 
-/* ------------------------------------------------ */
-/* 🚨 버튼 스타일을 위한 CSS 추가 및 수정 🚨 */
 .manage-menu {
   display: flex;
-  justify-content: center;
-  /* 버튼을 중앙에 배치 */
-  margin-bottom: 30px;
+  justify-content: space-between;
+  width: 100%;
+  height: 50px;
   gap: 15px;
-  /* 버튼 사이 간격 */
 }
 
-/* 기본 버튼 스타일 */
 .manage-menu a {
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  flex-shrink: 1;
+  width: 100%;
+  height: 50px;
   padding: 10px 25px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  /* 모서리 둥글게 */
   text-decoration: none;
   color: #444;
   background-color: #f0f0f0;
   font-size: 16px;
   font-weight: normal;
-  /* 기존 active a의 bold를 일반화 */
   transition: all 0.2s ease;
 }
 
@@ -2470,11 +2477,9 @@ h1 {
 
 /* 현재 활성화된 탭의 버튼 스타일 */
 .manage-menu .active {
-  /* <a> 태그에 active 클래스가 직접 붙습니다 */
   font-weight: bold;
   color: #fff;
-  background-color: #5c6bc0;
-  border-color: #5c6bc0;
+  background-color: #4b5ae4;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
 }
 
@@ -2494,6 +2499,7 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  justify-content: space-between;
 }
 
 .group-title {
@@ -2510,135 +2516,3 @@ h1 {
 /* * * * * * * * * * * * * * * * * * * * * * * * */
 /* * 여기까지 mate manage 게시판 스타일 * * */
 /* * * * * * * * * * * * * * * * * * * * * * * * */
-
-/* 나와 매칭된 메이트 리스트 */
-#match-list-solo-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.card-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 80%;
-}
-
-.matching-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.matching-card-img-info > img {
-  display: flex;
-  justify-content: center;
-  width: 400px;
-  height: 400px;
-}
-
-.matching-card-info > p{
-  font-size: 14px;
-}
-
-.card-box {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            max-width: 500px; /* 최대 너비 설정 */
-            padding: 0 10px; /* 좌우 여백 */
-            box-sizing: border-box;
-        }
-
-        /* 개별 매칭 카드 스타일 */
-        .matching-card {
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            width: 100%;
-            margin-bottom: 20px; /* 카드 간 간격 */
-            padding: 20px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* 카드에 그림자 추가 */
-            box-sizing: border-box;
-        }
-        
-        /* 이미지와 정보 레이아웃 (Flexbox) */
-        .matching-card-img-info {
-            display: flex;
-            align-items: flex-start; /* 이미지와 텍스트 상단 정렬 */
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px dotted #e0e0e0; /* 정보와 버튼 사이 점선 구분선 */
-        }
-
-        /* 프로필 이미지 */
-        .matching-card-img {
-            width: 120px;
-            height: 120px;
-            object-fit: cover;
-            border-radius: 8px; /* 둥근 모서리 */
-            margin-right: 20px;
-            flex-shrink: 0;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        /* 텍스트 정보 */
-        .matching-card-info {
-            flex-grow: 1;
-        }
-
-        .matching-card-info > p {
-            font-size: 15px;
-            margin-bottom: 8px;
-            color: #333;
-            line-height: 1.4;
-        }
-        
-        /* 정보 레이블 (신청자, 지역 등) */
-        .matching-card-info > p > span:first-child {
-            font-weight: 500;
-            color: #777;
-            display: inline-block;
-            width: 110px; /* 레이블 너비를 고정하여 값 정렬 */
-        }
-        
-        /* 메이트 유지 기간 (강조 색상) */
-        .matching-card-info p:last-child span:last-child {
-            font-weight: 700;
-            color: #d9534f; /* 붉은색 강조 */
-        }
-        
-        /* 버튼 바 (우측 정렬) */
-        .cut_mate_bar {
-            display: flex;
-            justify-content: flex-end;
-        }
-        
-        /* 메이트 끊기 버튼 스타일 (이미지 반영) */
-        #mate-cut {
-            /* 붉은색 계열 그라데이션 */
-            background: var(--accent);
-            color: white;
-            font-weight: 600;
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 2px 4px rgba(232, 90, 79, 0.4);
-            font-size: 14px;
-        }
-
-        #mate-cut:hover {
-            box-shadow: 0 4px 8px rgba(232, 90, 79, 0.6);
-            transform: translateY(-1px);
-        }
-
-        .empty-message {
-            text-align: center;
-            padding: 30px;
-            color: #999;
-            font-style: italic;
-        }
-/* === [수정/변경 영역 종료: 카드뷰] === */
