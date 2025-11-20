@@ -2466,3 +2466,136 @@ h1 {
 /* * * * * * * * * * * * * * * * * * * * * * * * */
 /* * 여기까지 mate manage 게시판 스타일 * * */
 /* * * * * * * * * * * * * * * * * * * * * * * * */
+
+/* 나와 매칭된 메이트 리스트 */
+#match-list-solo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.card-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+}
+
+.matching-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.matching-card-img-info > img {
+  display: flex;
+  justify-content: center;
+  width: 400px;
+  height: 400px;
+}
+
+.matching-card-info > p{
+  font-size: 14px;
+}
+
+.card-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 500px; /* 최대 너비 설정 */
+            padding: 0 10px; /* 좌우 여백 */
+            box-sizing: border-box;
+        }
+
+        /* 개별 매칭 카드 스타일 */
+        .matching-card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 100%;
+            margin-bottom: 20px; /* 카드 간 간격 */
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* 카드에 그림자 추가 */
+            box-sizing: border-box;
+        }
+        
+        /* 이미지와 정보 레이아웃 (Flexbox) */
+        .matching-card-img-info {
+            display: flex;
+            align-items: flex-start; /* 이미지와 텍스트 상단 정렬 */
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dotted #e0e0e0; /* 정보와 버튼 사이 점선 구분선 */
+        }
+
+        /* 프로필 이미지 */
+        .matching-card-img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px; /* 둥근 모서리 */
+            margin-right: 20px;
+            flex-shrink: 0;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 텍스트 정보 */
+        .matching-card-info {
+            flex-grow: 1;
+        }
+
+        .matching-card-info > p {
+            font-size: 15px;
+            margin-bottom: 8px;
+            color: #333;
+            line-height: 1.4;
+        }
+        
+        /* 정보 레이블 (신청자, 지역 등) */
+        .matching-card-info > p > span:first-child {
+            font-weight: 500;
+            color: #777;
+            display: inline-block;
+            width: 110px; /* 레이블 너비를 고정하여 값 정렬 */
+        }
+        
+        /* 메이트 유지 기간 (강조 색상) */
+        .matching-card-info p:last-child span:last-child {
+            font-weight: 700;
+            color: #d9534f; /* 붉은색 강조 */
+        }
+        
+        /* 버튼 바 (우측 정렬) */
+        .cut_mate_bar {
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        /* 메이트 끊기 버튼 스타일 (이미지 반영) */
+        #mate-cut {
+            /* 붉은색 계열 그라데이션 */
+            background: var(--accent);
+            color: white;
+            font-weight: 600;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(232, 90, 79, 0.4);
+            font-size: 14px;
+        }
+
+        #mate-cut:hover {
+            box-shadow: 0 4px 8px rgba(232, 90, 79, 0.6);
+            transform: translateY(-1px);
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 30px;
+            color: #999;
+            font-style: italic;
+        }
+        
+        /* === [수정/변경 영역 종료: 카드뷰] === */

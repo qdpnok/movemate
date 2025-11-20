@@ -2,7 +2,9 @@ package com.human.movemate.controller;
 
 import com.human.movemate.dto.MatchingDetailDto;
 import com.human.movemate.dto.MatchingDto;
+import com.human.movemate.dto.MatchingHistoryDto;
 import com.human.movemate.model.User;
+import com.human.movemate.service.MatchingService;
 import com.human.movemate.service.MateService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -10,12 +12,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Controller
@@ -24,6 +28,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/mate")   // 해당 클래스의 기본 경로를 localhost:포트번호/mate 으로 설정
 public class MateController {
     private final MateService mateService;
+    private final MatchingService matchingService;
 
 
     @GetMapping("")
@@ -143,6 +148,27 @@ public class MateController {
         model.addAttribute("viewType", viewType);
 
         return "post/mateDetail";       // 뷰 경로
+    }
+
+    @GetMapping("/matching/solo/{sportType}")
+    public String myMatchSolo(@PathVariable String sportType, HttpSession session, Model model) {
+        User user = (User) session.getAttribute("loginUser");
+
+        if (user == null) {
+            log.warn("탈퇴 실패: 권한 없는 사용자 또는 비로그인 상태");
+            // 보안을 위해 권한이 없으면 메인으로 리다이렉트
+            return "redirect:/";
+        }
+
+        String type;
+        if (Objects.equals(sportType, "running")) type = "러닝";
+        else type = "웨이트";
+
+        List<MatchingHistoryDto> matchList = matchingService.findByType(user.getUserNo(), "SOLO", type);
+        model.addAttribute("matches", matchList);
+        model.addAttribute("currentSportType", sportType);
+
+        return "mate/match_list_solo";
     }
 
 }
