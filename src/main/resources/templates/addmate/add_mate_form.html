@@ -23,8 +23,7 @@
                         <i class="fa-solid fa-location-dot"></i>
                         <span>지역선택</span>
                     </label>
-                    <select id="region-select" class="mate-input" th:field="*{region}" required>
-                        <option value="" selected>지역을 선택해주세요</option>
+                    <select id="region-select" class="mateselect-input" th:field="*{region}" required>
                     </select>
                 </div>
                 <div class="mate-form-group">
@@ -75,7 +74,8 @@
             </form>
 
         </div>
-        <script>
+        <script th:inline="javascript">
+            const existingRegion = /*[[${mateForm.region}]]*/ null;
             const regions = [
                 "광덕면", "구룡동", "구성동", "다가동", "대흥동", "동면", "목천읍", "문화동",
                 "병천면", "봉명동", "북면", "사직동", "삼룡동", "성남면", "성황동", "수신면",
@@ -88,12 +88,31 @@
             document.addEventListener('DOMContentLoaded', function () {
                 try {
                     const dropdown = document.getElementById("region-select");
+
+                    const defaultOption = document.createElement("option");
+                    defaultOption.value = "";
+                    defaultOption.innerText = "지역을 선택해주세요";
+                    defaultOption.disabled = true;
+
+                    if (!existingRegion) {
+                        defaultOption.selected = true;
+                    }
+                    dropdown.appendChild(defaultOption);
+
                     regions.forEach((region) => {
-                        const newRegion = document.createElement("option");
-                        newRegion.value = region;
-                        newRegion.innerText = region;
-                        dropdown.appendChild(newRegion);
+                        const newOption = document.createElement("option");
+                        newOption.value = region;
+                        newOption.innerText = region;
+
+                        if (existingRegion && existingRegion === region) {
+                            newOption.selected = true;
+                        }
+                        dropdown.appendChild(newOption);
                     });
+                    if (existingRegion) {
+                        dropdown.value = existingRegion;
+                    }
+
                 } catch (e) {
                     console.error("지역 목록 스크립트 오류:", e);
                 }
