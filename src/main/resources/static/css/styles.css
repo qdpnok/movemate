@@ -604,7 +604,7 @@ main {
 
 /* --- 이미지 및 정보 스타일 (기존 유지) --- */
 .main-mate-card.crew .main-mate-card-image {
- width: 100%;
+  width: 100%;
   height: 200px;
   /* 이미지 높이 고정 */
   background-color: #f0f0f0;
@@ -2421,6 +2421,7 @@ h1 {
   text-align: center;
   transition: transform 0.2s ease;
   margin: 10px;
+  gap: 10px;
 }
 
 .profile-card img {
@@ -2500,6 +2501,7 @@ h1 {
   flex-wrap: wrap;
   gap: 20px;
   justify-content: space-between;
+  padding: 20px;
 }
 
 .group-title {
