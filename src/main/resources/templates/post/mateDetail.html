@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
-    layout:decorate="~{/layout/main}">
+      layout:decorate="~{/layout/main}">
 
 <head>
     <meta charset="UTF-8">
@@ -8,72 +8,80 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
-    <title>받은/보낸 메이트 신청 상세 조회</title>
-
+    <title>메이트 매칭 상세</title>
+    <style>
+        .container { max-width: 800px; margin: 40px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        .header { text-align: center; margin-bottom: 20px; }
+        .status { font-weight: bold; color: #007bff; margin-top: 10px; }
+        .profile-section { display: flex; align-items: center; margin: 20px 0; padding: 15px; background: #f9f9f9; border-radius: 6px; }
+        .profile-img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-right: 20px; }
+        .message-box { border: 1px solid #ccc; padding: 15px; margin-top: 20px; background: #fff; border-radius: 4px; }
+        .action-area { text-align: center; margin-top: 30px; }
+        .btn-success { background-color: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; margin: 5px; }
+        .btn-danger { background-color: #dc3545; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; margin: 5px; }
+        .btn-warning { background-color: #ffc107; color: #212529; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; margin: 5px; }
+    </style>
 </head>
+<body layout:fragment="content">
+<div class="container">
 
-<body>
-    <div layout:fragment="content">
-        <div class="mate-detail-wrap">
-            <h1 class="board">
-                [[${detail.mateType == 'CREW' ? '메이트 크루 신청 조회' : '1:1 메이트 신청 조회'}]]
-            </h1>
-
-            <div th:if="${viewType == 'RECEIVED'}" class="match-card-block received">
-                <div class="section-header">받은 신청 조회</div>
-
-                <div class="profile-card-content">
-                    <img th:src="@{/images/jennie.jpg}" alt="신청자 프로필" class="profile-img">
-                    <div class="text-info-block">
-                        <div class="text-info-row">
-                            <span>신청자 : </span>
-                            <span th:text="${detail.applicantName}"></span>
-                        </div>
-                        <div class="text-info-row">
-                            <span>지역 : </span>
-                            <span th:text="${detail.applicantRegion}"></span>
-                        </div>
-                        <div class="text-info-row">
-                            <span>신청메시지 : </span>
-                            <span>입력 받은거 받아오는거 구현해야됨 </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="action-bar received-actions">
-                    <form th:action="@{/mate/matching/action}" method="post" class="action-form">
-                        <input type="hidden" name="matchNo" th:value="${detail.matchNo}">
-                        <button type="submit" name="action" value="ACCEPT" class="btn-action btn-accept">수락</button>
-                        <button type="submit" name="action" value="REJECT" class="btn-action btn-reject">거절</button>
-                    </form>
-                </div>
-            </div>
-
-            <div th:if="${viewType == 'SENT'}" class="match-card-block sent">
-                <div class="section-header">보낸 신청 조회</div>
-
-                <div class="profile-card-content">
-                    <img th:src="@{/images/jisoo.jpg}" alt="신청자 프로필 (가정)" class="profile-img">
-
-                    <div class="text-info-block">
-                        <p>신청자: <span th:text="'지수'">지수</span></p>
-                        <p>지역: <span th:text="'동남구 신부동'">동남구 신부동</span></p>
-                        <p class="message-text">신청 메시지: 안녕~ 나랑 같이 운동하자~</p>
-                    </div>
-                </div>
-
-                <div class="action-bar sent-actions">
-                    <form th:action="@{/mate/matching/action}" method="post" class="action-form">
-                        <input type="hidden" name="matchNo" th:value="${detail.matchNo}">
-                        <button type="submit" name="action" value="CANCEL" class="btn-action btn-cancel">신청취소</button>
-                    </form>
-                </div>
-            </div>
-
-
-        </div>
+    <div class="header">
+        <h1 th:text="${viewType == 'RECEIVED' ? '받은 메이트 신청 상세' : '보낸 메이트 신청 상세'}">신청 상세</h1>
+        <h2 th:text="'모집글: ' + ${detail.mateName}"></h2>
+        <p class="status" th:text="'현재 상태: ' + ${detail.matchStatus}"></p>
+        <hr>
     </div>
 
-</body>
+    <section>
+        <h3>상대방 정보</h3>
+        <div class="profile-section">
+            <img th:src="${detail.profileImageUrl}" alt="프로필 사진" class="profile-img">
+            <div>
+                <h4 th:text="${detail.applicantName} + '님'">이름</h4>
+                <p th:text="'지역: ' + ${detail.applicantRegion}"></p>
+            </div>
+        </div>
 
+        <div class="message-box">
+            <h4>신청 메시지:</h4>
+<!--            <p th:text="${detail.applicationContent}"></p>-->
+        </div>
+    </section>
+
+    <div class="action-area">
+
+        <div th:if="${detail.matchStatus == '대기'}">
+
+            <div th:if="${viewType == 'RECEIVED'}">
+                <h2>신청을 처리해 주세요.</h2>
+                <form th:action="@{/mate/matching/action}" method="post">
+                    <input type="hidden" name="matchNo" th:value="${detail.matchNo}">
+                    <button type="submit" name="action" value="ACCEPT" class="btn-success">✅ 수락하기</button>
+                    <button type="submit" name="action" value="REJECT" class="btn-danger">❌ 거절하기</button>
+                </form>
+            </div>
+
+            <div th:if="${viewType == 'SENT'}">
+                <h2>신청 취소</h2>
+                <form th:action="@{/mate/matching/action}" method="post">
+                    <input type="hidden" name="matchNo" th:value="${detail.matchNo}">
+                    <button type="submit" name="action" value="CANCEL" class="btn-warning">신청 취소</button>
+                </form>
+            </div>
+
+        </div>
+
+        <div th:unless="${detail.matchStatus == '대기'}">
+            <p style="color: grey;">이 매칭은 이미 **[[${detail.matchStatus}]]** 상태로 처리되었습니다.</p>
+        </div>
+
+    </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <a th:href="@{/mate}" style="text-decoration: none;">목록으로 돌아가기</a>
+    </div>
+
+</div>
+
+</body>
 </html>

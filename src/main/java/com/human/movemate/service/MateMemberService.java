@@ -12,5 +12,5 @@ public interface MateMemberService {
     void kickMember(long memberNo);
 
     // 언니! 여기에 메이트 신청하기 기능도 추가되었습니당!
-    boolean applyForMate(ApplyReqDto applyReq) throws IOException;
+    void applyForMate(MateApplyFormDto formDto, Long userNo) throws IOException;
 }

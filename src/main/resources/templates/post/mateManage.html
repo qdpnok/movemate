@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{/layout/main}">
+      layout:decorate="~{/layout/main}">
 
 <head>
     <meta charset="UTF-8">
@@ -12,21 +12,12 @@
     <title>메이트 관리</title>
 
     <style>
-        .manage-container {
-            max-width: 1000px;
-            margin: 0px auto;
-            padding: 0 20px;
-        }
-
         .postcontainer {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 30px auto;
             padding: 0 20px;
-            display: flex;
-            width: 100%;
-            flex-direction: column;
         }
-
+        /* ... (생략: profile-card 스타일) ... */
         .profile-card {
             width: 250px;
             height: 350px;
@@ -37,11 +28,15 @@
             flex-direction: column;
             align-items: center;
             padding: 15px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
             background-color: #fff;
             text-align: center;
             transition: transform 0.2s ease;
             margin: 10px;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-5px);
         }
 
         .profile-card img {
@@ -63,30 +58,26 @@
             color: #666;
         }
 
+        /* ------------------------------------------------ */
+        /*  버튼 스타일을 위한 CSS 추가 및 수정  */
         .manage-menu {
             display: flex;
-            justify-content: space-between;
-            width: 100%;
-            height: 50px;
-            gap: 15px;
+            justify-content: center; /* 버튼을 중앙에 배치 */
+            margin-bottom: 30px;
+            gap: 15px; /* 버튼 사이 간격 */
         }
 
+        /* 기본 버튼 스타일 */
         .manage-menu a {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-grow: 1;
-            flex-shrink: 1;
-            width: 100%;
-            height: 50px;
+            display: inline-block;
             padding: 10px 25px;
             border: 1px solid #ddd;
-            border-radius: 8px;
+            border-radius: 8px; /* 모서리 둥글게 */
             text-decoration: none;
             color: #444;
             background-color: #f0f0f0;
             font-size: 16px;
-            font-weight: normal;
+            font-weight: normal; /* 기존 active a의 bold를 일반화 */
             transition: all 0.2s ease;
         }
 
@@ -97,13 +88,13 @@
         }
 
         /* 현재 활성화된 탭의 버튼 스타일 */
-        .manage-menu .active {
+        .manage-menu .active { /* <a> 태그에 active 클래스가 직접 붙습니다 */
             font-weight: bold;
             color: #fff;
-            background-color: #4b5ae4;
+            background-color: #5c6bc0;
+            border-color: #5c6bc0;
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
         }
-
         /* ------------------------------------------------ */
 
 
@@ -120,7 +111,6 @@
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
-            justify-content: space-between;
         }
 
         .group-title {
@@ -129,24 +119,20 @@
             color: #333;
             border-bottom: 2px solid #5c6bc0;
             padding-bottom: 5px;
-            margin-top: 40px;
-            /* 위쪽 여백으로 그룹 간 간격 확보 */
+            margin-top: 40px; /* 위쪽 여백으로 그룹 간 간격 확보 */
             margin-bottom: 25px;
         }
     </style>
 </head>
 
 <body layout:fragment="content">
-    <div class="manage-container">
-        <h1 class="board">메이트 신청 관리</h1>
+<div id="container">
+    <h1>메이트 신청 관리</h1>
 
-        <nav class="manage-menu">
-            <a th:classappend="${type == 'received'} ? 'active'"
-               th:href="@{/mate(type='received', userNo=${userNo})}">받은 신청 조회</a>
+    <nav class="manage-menu">
+        <a th:classappend="${type == 'received'} ? 'active'"
+           th:href="@{/mate(type='received', userNo=${userNo})}">받은 신청 조회</a>
 
-            <a th:classappend="${type == 'sent'} ? 'active'" th:href="@{/mate(type='sent', userNo=${userNo})}">보낸 신청
-                조회</a>
-        </nav>
         <a th:classappend="${type == 'sent'} ? 'active'"
            th:href="@{/mate(type='sent', userNo=${userNo})}">보낸 신청 조회</a>
 
@@ -154,85 +140,23 @@
            th:href="@{/mate(type='accepted', userNo=${userNo})}">매칭 완료 조회</a>
     </nav>
 
-        <div class="postcontainer">
-            <div th:if="${#maps.isEmpty(groupedList)}" class="no-data-message">
-                아직 신청 목록이 없습니다.
-            </div>
-
-            <!-- 1. 메이트 타입별 순회 (예: SOLO, CREW) -->
-            <div th:each="mateTypeEntry : ${groupedList}">
-                <!-- mateTypeEntry.key: "SOLO" -->
-                <!-- mateTypeEntry.value: Map<String, List<ApplyResDto>> (스포츠 타입별 맵) -->
-
-                <h2 class="group-title" th:text="${mateTypeEntry.key} + ' 신청 현황'">게시글 타입 신청 현황</h2>
-
-                <!-- 2. 스포츠 타입별 순회 (예: 러닝, 웨이트) -->
-                <div th:each="sportTypeEntry : ${mateTypeEntry.value}">
-                    <!-- sportTypeEntry.key: "러닝" -->
-                    <!-- sportTypeEntry.value: List<ApplyResDto> (실제 신청 리스트) -->
-
-                    <h3 class="sub-title" th:text="${sportTypeEntry.key}">스포츠 타입</h3>
-
-                    <div class="cards-wrapper">
-                        <!-- 3. 실제 신청 리스트 순회 -->
-                        <div th:each="matching : ${sportTypeEntry.value}">
-                            <!-- matching: ApplyResDto 객체 -->
-
-                            <a th:href="@{/mate/detail(matchNo=${matching.applicationNo})}"
-                               style="text-decoration: none; color: inherit;">
-
-                                <div class="profile-card">
-                                    <!-- 이미지가 없을 경우 기본 이미지 처리 -->
-                                    <img th:src="${matching.imageUrl != null ? matching.imageUrl : '/images/profile.png'}" alt="프로필 사진" />
-
-                                    <!-- DTO 필드명에 맞춰 수정 (mateName 등) -->
-                                    <p class="name" th:text="${matching.mateName}">상대방 이름</p>
-                                    <p class="region" th:text="${matching.region}">상대방 지역</p>
-
-                                    <p class="status" th:text="${matching.status}"></p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="postcontainer">
+        <div th:if="${#maps.isEmpty(groupedList)}" class="no-data-message">
+            아직 신청 목록이 없습니다.
         </div>
+        <div th:each="entry : ${groupedList}">
 
+            <h2 class="group-title" th:text="${entry.key} + ' 신청 현황'">게시글 타입 신청 현황</h2>
 
-<!--        <nav class="manage-menu">-->
-<!--            <a th:classappend="${type == 'received'} ? 'active'"-->
-<!--                th:href="@{/mate(type='received', userNo=${userNo})}">받은 신청 조회</a>-->
+            <div class="cards-wrapper">
+                <div th:each="matching : ${entry.value}">
+                    <a th:href="@{/mate/detail(matchNo=${matching.matchNo})}" style="text-decoration: none; color: inherit;">
 
-<!--            <a th:classappend="${type == 'sent'} ? 'active'" th:href="@{/mate(type='sent', userNo=${userNo})}">보낸 신청-->
-<!--                조회</a>-->
-<!--        </nav>-->
+                        <div class="profile-card">
+                            <img th:src="${matching.profileImageUrl}" alt="프로필 사진" />
+                            <p class="name" th:text="${matching.name}">상대방 이름</p>
+                            <p class="region" th:text="${matching.region}">상대방 지역</p>
 
-<!--        <div class="postcontainer">-->
-<!--            <div th:if="${#maps.isEmpty(groupedList)}" class="no-data-message">-->
-<!--                아직 신청 목록이 없습니다.-->
-<!--            </div>-->
-<!--            <div th:each="entry : ${groupedList}">-->
-
-<!--                <h2 class="group-title" th:text="${entry.key} + ' 신청 현황'">게시글 타입 신청 현황</h2>-->
-
-<!--                <div class="cards-wrapper">-->
-<!--                    <div th:each="matching : ${entry.value}">-->
-<!--                        <a th:href="@{/mate/detail(matchNo=${matching.applicationNo})}"-->
-<!--                            style="text-decoration: none; color: inherit;">-->
-
-<!--                            <div class="profile-card">-->
-<!--                                <img th:src="${matching.imageUrl}" alt="프로필 사진" />-->
-<!--                                <p class="name" th:text="${matching.name}">상대방 이름</p>-->
-<!--                                <p class="region" th:text="${matching.region}">상대방 지역</p>-->
-
-<!--                                <p class="status" th:text="${matching.status}"></p>-->
-<!--                            </div>-->
-<!--                        </a>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-    </div>
                             <p th:if="${type != 'accepted'}" class="status" th:text="${matching.status}"></p>
                             <p th:if="${type == 'accepted'}" class="post-title" th:text="${matching.postTitle}"></p>
                         </div>
