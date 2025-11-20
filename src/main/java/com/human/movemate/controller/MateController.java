@@ -81,8 +81,20 @@ public class MateController {
         // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 
         // 1. List를 Map<PostType, List<DTO>> 형태로 그룹화
+//        Map<String, List<MatchingDto>> groupedList = list.stream()
+//                .collect(Collectors.groupingBy(MatchingDto::getPostType));
         Map<String, List<MatchingDto>> groupedList = list.stream()
-                .collect(Collectors.groupingBy(MatchingDto::getPostType));
+                .collect(Collectors.groupingBy(
+                        // 그룹 키를 결정하는 함수: SOLO만 '1:1'로 변환하고 나머지는 그대로 사용
+                        dto -> {
+                            String postType = dto.getPostType();
+                            if ("SOLO".equals(postType)) {
+                                return "1:1";
+                            }
+                            // "CREW"를 포함한 나머지 모든 타입은 원본 값 그대로 반환
+                            return postType;
+                        }
+                ));
 
         model.addAttribute("groupedList", groupedList);
         model.addAttribute("type", type);

@@ -18,7 +18,8 @@
             <h1 class="board" th:unless="${postId == null}">게시판 글 수정</h1>
 
 
-            <form th:action="${postId == null} ? @{/posts/write} : @{/posts/update/{id}(id=${postId})}" method="post"
+            <form id="postWriteForm"
+                th:action="${postId == null} ? @{/posts/write} : @{/posts/update/{id}(id=${postId})}" method="post"
                 th:object="${postForm}" enctype="multipart/form-data">
 
                 <div class="write-form-group">
@@ -60,6 +61,29 @@
         </div>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
+                const form = document.getElementById('postWriteForm');
+                const boardTypeNo = document.getElementById('boardTypeNo');
+                const title = document.getElementById('title');
+                const content = document.getElementById('content');
+
+                form.addEventListener('submit', function (event) {
+                    if (boardTypeNo.value === "") {
+                        alert("게시판을 선택해주세요.");
+                        event.preventDefault();
+                        return;
+                    }
+                    if (title.value.trim() === "") {
+                        alert("제목을 입력해주세요.");
+                        event.preventDefault();
+                        return;
+                    }
+                    if (content.value.trim() === "") {
+                        alert("내용을 입력해주세요.");
+                        event.preventDefault();
+                        return;
+                    }
+
+                });
 
                 try {
                     const fileInput = document.getElementById('postImageInput');
