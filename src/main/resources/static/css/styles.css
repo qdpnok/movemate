@@ -816,7 +816,7 @@ hamburgerButton.addEventListener('click', () => {
 /* * * * * * * * * * * * * * * * * * * * * * * */
 
 .post-container {
-  max-width: 1200px;
+  max-width: 800px;
   margin: 0px auto;
   padding: 0 20px;
 }
@@ -834,10 +834,16 @@ hamburgerButton.addEventListener('click', () => {
 /* 탭 메뉴 (러닝/웨이트) */
 .post-box {
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 50px;
+  gap: 20px;
   height: 100px;
+  min-width: 0;
+}
+
+.weight-post,
+.running-post {
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 
 .weight-post a,
@@ -845,7 +851,7 @@ hamburgerButton.addEventListener('click', () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 500px;
+  width: 100%;
   height: 50px;
   border-radius: 8px;
   background-color: #f3f4f6;
@@ -854,6 +860,8 @@ hamburgerButton.addEventListener('click', () => {
   text-decoration: none;
   transition: all 0.2s ease;
   cursor: pointer;
+  flex-grow: 0;
+  flex-shrink: 0;
 }
 
 /* 게시판 선택되면 스타일 적용 */
@@ -862,7 +870,7 @@ hamburgerButton.addEventListener('click', () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 500px;
+  width: auto;
   height: 50px;
   border-radius: 8px;
   background-color: #4b5ae4;
@@ -1907,14 +1915,29 @@ th {
 /* * * * * * * * * * * * * * * * * * * * * * * * */
 
 
+.my-management-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.mate-post-box {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  /* 버튼 사이 간격 유지 */
+  height: auto;
+}
+
 
 .my-crew-btn {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 525px;
+  width: 500px;
   height: 50px;
-  border-radius: 20px;
+  border-radius: 8px;
   background-color: #F3F4F6;
   color: BLACK;
   font-size: 20px;
@@ -1926,9 +1949,9 @@ th {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 525px;
+  width: 500px;
   height: 50px;
-  border-radius: 20px;
+  border-radius: 8px;
   background-color: #4B5AE4;
   color: white;
   font-size: 20px;
@@ -1992,6 +2015,7 @@ th {
   margin-top: 20px;
   padding-top: 20px;
   border-top: 2px dotted #ccc;
+  gap: 30;
 }
 
 .btn-crew-edit,
@@ -2002,7 +2026,7 @@ th {
   padding: 10px 0;
   text-align: center;
   text-decoration: none;
-  border-radius: 25px;
+  border-radius: 8px;
   color: white;
   font-weight: 700;
   font-size: 1rem;

@@ -21,12 +21,22 @@
             <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
             <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
 
-            <div class="post-box">
-                <a th:href="@{/addMate/my/crew(sport='러닝')}" th:classappend="${activeTab == '러닝'} ? 'active'"
-                    class="my-crew-btn">러닝 크루</a>
-                <a th:href="@{/addMate/my/crew(sport='웨이트')}" th:classappend="${activeTab == '웨이트'} ? 'active'"
-                    class="my-crew-btn">짐 크루</a>
+            <div class="my-management-tabs">
+                <div class="mate-post-box">
+                    <a th:href="@{/addMate/my/crew(sport='러닝')}" th:classappend="${activeTab == '러닝'} ? 'active'"
+                        class="my-crew-btn">러닝 메이트</a>
+                    <a th:href="@{/addMate/my/crew(sport='웨이트')}" th:classappend="${activeTab == '웨이트'} ? 'active'"
+                        class="my-crew-btn">웨이트 메이트</a>
+                </div>
+
+                <div class="mate-post-box">
+                    <a th:href="@{/addMate/my/solo(sport=${activeTab})}" th:classappend="${false} ? 'active'"
+                        class="my-crew-btn">1:1 메이트</a>
+                    <a th:href="@{/addMate/my/crew(sport=${activeTab})}" th:classappend="${true} ? 'active'"
+                        class="my-crew-btn">메이트 크루</a>
+                </div>
             </div>
+
 
             <div class="crew-list-header">나의 크루 조회</div>
 
