@@ -270,15 +270,26 @@ public class AddMateController {
         if (loginUser == null) {
             return "redirect:/login";
         }
-        try {
-            // Service에서 권한 확인 및 삭제
+        AddMate mateToDelete = addMateService.findById(mateNo);
+
+        if (mateToDelete == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "삭제할 게시글을 찾을 수 없습니다.");
+            return "redirect:/addMate";
+        }
+        try { // Service 메소드 호출해서 권한 확인 하고 DB 삭제 처리
             addMateService.deleteMate(mateNo, loginUser.getUserNo());
             redirectAttributes.addFlashAttribute("successMessage", "게시글이 삭제되었습니다.");
+            // mateType과 sportType을 기반으로 정확한 목록 경로로 리다이렉트
+            String mateType = mateToDelete.getMateType();
+            String sportType = mateToDelete.getSportType();
+            String encodedSportType = URLEncoder.encode(sportType, StandardCharsets.UTF_8);
+            String typePath = "SOLO".equals(mateType) ? "/my/solo" : "/my/crew";
+            return "redirect:/addMate" + typePath + "?sport=" + encodedSportType;
         } catch (Exception e) {
             log.error("메이트 삭제 실패: {}", e.getMessage());
             redirectAttributes.addFlashAttribute("errorMessage", "삭제에 실패했습니다: " + e.getMessage());
+            return "redirect:/addMate/" + mateNo;
         }
-        return "redirect:/addMate/" + mateNo;
     }
 
 //    1:1 메이트 신청 민아
