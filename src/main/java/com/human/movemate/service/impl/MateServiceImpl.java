@@ -1,11 +1,11 @@
 package com.human.movemate.service.impl;
 
 
+import com.human.movemate.dto.ApplyResDto;
 import com.human.movemate.dao.MateDao;
+import com.human.movemate.dao.MateMemberDao;
 import com.human.movemate.dto.MatchingDetailDto;
 import com.human.movemate.model.AddMate;
-import com.human.movemate.dto.MatchingDto;
-import com.human.movemate.model.Post;
 import com.human.movemate.service.MateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +19,7 @@ import java.util.List;
 public class MateServiceImpl implements MateService {
 
     private final MateDao mateDao; // 창고지기(DAO)를 부름
+    private final MateMemberDao mateMemberDao;
 
     @Override
     public List<AddMate> findAllMates() {
@@ -26,13 +27,14 @@ public class MateServiceImpl implements MateService {
         return mateDao.findAll();
     }
 
-    public List<MatchingDto> findReceivedApplications(Long userNo) {
-        return mateDao.findReceivedMatchings(userNo);
+    @Override
+    public List<ApplyResDto> findReceivedApplications(Long userNo) {
+        return mateMemberDao.findSentApply(userNo);
     }
 
     @Override
-    public List<MatchingDto> findSentApplications(Long userNo) {
-        return mateDao.findSentMatchings(userNo);
+    public List<ApplyResDto> findSentApplications(Long userNo) {
+        return mateMemberDao.findReceivedApply(userNo);
     }
 
     @Override

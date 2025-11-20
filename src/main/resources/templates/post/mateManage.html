@@ -142,7 +142,7 @@
 
         <nav class="manage-menu">
             <a th:classappend="${type == 'received'} ? 'active'"
-                th:href="@{/mate(type='received', userNo=${userNo})}">받은 신청 조회</a>
+               th:href="@{/mate(type='received', userNo=${userNo})}">받은 신청 조회</a>
 
             <a th:classappend="${type == 'sent'} ? 'active'" th:href="@{/mate(type='sent', userNo=${userNo})}">보낸 신청
                 조회</a>
@@ -152,27 +152,80 @@
             <div th:if="${#maps.isEmpty(groupedList)}" class="no-data-message">
                 아직 신청 목록이 없습니다.
             </div>
-            <div th:each="entry : ${groupedList}">
 
-                <h2 class="group-title" th:text="${entry.key} + ' 신청 현황'">게시글 타입 신청 현황</h2>
+            <!-- 1. 메이트 타입별 순회 (예: SOLO, CREW) -->
+            <div th:each="mateTypeEntry : ${groupedList}">
+                <!-- mateTypeEntry.key: "SOLO" -->
+                <!-- mateTypeEntry.value: Map<String, List<ApplyResDto>> (스포츠 타입별 맵) -->
 
-                <div class="cards-wrapper">
-                    <div th:each="matching : ${entry.value}">
-                        <a th:href="@{/mate/detail(matchNo=${matching.matchNo})}"
-                            style="text-decoration: none; color: inherit;">
+                <h2 class="group-title" th:text="${mateTypeEntry.key} + ' 신청 현황'">게시글 타입 신청 현황</h2>
 
-                            <div class="profile-card">
-                                <img th:src="${matching.profileImageUrl}" alt="프로필 사진" />
-                                <p class="name" th:text="${matching.name}">상대방 이름</p>
-                                <p class="region" th:text="${matching.region}">상대방 지역</p>
+                <!-- 2. 스포츠 타입별 순회 (예: 러닝, 웨이트) -->
+                <div th:each="sportTypeEntry : ${mateTypeEntry.value}">
+                    <!-- sportTypeEntry.key: "러닝" -->
+                    <!-- sportTypeEntry.value: List<ApplyResDto> (실제 신청 리스트) -->
 
-                                <p class="status" th:text="${matching.status}"></p>
-                            </div>
-                        </a>
+                    <h3 class="sub-title" th:text="${sportTypeEntry.key}">스포츠 타입</h3>
+
+                    <div class="cards-wrapper">
+                        <!-- 3. 실제 신청 리스트 순회 -->
+                        <div th:each="matching : ${sportTypeEntry.value}">
+                            <!-- matching: ApplyResDto 객체 -->
+
+                            <a th:href="@{/mate/detail(matchNo=${matching.applicationNo})}"
+                               style="text-decoration: none; color: inherit;">
+
+                                <div class="profile-card">
+                                    <!-- 이미지가 없을 경우 기본 이미지 처리 -->
+                                    <img th:src="${matching.imageUrl != null ? matching.imageUrl : '/images/profile.png'}" alt="프로필 사진" />
+
+                                    <!-- DTO 필드명에 맞춰 수정 (mateName 등) -->
+                                    <p class="name" th:text="${matching.mateName}">상대방 이름</p>
+                                    <p class="region" th:text="${matching.region}">상대방 지역</p>
+
+                                    <p class="status" th:text="${matching.status}"></p>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
+<!--        <nav class="manage-menu">-->
+<!--            <a th:classappend="${type == 'received'} ? 'active'"-->
+<!--                th:href="@{/mate(type='received', userNo=${userNo})}">받은 신청 조회</a>-->
+
+<!--            <a th:classappend="${type == 'sent'} ? 'active'" th:href="@{/mate(type='sent', userNo=${userNo})}">보낸 신청-->
+<!--                조회</a>-->
+<!--        </nav>-->
+
+<!--        <div class="postcontainer">-->
+<!--            <div th:if="${#maps.isEmpty(groupedList)}" class="no-data-message">-->
+<!--                아직 신청 목록이 없습니다.-->
+<!--            </div>-->
+<!--            <div th:each="entry : ${groupedList}">-->
+
+<!--                <h2 class="group-title" th:text="${entry.key} + ' 신청 현황'">게시글 타입 신청 현황</h2>-->
+
+<!--                <div class="cards-wrapper">-->
+<!--                    <div th:each="matching : ${entry.value}">-->
+<!--                        <a th:href="@{/mate/detail(matchNo=${matching.applicationNo})}"-->
+<!--                            style="text-decoration: none; color: inherit;">-->
+
+<!--                            <div class="profile-card">-->
+<!--                                <img th:src="${matching.imageUrl}" alt="프로필 사진" />-->
+<!--                                <p class="name" th:text="${matching.name}">상대방 이름</p>-->
+<!--                                <p class="region" th:text="${matching.region}">상대방 지역</p>-->
+
+<!--                                <p class="status" th:text="${matching.status}"></p>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
 </body>
 
