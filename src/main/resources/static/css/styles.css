@@ -828,6 +828,7 @@ hamburgerButton.addEventListener('click', () => {
   font-size: 30px;
   font-weight: bold;
   height: 150px;
+  color: black;
 }
 
 /* 탭 메뉴 (러닝/웨이트) */
