@@ -29,12 +29,12 @@ public class MateServiceImpl implements MateService {
 
     @Override
     public List<ApplyResDto> findReceivedApplications(Long userNo) {
-        return mateMemberDao.findSentApply(userNo);
+        return mateMemberDao.findReceivedApply(userNo);
     }
 
     @Override
     public List<ApplyResDto> findSentApplications(Long userNo) {
-        return mateMemberDao.findReceivedApply(userNo);
+        return mateMemberDao.findSentApply(userNo);
     }
 
     @Override
