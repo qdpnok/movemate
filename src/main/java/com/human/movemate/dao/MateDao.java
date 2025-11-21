@@ -37,8 +37,8 @@ public class MateDao {
                 "JOIN MATE T4 ON T1.MATE_NO = T4.MATE_NO " +             // MATCHING과 MATE 연결
                 "JOIN USERS T2 ON T4.USER_NO = T2.USER_NO " +            // MATE 작성자(상대방) 정보 조인
                 "JOIN USER_PROFILE T3 ON T2.USER_NO = T3.USER_NO " +
-                "WHERE T1.APPLICANT_USER_NO = ?" + // 로그인 유저가 신청자
-                "AND T1.STATUS = '대기'"; // '대기' 상태인 것만 조회하도록 추가, 수락/거절 버튼 누른 대상자 안보이게 함
+                "WHERE T1.APPLICANT_USER_NO = ? " + // 로그인 유저가 신청자
+                "AND (T1.STATUS = '대기' OR T1.STATUS = 'PENDING')"; // '대기' 상태인 것만 조회하도록 추가, 수락/거절 버튼 누른 대상자 안보이게 함
 
         // 쿼리 결과 매핑 (MatchingDto에 맞게 수정)
         return jdbc.query(sql, new Object[]{userNo}, (rs, rowNum) -> {
@@ -73,8 +73,8 @@ public class MateDao {
                 "JOIN MATE T4 ON T1.MATE_NO = T4.MATE_NO " +             // MATCHING과 MATE 연결
                 "JOIN USERS T2 ON T1.APPLICANT_USER_NO = T2.USER_NO " +  // 신청자(상대방) 정보 조인
                 "JOIN USER_PROFILE T3 ON T2.USER_NO = T3.USER_NO " +
-                "WHERE T4.USER_NO = ?" + // 로그인 유저가 모집글 작성자
-                "AND T1.STATUS = '대기'"; // '대기' 상태인 것만 조회하도록 추가, 수락/거절 버튼 누른 대상자 안보이게 함
+                "WHERE T4.USER_NO = ? " + // 로그인 유저가 모집글 작성자
+                "AND (T1.STATUS = '대기' OR T1.STATUS = 'PENDING')"; // '대기' 상태인 것만 조회하도록 추가, 수락/거절 버튼 누른 대상자 안보이게 함
 
         // 쿼리 결과 매핑 (MatchingDto에 맞게 수정)
         return jdbc.query(sql, new Object[]{userNo}, (rs, rowNum) -> {

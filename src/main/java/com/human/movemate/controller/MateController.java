@@ -165,6 +165,11 @@ public class MateController {
         // 2. 상세 데이터 조회
         MatchingDetailDto matchingDetail = mateService.getMatchingDetail(matchNo, loggedInUserNo);
 
+        // DTO matchStatus 데이터 확인을 위한 로그 찍기
+        log.info("matchingDetail.matchStatus={}", matchingDetail.getMatchStatus());
+        log.info("matchingDetail.mateWriterNo={}, loggedInUserNo={}", matchingDetail.getMateWriterNo(), loggedInUserNo);
+        log.info("matchingDetail.applicantNo={}", matchingDetail.getApplicantNo());
+
         if (matchingDetail == null) {
             return "redirect:/mate"; // 데이터 없으면 목록으로
         }

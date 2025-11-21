@@ -50,7 +50,7 @@
 
     <div class="action-area">
 
-        <div th:if="${detail.matchStatus == '대기'}">
+        <div th:if="${detail.matchStatus == '대기' or detail.matchStatus == 'PENDING'}">
 
             <div th:if="${viewType == 'RECEIVED'}">
                 <h2>신청을 처리해 주세요.</h2>
@@ -71,7 +71,7 @@
 
         </div>
 
-        <div th:unless="${detail.matchStatus == '대기'}">
+        <div th:unless="${detail.matchStatus == '대기' or detail.matchStatus == 'PENDING'}">
             <p style="color: grey;">이 매칭은 이미 **[[${detail.matchStatus}]]** 상태로 처리되었습니다.</p>
         </div>
 
