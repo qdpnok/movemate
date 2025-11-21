@@ -130,6 +130,16 @@ public class AddMateServiceImpl implements AddMateService {
         return addMateDao.findByUserNoAndType(userNo, mateType, sportType);
     }
 
+    // 메이트 크루에서 크루원 강퇴할때 필요함
+    public boolean isUserMateLeader(Long mateNo, Long userNo) {
+        //  MateDao를 통해 글 작성자가 리더가 맞냐 ? 확인하기
+        AddMate mate = addMateDao.getById(mateNo);
+        if (mate != null && mate.getUserNo().equals(userNo)) {
+            return true; // 글 작성자 = 리더가 맞음
+        }
+        return false;
+    }
+
 
 }
 

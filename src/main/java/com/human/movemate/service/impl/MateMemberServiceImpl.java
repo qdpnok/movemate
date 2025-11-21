@@ -23,16 +23,16 @@ public class MateMemberServiceImpl implements MateMemberService {
     private final MatchDao matchDao; // 매칭 테이블 저장을 위해 필요해
     private final FileStorageService fileStorageService; // 파일 저장 도와주는 친구
 
-    // 1. 팀원이 만든 기능 구현 (크루원 목록)
+    // 크루원 목록 조회
     @Override
     public List<MateMemberDto> getCrewMembers(Long mateNo) {
         return null;
     }
 
-    // 2. 팀원이 만든 기능 구현 (강퇴)
+    // 강퇴
     @Override
     public void kickMember(long memberNo) {
-        // mateMemberDao.kickMember(memberNo);
+        mateMemberDao.deleteMember(memberNo);
     }
 
     // 3. [본인 추가] 메이트 신청 기능

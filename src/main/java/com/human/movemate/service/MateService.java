@@ -1,6 +1,7 @@
 package com.human.movemate.service;
 
 import com.human.movemate.dto.MatchingDetailDto;
+import com.human.movemate.dto.MatchingDto;
 import com.human.movemate.model.AddMate;
 import com.human.movemate.dto.MatchingDto;
 import com.human.movemate.model.Post;

@@ -112,6 +112,16 @@ public class PostController {
             postService.save(postFormDto, loginUserNo);
             // [성공 시] 리다이렉트 페이지로 "successMessage"를 보냄
             redirectAttributes.addFlashAttribute("successMessage", "게시글이 성공적으로 등록되었습니다.");
+            Long boardTypeNo = postFormDto.getBoardTypeNo();
+            String redirectPath;
+            if (boardTypeNo != null) {
+                String boardName = (boardTypeNo == 1L) ? "running" : "weight";
+                // ⭐ /posts/경로를 포함한 절대 경로로 수정
+                redirectPath = "redirect:/posts/" + boardName + "/1";
+            } else {
+                redirectPath = "redirect:/posts/running/1";
+            }
+            return redirectPath;
         } catch (Exception e) {
             log.error("게시글 저장 실패: {}", e.getMessage());
             // [실패 시] 리다이렉트 페이지로 "errorMessage"를 보냄

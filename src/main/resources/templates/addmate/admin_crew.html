@@ -36,7 +36,7 @@
                     </div>
 
                     <div class="member-action">
-                        <a th:if="${member.userNo != session.loginUser.userNo}"
+                        <a th:if="${mate.userNo == session.loginUser.userNo AND member.userNo != session.loginUser.userNo}"
                             th:href="@{/addMate/kick/{mateId}/{memId}(mateId=${mate.mateNo}, memId=${member.memberNo})}"
                             class="btn-kick" onclick="return confirm('이 크루원을 강퇴하시겠습니까?');">
                             크루원 강퇴

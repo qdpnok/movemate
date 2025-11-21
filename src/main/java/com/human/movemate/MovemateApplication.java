@@ -9,5 +9,4 @@ public class MovemateApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MovemateApplication.class, args);
 	}
-
 }
